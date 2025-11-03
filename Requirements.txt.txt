@@ -1,0 +1,9 @@
+pandas
+streamlit
+numpy
+matplotlib
+scikit-learn
+langchain_community
+seaborn
+langchain-groq
+langchain_core
