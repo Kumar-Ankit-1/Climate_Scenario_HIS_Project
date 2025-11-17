@@ -1,0 +1,15 @@
+{
+  "generated_at": "2025-11-10T11:34:56Z",
+  "source_url": "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv",
+  "region": "World",
+  "years": [
+    2000,
+    2100
+  ],
+  "raw_file": "C:\\Users\\mohit\\climate_etl_project\\raw\\owid-co2-data.csv",
+  "raw_checksum": "sha256:f659db45a92b7cd295e950c4ee9733104000a331657a96e630e00e1ec95076ca",
+  "processed_file": "C:\\Users\\mohit\\climate_etl_project\\processed\\owid_world_co2_2000_2100.csv",
+  "processed_checksum": "sha256:5801c3be38b17c3def2ebb8e13c9cc82542c577c729c3a0f574c09c15739823f",
+  "notes": "Territory-based CO2 emissions; converted tonnes \u2192 MtCO2/yr.",
+  "license_hint": "Check OWID repo for license and attribution."
+}

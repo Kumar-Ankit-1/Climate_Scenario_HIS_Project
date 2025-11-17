@@ -1,0 +1,30 @@
+{
+  "id": "gcp_co2_v2024",
+  "name": "Global Carbon Project CO2 Dataset",
+  "provider": "Global Carbon Project",
+  "family": "Historical",
+  "description": "Global CO2 emissions from fossil fuels and cement, annually.",
+  "variables": ["CO2_emissions"],
+  "sectors": [],
+  "regions": ["World"],
+  "start_year": 1959,
+  "end_year": 2023,
+  "frequency": "annual",
+  "unit": {"CO2_emissions": "GtCO2/yr"},
+  "schema": ["year","CO2_emissions"],
+  "license": "Open with attribution",
+  "access": {
+    "type": "http",
+    "url": "https://data.globalcarbonproject.org/..."
+  },
+  "provenance": {
+    "source_url": "https://www.globalcarbonproject.org",
+    "retrieval_date": "2025-10-25",
+    "checksum": "sha256:f659db45a92b7cd295e950c4ee9733104000a331657a96e630e00e1ec95076ca"
+  },
+  "tags": ["historical","baseline","global"],
+  "format": "csv",
+  "preprocess": "gcp_adapter_v1",
+  "cost": "free",
+  "last_updated": "2025-10-25T12:00:00Z"
+}

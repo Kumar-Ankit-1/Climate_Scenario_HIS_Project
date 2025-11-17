@@ -1,0 +1,32 @@
+{
+  "id": "iiasa_ssp_v2023",
+  "name": "IIASA SSP Database (selected variables)",
+  "provider": "IIASA",
+  "family": "SSP",
+  "description": "Model outputs for SSP scenario family, includes sector and regional breakdowns depending on model.",
+  "variables": ["CO2","CH4","Energy|Coal","Energy|Renewables"],
+  "sectors": ["Energy","Industry","Transport","AFOLU"],
+  "regions": ["World","Europe","OECD","Asia"],
+  "start_year": 1850,
+  "end_year": 2100,
+  "frequency": "annual",
+  "unit": {"CO2": "MtCO2/yr"},
+  "schema": ["model","scenario","region","sector","variable","year","value"],
+  "license": "see IIASA SSP Database metadata (often open with attribution)",
+  "access": {
+    "type": "http",
+    "url": "https://tntcat.iiasa.ac.at/SspDb/dsd?Action=html",
+    "method": "GET",
+    "notes": "some files require manual selection; see repo for retrieval script"
+  },
+  "provenance": {
+    "source_url": "https://tntcat.iiasa.ac.at/SspDb",
+    "retrieval_date": "2025-10-20",
+    "checksum": "sha256:f659db45a92b7cd295e950c4ee9733104000a331657a96e630e00e1ec95076ca"
+  },
+  "tags": ["scenario","SSP","model"],
+  "format": "xlsx",
+  "preprocess": "iiasa_ssp_adapter_v1",
+  "cost": "free",
+  "last_updated": "2025-10-20T10:00:00Z"
+}

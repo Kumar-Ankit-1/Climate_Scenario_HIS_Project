@@ -1,0 +1,31 @@
+{
+  "id": "owid_co2_v2025",
+  "name": "OWID CO2 Dataset",
+  "provider": "Our World in Data",
+  "family": "Historical",
+  "description": "Territory-based CO2 emissions by country and aggregate regions (OWID repo).",
+  "variables": ["co2", "co2_per_capita", "cumulative_co2"],
+  "sectors": [],
+  "regions": ["World", "Europe", "Germany", "France"],
+  "start_year": 1750,
+  "end_year": 2023,
+  "frequency": "annual",
+  "unit": {"co2": "MtCO2/yr"},
+  "schema": ["iso_code","country","year","co2","co2_per_capita","cumulative_co2"],
+  "license": "Our World in Data (see repository for sources and attribution)",
+  "access": {
+    "type": "http",
+    "url": "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv",
+    "method": "GET"
+  },
+  "provenance": {
+    "source_url": "https://github.com/owid/co2-data",
+    "retrieval_date": "2025-10-25",
+    "checksum": "sha256:f659db45a92b7cd295e950c4ee9733104000a331657a96e630e00e1ec95076ca"
+  },
+  "tags": ["historical","baseline","country"],
+  "format": "csv",
+  "preprocess": "owid_adapter_v1",
+  "cost": "free",
+  "last_updated": "2025-10-25T12:00:00Z"
+}

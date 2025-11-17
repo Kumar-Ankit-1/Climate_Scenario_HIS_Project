@@ -1,0 +1,15 @@
+{
+  "generated_at": "2025-11-10T13:03:25Z",
+  "source_url": "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv",
+  "region": "Germany",
+  "years": [
+    2000,
+    2100
+  ],
+  "raw_file": "C:\\Users\\mohit\\climate_etl_project\\raw\\owid-co2-data.csv",
+  "raw_checksum": "sha256:f659db45a92b7cd295e950c4ee9733104000a331657a96e630e00e1ec95076ca",
+  "processed_file": "C:\\Users\\mohit\\climate_etl_project\\processed\\owid_germany_co2_2000_2100.csv",
+  "processed_checksum": "sha256:2388d6288573c215dca614cdeccc031f99acf3ad121b25404a778afa00e30bf5",
+  "notes": "Territory-based CO2 emissions; converted tonnes \u2192 MtCO2/yr.",
+  "license_hint": "Check OWID repo for license and attribution."
+}
