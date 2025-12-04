@@ -1,11 +1,9 @@
 # ingestion.py
 """
-Ingestion script
-- CSVs:
-  variables.csv -> header: variable,description
-  scenarios.csv -> header: scenario_id,scenario_text
-
-- Builds embeddings (Gemini remote if GEMINI_API_URL+GEMINI_API_KEY set, otherwise sentence-transformers)
+Ingestion script (robust)
+- variables.csv: header: variable,description
+- scenarios.csv: tolerant headers: name/description OR scenario_id/scenario_text OR many variants
+- Builds embeddings (remote GEMINI if env set, otherwise sentence-transformers)
 - Builds FAISS index and saves metadata JSON mapping index ids -> item metadata
 
 Usage:
@@ -17,6 +15,8 @@ import json
 import argparse
 from typing import List
 import numpy as np
+import requests
+import io
 
 # optional imports
 try:
@@ -29,21 +29,15 @@ try:
 except Exception:
     faiss = None
 
-import requests
-
 # ------------------------
 # Embedding wrapper
 # ------------------------
 def _call_remote_embedding(api_url: str, api_key: str, texts: List[str]) -> List[List[float]]:
-    """
-    Call a remote embedding endpoint. Accepts a few common response shapes.
-    """
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     payload = {"input": texts}
     resp = requests.post(api_url, headers=headers, json=payload, timeout=60)
     resp.raise_for_status()
     j = resp.json()
-    # try common shapes
     if isinstance(j, dict):
         if "data" in j and isinstance(j["data"], list) and "embedding" in j["data"][0]:
             return [d["embedding"] for d in j["data"]]
@@ -73,7 +67,6 @@ class EmbeddingProvider:
             emb_list = _call_remote_embedding(self.gemini_url, self.gemini_key, texts)
             arr = np.array(emb_list, dtype=np.float32)
             return arr
-        # fallback to sentence-transformers
         if SentenceTransformer is None:
             raise RuntimeError(
                 "sentence-transformers not installed and no GEMINI_API configured. "
@@ -90,7 +83,7 @@ class EmbeddingProvider:
         return self.embed_batch([text])[0]
 
 # ------------------------
-# CSV loaders
+# Robust CSV loaders
 # ------------------------
 def load_variables_csv(path: str):
     items = []
@@ -109,21 +102,80 @@ def load_variables_csv(path: str):
             })
     return items
 
+def _try_read_text(path):
+    for enc in ("utf-8-sig", "utf-8", "latin-1"):
+        try:
+            with open(path, "r", encoding=enc, newline="") as fh:
+                txt = fh.read()
+            return txt, enc
+        except Exception:
+            pass
+    raise RuntimeError(f"Unable to read file: {path} with utf-8/latin-1 encodings")
+
 def load_scenarios_csv(path: str):
+    txt, enc = _try_read_text(path)
+    lines = txt.splitlines()
+    if not lines:
+        return []
+    delim = ","
+    try:
+        sn = csv.Sniffer()
+        dialect = sn.sniff("\n".join(lines[:50]))
+        delim = dialect.delimiter
+    except Exception:
+        delim = ","
+    reader = csv.DictReader(io.StringIO(txt), delimiter=delim)
+    headers = [h for h in (reader.fieldnames or []) if h]
+    header_map = {}
+    for h in headers:
+        lh = h.lower().strip().replace(" ", "_").replace("-", "_")
+        header_map[lh] = h
+
+    id_candidates = ["scenario_id","id","scenario","name","scenarioid","scen_id","scenid"]
+    text_candidates = ["scenario_text","text","description","scenario_description","scenariotext","scenario-text","desc"]
+
+    found_id = None
+    found_text = None
+    for cand in id_candidates:
+        if cand in header_map:
+            found_id = header_map[cand]; break
+    for cand in text_candidates:
+        if cand in header_map:
+            found_text = header_map[cand]; break
+
     items = []
-    with open(path, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
+    if found_id or found_text:
+        ctr = 0
         for row in reader:
-            sid = (row.get("scenario_id") or row.get("id") or row.get("name") or row.get("scenario") or "").strip()
-            text = (row.get("scenario_text") or row.get("Description") or row.get("text") or "").strip()
-            if not sid and not text:
-                continue
-            items.append({
-                "type": "scenario",
-                "id": sid if sid else f"sc-{len(items)+1}",
-                "text": text,
-                "meta": {"scenario_id": sid, "text": text}
-            })
+            ctr += 1
+            sid = (row.get(found_id) or "").strip() if found_id else ""
+            textval = (row.get(found_text) or "").strip() if found_text else ""
+            if not sid:
+                for h in ("scenario_id","id","scenario","name"):
+                    if h in row and (row.get(h) or "").strip():
+                        sid = (row.get(h) or "").strip()
+                        break
+            if not textval:
+                for h in ("scenario_text","text","description"):
+                    if h in row and (row.get(h) or "").strip():
+                        textval = (row.get(h) or "").strip()
+                        break
+            if (sid and sid.strip()) or (textval and textval.strip()):
+                if not sid:
+                    sid = f"sc-{ctr}"
+                if not textval:
+                    textval = ""
+                items.append({"type":"scenario","id":sid,"text":textval,"meta":{"scenario_id":sid,"text":textval}})
+        return items
+
+    ctr = 0
+    for raw in lines:
+        s = raw.strip()
+        if not s:
+            continue
+        ctr += 1
+        sid = f"sc-{ctr}"
+        items.append({"type":"scenario","id":sid,"text":s,"meta":{"scenario_id":sid,"text":s}})
     return items
 
 # ------------------------
@@ -177,7 +229,7 @@ def main(variables_csv, scenarios_csv, index_dir, meta_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--variables", required=True, help="variables CSV path (columns: variable,description)")
-    parser.add_argument("--scenarios", required=True, help="scenarios CSV path (columns: scenario_id,scenario_text)")
+    parser.add_argument("--scenarios", required=True, help="scenarios CSV path (columns: scenario_id,scenario_text OR name,description)")
     parser.add_argument("--index-dir", default="./vector_index", help="directory to store faiss.index")
     parser.add_argument("--meta", default="./metadata.json", help="metadata json path")
     args = parser.parse_args()

@@ -1,209 +1,48 @@
 {
   "series": [
     {
+      "year": 2020,
+      "value": 16.91
+    },
+    {
+      "year": 2025,
+      "value": 15.34
+    },
+    {
+      "year": 2030,
+      "value": 8.75
+    },
+    {
+      "year": 2035,
+      "value": 5.043
+    },
+    {
+      "year": 2040,
+      "value": 11.08
+    },
+    {
+      "year": 2045,
+      "value": 16.72
+    },
+    {
       "year": 2050,
-      "value": 73.4265
-    },
-    {
-      "year": 2051,
-      "value": 74.5653
-    },
-    {
-      "year": 2052,
-      "value": 75.0313
-    },
-    {
-      "year": 2053,
-      "value": 75.3958
-    },
-    {
-      "year": 2054,
-      "value": 71.442
-    },
-    {
-      "year": 2055,
-      "value": 72.9722
-    },
-    {
-      "year": 2056,
-      "value": 74.4157
-    },
-    {
-      "year": 2057,
-      "value": 71.1141
-    },
-    {
-      "year": 2058,
-      "value": 74.0721
-    },
-    {
-      "year": 2059,
-      "value": 73.5586
-    },
-    {
-      "year": 2060,
-      "value": 73.1018
-    },
-    {
-      "year": 2061,
-      "value": 71.874
-    },
-    {
-      "year": 2062,
-      "value": 73.1428
-    },
-    {
-      "year": 2063,
-      "value": 72.1682
-    },
-    {
-      "year": 2064,
-      "value": 73.6302
-    },
-    {
-      "year": 2065,
-      "value": 72.1405
-    },
-    {
-      "year": 2066,
-      "value": 72.9772
-    },
-    {
-      "year": 2067,
-      "value": 72.6653
-    },
-    {
-      "year": 2068,
-      "value": 72.0987
-    },
-    {
-      "year": 2069,
-      "value": 71.4193
-    },
-    {
-      "year": 2070,
-      "value": 71.5816
-    },
-    {
-      "year": 2071,
-      "value": 70.1886
-    },
-    {
-      "year": 2072,
-      "value": 69.0186
-    },
-    {
-      "year": 2073,
-      "value": 69.205
-    },
-    {
-      "year": 2074,
-      "value": 70.6834
-    },
-    {
-      "year": 2075,
-      "value": 68.378
-    },
-    {
-      "year": 2076,
-      "value": 70.5222
-    },
-    {
-      "year": 2077,
-      "value": 69.8127
-    },
-    {
-      "year": 2078,
-      "value": 70.2361
-    },
-    {
-      "year": 2079,
-      "value": 70.9881
-    },
-    {
-      "year": 2080,
-      "value": 70.4173
-    },
-    {
-      "year": 2081,
-      "value": 70.9338
-    },
-    {
-      "year": 2082,
-      "value": 68.5827
-    },
-    {
-      "year": 2083,
-      "value": 68.2479
-    },
-    {
-      "year": 2084,
-      "value": 67.7
-    },
-    {
-      "year": 2085,
-      "value": 66.8688
-    },
-    {
-      "year": 2086,
-      "value": 67.5977
-    },
-    {
-      "year": 2087,
-      "value": 69.5351
-    },
-    {
-      "year": 2088,
-      "value": 67.1962
-    },
-    {
-      "year": 2089,
-      "value": 66.1956
-    },
-    {
-      "year": 2090,
-      "value": 69.7948
-    },
-    {
-      "year": 2091,
-      "value": 67.7204
-    },
-    {
-      "year": 2092,
-      "value": 66.4972
-    },
-    {
-      "year": 2093,
-      "value": 67.9023
-    },
-    {
-      "year": 2094,
-      "value": 66.6485
-    },
-    {
-      "year": 2095,
-      "value": 66.3404
-    },
-    {
-      "year": 2096,
-      "value": 68.8258
-    },
-    {
-      "year": 2097,
-      "value": 65.0292
-    },
-    {
-      "year": 2098,
-      "value": 66.6406
-    },
-    {
-      "year": 2099,
-      "value": 66.9216
-    },
-    {
-      "year": 2100,
-      "value": 67.8666
+      "value": 18.08
     }
   ],
-  "source": "synth_fallback"
+  "source": "tabular_data",
+  "unit": "billion US$2010/yr",
+  "variable": "Investment|Energy Supply|Electricity|Renewables",
+  "scenario": "ADVANCE_2020_Med2C",
+  "region": "RUS",
+  "debug": {
+    "json_lookup": {
+      "matched": "best_of_all",
+      "scores": {
+        "k": "advance_2020_med2c_wp6|usa|investment|energy supply|electricity|gas",
+        "s_score": 90.0,
+        "r_score": 66.66666666666667,
+        "v_score": 89.65517241379311
+      }
+    }
+  }
 }

@@ -1,22 +1,23 @@
 {
   "variable": {
     "type": "variable",
-    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|67.0th Percentile",
-    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|67.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 67.0th Percentile)",
+    "id": "Investment|Energy Supply|Electricity|Renewables",
+    "text": "Investment|Energy Supply|Electricity|Renewables. Investments in renewable electricity sources.",
     "meta": {
-      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|67.0th Percentile",
-      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 67.0th Percentile)"
+      "variable": "Investment|Energy Supply|Electricity|Renewables",
+      "description": "Investments in renewable electricity sources."
     }
   },
   "scenario": {
-    "type": "variable",
-    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|16.7th Percentile",
-    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 16.7th Percentile)",
+    "type": "scenario",
+    "id": "ADVANCE_2020_Med2C",
+    "text": "Scenario from the ADVANCE project, aiming for 2°C warming.",
     "meta": {
-      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|16.7th Percentile",
-      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 16.7th Percentile)"
+      "scenario_id": "ADVANCE_2020_Med2C",
+      "text": "Scenario from the ADVANCE project, aiming for 2°C warming."
     }
   },
-  "start_year": 2050,
+  "region": "RUS",
+  "start_year": 2020,
   "end_year": 2100
 }

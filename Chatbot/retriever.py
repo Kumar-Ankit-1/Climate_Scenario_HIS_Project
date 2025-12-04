@@ -120,7 +120,7 @@ def interactive_flow(index, metadata, emb_provider, query=None, window_k=128, va
             print("No query and non-interactive terminal: use --query.")
             return None
         try:
-            query = input("Enter a search query (e.g., 'renewable energy under drought'): ").strip()
+            query = input("Enter a search query (e.g., 'Carbon Dioxide or Med2C'): ").strip()
         except Exception as e:
             print(f"Unable to read from stdin: {e}")
             return None
@@ -278,7 +278,7 @@ def interactive_flow(index, metadata, emb_provider, query=None, window_k=128, va
         "start_year": start_y,
         "end_year": end_y
     }
-    out_path = "confirmed_selection.json"
+    out_path = "Confirmed_selection/confirmed_selection.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(record, f, indent=2, ensure_ascii=False)
     print(f"\nSaved selection to {out_path}")
