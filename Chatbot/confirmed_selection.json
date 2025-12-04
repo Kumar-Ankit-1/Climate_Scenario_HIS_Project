@@ -1,0 +1,22 @@
+{
+  "variable": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 50.0th Percentile)"
+    }
+  },
+  "scenario": {
+    "type": "scenario",
+    "id": "EMF30_D_Frozen-CH4",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_Frozen-CH4",
+      "text": ""
+    }
+  },
+  "start_year": 2050,
+  "end_year": 2100
+}

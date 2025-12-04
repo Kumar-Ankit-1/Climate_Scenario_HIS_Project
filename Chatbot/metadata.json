@@ -1,0 +1,1352 @@
+{
+  "1": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|10.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|10.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 10.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|10.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 10.0th Percentile)"
+    }
+  },
+  "2": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 16.7th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|16.7th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 16.7th Percentile)"
+    }
+  },
+  "3": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|33.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|33.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 33.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|33.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 33.0th Percentile)"
+    }
+  },
+  "4": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|5.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|5.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 5.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|5.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 5.0th Percentile)"
+    }
+  },
+  "5": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 50.0th Percentile)"
+    }
+  },
+  "6": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|67.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|67.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 67.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|67.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 67.0th Percentile)"
+    }
+  },
+  "7": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|83.3th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|83.3th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 83.3th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|83.3th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 83.3th Percentile)"
+    }
+  },
+  "8": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|90.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|90.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 90.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|90.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 90.0th Percentile)"
+    }
+  },
+  "9": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|95.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|95.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 95.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|95.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (FaIRv1.6.2, 95.0th Percentile)"
+    }
+  },
+  "10": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|10.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|10.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 10.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|10.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 10.0th Percentile)"
+    }
+  },
+  "11": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 16.7th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|16.7th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 16.7th Percentile)"
+    }
+  },
+  "12": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|33.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|33.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 33.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|33.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 33.0th Percentile)"
+    }
+  },
+  "13": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|5.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|5.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 5.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|5.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 5.0th Percentile)"
+    }
+  },
+  "14": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 50.0th Percentile)"
+    }
+  },
+  "15": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|67.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|67.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 67.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|67.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 67.0th Percentile)"
+    }
+  },
+  "16": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|83.3th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|83.3th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 83.3th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|83.3th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 83.3th Percentile)"
+    }
+  },
+  "17": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|90.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|90.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 90.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|90.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 90.0th Percentile)"
+    }
+  },
+  "18": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|95.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|95.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 95.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|MAGICCv7.5.3|95.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CH4 (MAGICCv7.5.3, 95.0th Percentile)"
+    }
+  },
+  "19": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|10.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|10.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 10.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|10.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 10.0th Percentile)"
+    }
+  },
+  "20": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 16.7th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|16.7th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 16.7th Percentile)"
+    }
+  },
+  "21": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|33.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|33.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 33.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|33.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 33.0th Percentile)"
+    }
+  },
+  "22": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|5.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|5.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 5.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|5.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 5.0th Percentile)"
+    }
+  },
+  "23": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 50.0th Percentile)"
+    }
+  },
+  "24": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|67.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|67.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 67.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|67.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 67.0th Percentile)"
+    }
+  },
+  "25": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|83.3th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|83.3th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 83.3th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|83.3th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 83.3th Percentile)"
+    }
+  },
+  "26": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|90.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|90.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 90.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|90.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 90.0th Percentile)"
+    }
+  },
+  "27": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|95.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|95.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 95.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|95.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 95.0th Percentile)"
+    }
+  },
+  "28": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|10.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|10.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 10.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|10.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 10.0th Percentile)"
+    }
+  },
+  "29": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 16.7th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|16.7th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 16.7th Percentile)"
+    }
+  },
+  "30": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|33.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|33.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 33.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|33.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 33.0th Percentile)"
+    }
+  },
+  "31": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|5.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|5.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 5.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|5.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 5.0th Percentile)"
+    }
+  },
+  "32": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 50.0th Percentile)"
+    }
+  },
+  "33": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|67.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|67.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 67.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|67.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 67.0th Percentile)"
+    }
+  },
+  "34": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|83.3th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|83.3th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 83.3th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|83.3th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 83.3th Percentile)"
+    }
+  },
+  "35": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|90.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|90.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 90.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|90.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 90.0th Percentile)"
+    }
+  },
+  "36": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|95.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|95.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 95.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|MAGICCv7.5.3|95.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (MAGICCv7.5.3, 95.0th Percentile)"
+    }
+  },
+  "37": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|10.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|10.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 10.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|10.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 10.0th Percentile)"
+    }
+  },
+  "38": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 16.7th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|16.7th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 16.7th Percentile)"
+    }
+  },
+  "39": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|33.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|33.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 33.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|33.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 33.0th Percentile)"
+    }
+  },
+  "40": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|5.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|5.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 5.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|5.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 5.0th Percentile)"
+    }
+  },
+  "41": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 50.0th Percentile)"
+    }
+  },
+  "42": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|67.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|67.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 67.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|67.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 67.0th Percentile)"
+    }
+  },
+  "43": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|83.3th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|83.3th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 83.3th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|83.3th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 83.3th Percentile)"
+    }
+  },
+  "44": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|90.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|90.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 90.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|90.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 90.0th Percentile)"
+    }
+  },
+  "45": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|95.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|95.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 95.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|FaIRv1.6.2|95.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (FaIRv1.6.2, 95.0th Percentile)"
+    }
+  },
+  "46": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|10.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|10.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 10.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|10.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 10.0th Percentile)"
+    }
+  },
+  "47": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|16.7th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 16.7th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|16.7th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 16.7th Percentile)"
+    }
+  },
+  "48": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|33.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|33.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 33.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|33.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 33.0th Percentile)"
+    }
+  },
+  "49": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|5.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|5.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 5.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|5.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 5.0th Percentile)"
+    }
+  },
+  "50": {
+    "type": "variable",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|50.0th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 50.0th Percentile)",
+    "meta": {
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|N2O|MAGICCv7.5.3|50.0th Percentile",
+      "description": "AR6 climate diagnostics for Atmospheric Concentrations of N2O (MAGICCv7.5.3, 50.0th Percentile)"
+    }
+  },
+  "51": {
+    "type": "scenario",
+    "id": "ADVANCE_2020_1.5C-2100",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_2020_1.5C-2100",
+      "text": ""
+    }
+  },
+  "52": {
+    "type": "scenario",
+    "id": "ADVANCE_2020_Med2C",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_2020_Med2C",
+      "text": ""
+    }
+  },
+  "53": {
+    "type": "scenario",
+    "id": "ADVANCE_2020_WB2C",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_2020_WB2C",
+      "text": ""
+    }
+  },
+  "54": {
+    "type": "scenario",
+    "id": "ADVANCE_2030_Med2C",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_2030_Med2C",
+      "text": ""
+    }
+  },
+  "55": {
+    "type": "scenario",
+    "id": "ADVANCE_2030_Price1.5C",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_2030_Price1.5C",
+      "text": ""
+    }
+  },
+  "56": {
+    "type": "scenario",
+    "id": "ADVANCE_2030_WB2C",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_2030_WB2C",
+      "text": ""
+    }
+  },
+  "57": {
+    "type": "scenario",
+    "id": "ADVANCE_INDC",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_INDC",
+      "text": ""
+    }
+  },
+  "58": {
+    "type": "scenario",
+    "id": "ADVANCE_NoPolicy",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_NoPolicy",
+      "text": ""
+    }
+  },
+  "59": {
+    "type": "scenario",
+    "id": "ADVANCE_Reference",
+    "text": "",
+    "meta": {
+      "scenario_id": "ADVANCE_Reference",
+      "text": ""
+    }
+  },
+  "60": {
+    "type": "scenario",
+    "id": "EMF30_BCOC-EndU",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_BCOC-EndU",
+      "text": ""
+    }
+  },
+  "61": {
+    "type": "scenario",
+    "id": "EMF30_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_Baseline",
+      "text": ""
+    }
+  },
+  "62": {
+    "type": "scenario",
+    "id": "EMF30_CH4-Only",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_CH4-Only",
+      "text": ""
+    }
+  },
+  "63": {
+    "type": "scenario",
+    "id": "EMF30_ClimPolicy",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_ClimPolicy",
+      "text": ""
+    }
+  },
+  "64": {
+    "type": "scenario",
+    "id": "EMF30_ClimPolicy+SLCF",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_ClimPolicy+SLCF",
+      "text": ""
+    }
+  },
+  "65": {
+    "type": "scenario",
+    "id": "EMF30_D_BCOC-Red",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_BCOC-Red",
+      "text": ""
+    }
+  },
+  "66": {
+    "type": "scenario",
+    "id": "EMF30_D_CH4-ClimPolicy",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_CH4-ClimPolicy",
+      "text": ""
+    }
+  },
+  "67": {
+    "type": "scenario",
+    "id": "EMF30_D_CO2-Only",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_CO2-Only",
+      "text": ""
+    }
+  },
+  "68": {
+    "type": "scenario",
+    "id": "EMF30_D_Frozen-CH4",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_Frozen-CH4",
+      "text": ""
+    }
+  },
+  "69": {
+    "type": "scenario",
+    "id": "EMF30_D_Frozen-EF",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_Frozen-EF",
+      "text": ""
+    }
+  },
+  "70": {
+    "type": "scenario",
+    "id": "EMF30_D_Frozen-EF-EndU",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_Frozen-EF-EndU",
+      "text": ""
+    }
+  },
+  "71": {
+    "type": "scenario",
+    "id": "EMF30_D_Frozen-EF-SLCF",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_D_Frozen-EF-SLCF",
+      "text": ""
+    }
+  },
+  "72": {
+    "type": "scenario",
+    "id": "EMF30_SLCF",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_SLCF",
+      "text": ""
+    }
+  },
+  "73": {
+    "type": "scenario",
+    "id": "EMF30_Slower-Action",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_Slower-Action",
+      "text": ""
+    }
+  },
+  "74": {
+    "type": "scenario",
+    "id": "EMF30_Slower-Action+SLCF",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_Slower-Action+SLCF",
+      "text": ""
+    }
+  },
+  "75": {
+    "type": "scenario",
+    "id": "EMF30_Slower-to-faster",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_Slower-to-faster",
+      "text": ""
+    }
+  },
+  "76": {
+    "type": "scenario",
+    "id": "EMF30_Slower-to-faster+SLCF",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_Slower-to-faster+SLCF",
+      "text": ""
+    }
+  },
+  "77": {
+    "type": "scenario",
+    "id": "EMF30_Slower-to-faster+SLCF+HFC",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF30_Slower-to-faster+SLCF+HFC",
+      "text": ""
+    }
+  },
+  "78": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_Bio_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_Bio_1p5Degree",
+      "text": ""
+    }
+  },
+  "79": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_Bio_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_Bio_2Degree",
+      "text": ""
+    }
+  },
+  "80": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_Bio_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_Bio_Baseline",
+      "text": ""
+    }
+  },
+  "81": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_EEEI_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_EEEI_1p5Degree",
+      "text": ""
+    }
+  },
+  "82": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_EEEI_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_EEEI_2Degree",
+      "text": ""
+    }
+  },
+  "83": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_EEEI_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_EEEI_Baseline",
+      "text": ""
+    }
+  },
+  "84": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_LifeStyle_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_LifeStyle_1p5Degree",
+      "text": ""
+    }
+  },
+  "85": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_LifeStyle_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_LifeStyle_2Degree",
+      "text": ""
+    }
+  },
+  "86": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_LifeStyle_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_LifeStyle_Baseline",
+      "text": ""
+    }
+  },
+  "87": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_Ref_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_Ref_1p5Degree",
+      "text": ""
+    }
+  },
+  "88": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_Ref_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_Ref_2Degree",
+      "text": ""
+    }
+  },
+  "89": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_Ref_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_Ref_Baseline",
+      "text": ""
+    }
+  },
+  "90": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_CCS_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_CCS_1p5Degree",
+      "text": ""
+    }
+  },
+  "91": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_CCS_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_CCS_2Degree",
+      "text": ""
+    }
+  },
+  "92": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_CCS_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_CCS_Baseline",
+      "text": ""
+    }
+  },
+  "93": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_bio_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_bio_1p5Degree",
+      "text": ""
+    }
+  },
+  "94": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_bio_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_bio_2Degree",
+      "text": ""
+    }
+  },
+  "95": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_bio_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_bio_Baseline",
+      "text": ""
+    }
+  },
+  "96": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_nuclear_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_nuclear_1p5Degree",
+      "text": ""
+    }
+  },
+  "97": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_nuclear_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_nuclear_2Degree",
+      "text": ""
+    }
+  },
+  "98": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_nuclear_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_nuclear_Baseline",
+      "text": ""
+    }
+  },
+  "99": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_solar_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_solar_1p5Degree",
+      "text": ""
+    }
+  },
+  "100": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_solar_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_solar_2Degree",
+      "text": ""
+    }
+  },
+  "101": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_solar_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_solar_Baseline",
+      "text": ""
+    }
+  },
+  "102": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_wind_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_wind_1p5Degree",
+      "text": ""
+    }
+  },
+  "103": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_wind_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_wind_2Degree",
+      "text": ""
+    }
+  },
+  "104": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_ST_wind_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_ST_wind_Baseline",
+      "text": ""
+    }
+  },
+  "105": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_SupTech_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_SupTech_1p5Degree",
+      "text": ""
+    }
+  },
+  "106": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_SupTech_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_SupTech_2Degree",
+      "text": ""
+    }
+  },
+  "107": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_SupTech_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_SupTech_Baseline",
+      "text": ""
+    }
+  },
+  "108": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_combined_1p5Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_combined_1p5Degree",
+      "text": ""
+    }
+  },
+  "109": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_combined_2Degree",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_combined_2Degree",
+      "text": ""
+    }
+  },
+  "110": {
+    "type": "scenario",
+    "id": "SFCM_SSP2_combined_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SFCM_SSP2_combined_Baseline",
+      "text": ""
+    }
+  },
+  "111": {
+    "type": "scenario",
+    "id": "SSP1-19",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP1-19",
+      "text": ""
+    }
+  },
+  "112": {
+    "type": "scenario",
+    "id": "SSP1-26",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP1-26",
+      "text": ""
+    }
+  },
+  "113": {
+    "type": "scenario",
+    "id": "SSP1-34",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP1-34",
+      "text": ""
+    }
+  },
+  "114": {
+    "type": "scenario",
+    "id": "SSP1-45",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP1-45",
+      "text": ""
+    }
+  },
+  "115": {
+    "type": "scenario",
+    "id": "SSP1-Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP1-Baseline",
+      "text": ""
+    }
+  },
+  "116": {
+    "type": "scenario",
+    "id": "SSP2-19",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP2-19",
+      "text": ""
+    }
+  },
+  "117": {
+    "type": "scenario",
+    "id": "SSP2-26",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP2-26",
+      "text": ""
+    }
+  },
+  "118": {
+    "type": "scenario",
+    "id": "SSP2-34",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP2-34",
+      "text": ""
+    }
+  },
+  "119": {
+    "type": "scenario",
+    "id": "SSP2-45",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP2-45",
+      "text": ""
+    }
+  },
+  "120": {
+    "type": "scenario",
+    "id": "SSP2-60",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP2-60",
+      "text": ""
+    }
+  },
+  "121": {
+    "type": "scenario",
+    "id": "SSP2-Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP2-Baseline",
+      "text": ""
+    }
+  },
+  "122": {
+    "type": "scenario",
+    "id": "SSP3-34",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP3-34",
+      "text": ""
+    }
+  },
+  "123": {
+    "type": "scenario",
+    "id": "SSP3-45",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP3-45",
+      "text": ""
+    }
+  },
+  "124": {
+    "type": "scenario",
+    "id": "SSP3-60",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP3-60",
+      "text": ""
+    }
+  },
+  "125": {
+    "type": "scenario",
+    "id": "SSP3-Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP3-Baseline",
+      "text": ""
+    }
+  },
+  "126": {
+    "type": "scenario",
+    "id": "SSP4-26",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP4-26",
+      "text": ""
+    }
+  },
+  "127": {
+    "type": "scenario",
+    "id": "SSP4-34",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP4-34",
+      "text": ""
+    }
+  },
+  "128": {
+    "type": "scenario",
+    "id": "SSP4-45",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP4-45",
+      "text": ""
+    }
+  },
+  "129": {
+    "type": "scenario",
+    "id": "SSP4-Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP4-Baseline",
+      "text": ""
+    }
+  },
+  "130": {
+    "type": "scenario",
+    "id": "SSP5-26",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP5-26",
+      "text": ""
+    }
+  },
+  "131": {
+    "type": "scenario",
+    "id": "SSP5-34",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP5-34",
+      "text": ""
+    }
+  },
+  "132": {
+    "type": "scenario",
+    "id": "SSP5-45",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP5-45",
+      "text": ""
+    }
+  },
+  "133": {
+    "type": "scenario",
+    "id": "SSP5-60",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP5-60",
+      "text": ""
+    }
+  },
+  "134": {
+    "type": "scenario",
+    "id": "SSP5-Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "SSP5-Baseline",
+      "text": ""
+    }
+  },
+  "135": {
+    "type": "scenario",
+    "id": "CD-LINKS_INDC2030i_1600",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_INDC2030i_1600",
+      "text": ""
+    }
+  },
+  "136": {
+    "type": "scenario",
+    "id": "CD-LINKS_INDCi",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_INDCi",
+      "text": ""
+    }
+  },
+  "137": {
+    "type": "scenario",
+    "id": "CD-LINKS_NDC2030i_1000",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_NDC2030i_1000",
+      "text": ""
+    }
+  },
+  "138": {
+    "type": "scenario",
+    "id": "CD-LINKS_NPi",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_NPi",
+      "text": ""
+    }
+  },
+  "139": {
+    "type": "scenario",
+    "id": "CD-LINKS_NPi2020_1000",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_NPi2020_1000",
+      "text": ""
+    }
+  },
+  "140": {
+    "type": "scenario",
+    "id": "CD-LINKS_NPi2020_1600",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_NPi2020_1600",
+      "text": ""
+    }
+  },
+  "141": {
+    "type": "scenario",
+    "id": "CD-LINKS_NPi2020_400",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_NPi2020_400",
+      "text": ""
+    }
+  },
+  "142": {
+    "type": "scenario",
+    "id": "CD-LINKS_NoPolicy",
+    "text": "",
+    "meta": {
+      "scenario_id": "CD-LINKS_NoPolicy",
+      "text": ""
+    }
+  },
+  "143": {
+    "type": "scenario",
+    "id": "CO_Bridge",
+    "text": "",
+    "meta": {
+      "scenario_id": "CO_Bridge",
+      "text": ""
+    }
+  },
+  "144": {
+    "type": "scenario",
+    "id": "CO_CurPol",
+    "text": "",
+    "meta": {
+      "scenario_id": "CO_CurPol",
+      "text": ""
+    }
+  },
+  "145": {
+    "type": "scenario",
+    "id": "EMF33_Baseline",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF33_Baseline",
+      "text": ""
+    }
+  },
+  "146": {
+    "type": "scenario",
+    "id": "EMF33_Med2C_cost100",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF33_Med2C_cost100",
+      "text": ""
+    }
+  },
+  "147": {
+    "type": "scenario",
+    "id": "EMF33_Med2C_full",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF33_Med2C_full",
+      "text": ""
+    }
+  },
+  "148": {
+    "type": "scenario",
+    "id": "EMF33_Med2C_nobeccs",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF33_Med2C_nobeccs",
+      "text": ""
+    }
+  },
+  "149": {
+    "type": "scenario",
+    "id": "EMF33_Med2C_nofuel",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF33_Med2C_nofuel",
+      "text": ""
+    }
+  },
+  "150": {
+    "type": "scenario",
+    "id": "EMF33_Med2C_none",
+    "text": "",
+    "meta": {
+      "scenario_id": "EMF33_Med2C_none",
+      "text": ""
+    }
+  }
+}
