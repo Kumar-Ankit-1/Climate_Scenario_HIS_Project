@@ -1,0 +1,48 @@
+{
+  "series": [
+    {
+      "year": 2020,
+      "value": 16.91
+    },
+    {
+      "year": 2025,
+      "value": 15.34
+    },
+    {
+      "year": 2030,
+      "value": 8.75
+    },
+    {
+      "year": 2035,
+      "value": 5.043
+    },
+    {
+      "year": 2040,
+      "value": 11.08
+    },
+    {
+      "year": 2045,
+      "value": 16.72
+    },
+    {
+      "year": 2050,
+      "value": 18.08
+    }
+  ],
+  "source": "tabular_data",
+  "unit": "billion US$2010/yr",
+  "variable": "Investment|Energy Supply|Electricity|Renewables",
+  "scenario": "ADVANCE_2020_Med2C",
+  "region": "RUS",
+  "debug": {
+    "json_lookup": {
+      "matched": "best_of_all",
+      "scores": {
+        "k": "advance_2020_med2c_wp6|usa|investment|energy supply|electricity|gas",
+        "s_score": 90.0,
+        "r_score": 66.66666666666667,
+        "v_score": 89.65517241379311
+      }
+    }
+  }
+}

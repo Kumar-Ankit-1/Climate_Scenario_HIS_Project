@@ -1,0 +1,23 @@
+{
+  "variable": {
+    "type": "variable",
+    "id": "Investment|Energy Supply|Electricity|Renewables",
+    "text": "Investment|Energy Supply|Electricity|Renewables. Investments in renewable electricity sources.",
+    "meta": {
+      "variable": "Investment|Energy Supply|Electricity|Renewables",
+      "description": "Investments in renewable electricity sources."
+    }
+  },
+  "scenario": {
+    "type": "scenario",
+    "id": "ADVANCE_2020_Med2C",
+    "text": "Scenario from the ADVANCE project, aiming for 2°C warming.",
+    "meta": {
+      "scenario_id": "ADVANCE_2020_Med2C",
+      "text": "Scenario from the ADVANCE project, aiming for 2°C warming."
+    }
+  },
+  "region": "RUS",
+  "start_year": 2020,
+  "end_year": 2100
+}

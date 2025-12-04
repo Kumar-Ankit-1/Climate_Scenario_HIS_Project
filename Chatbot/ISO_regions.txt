@@ -1,0 +1,199 @@
+EU-Europe
+RUS-Russia
+BRA-Brazil
+CHN-China
+IND-India
+JPN-Japan
+USA-United States
+CAN-Canada
+KOR-South Korea
+ZAF-South Africa
+IDN-Indonesia
+MEX-Mexico
+ARG-Argentina
+COL-Colombia
+PAK-Pakistan
+TWN-Taiwan
+AUS-Australia
+SAU-Saudi Arabia
+TUR-Turkey
+ABW-Aruba
+AFG-Afghanistan
+AGO-Angola
+ALB-Albania
+ARE-United Arab Emirates
+ARM-Armenia
+ATG-Antigua and Barbuda
+AUT-Austria
+AZE-Azerbaijan
+BDI-Burundi
+BEL-Belgium
+BEN-Benin
+BFA-Burkina Faso
+BGD-Bangladesh
+BGR-Bulgaria
+BHR-Bahrain
+BHS-Bahamas
+BIH-Bosnia and Herzegovina
+BLR-Belarus
+BLZ-Belize
+BOL-Bolivia
+BRB-Barbados
+BRN-Brunei
+BTN-Bhutan
+BWA-Botswana
+CAF-Central African Republic
+CHE-Switzerland
+CHL-Chile
+CIV-Côte d’Ivoire
+CMR-Cameroon
+COD-Democratic Republic of the Congo
+COG-Republic of the Congo
+COM-Comoros
+CPV-Cape Verde
+CRI-Costa Rica
+CUB-Cuba
+CYP-Cyprus
+CZE-Czech Republic
+DEU-Germany
+DJI-Djibouti
+DNK-Denmark
+DOM-Dominican Republic
+DZA-Algeria
+ECU-Ecuador
+EGY-Egypt
+ERI-Eritrea
+ESH-Western Sahara
+ESP-Spain
+EST-Estonia
+ETH-Ethiopia
+FIN-Finland
+FJI-Fiji
+FRA-France
+FSM-Federated States of Micronesia
+GAB-Gabon
+GBR-United Kingdom
+GEO-Georgia
+GHA-Ghana
+GIN-Guinea
+GLP-Guadeloupe
+GMB-Gambia
+GNB-Guinea-Bissau
+GNQ-Equatorial Guinea
+GRC-Greece
+GRD-Grenada
+GTM-Guatemala
+GUF-French Guiana
+GUM-Guam
+GUY-Guyana
+HKG-Hong Kong
+HND-Honduras
+HRV-Croatia
+HTI-Haiti
+HUN-Hungary
+IRL-Ireland
+IRN-Iran
+IRQ-Iraq
+ISL-Iceland
+ISR-Israel
+ITA-Italy
+JAM-Jamaica
+JOR-Jordan
+KAZ-Kazakhstan
+KEN-Kenya
+KGZ-Kyrgyzstan
+KHM-Cambodia
+KIR-Kiribati
+KWT-Kuwait
+LAO-Laos
+LBN-Lebanon
+LBR-Liberia
+LBY-Libya
+LCA-Saint Lucia
+LKA-Sri Lanka
+LSO-Lesotho
+LTU-Lithuania
+LUX-Luxembourg
+LVA-Latvia
+MAC-Macau
+MAR-Morocco
+MDA-Moldova
+MDG-Madagascar
+MDV-Maldives
+MKD-North Macedonia
+MLI-Mali
+MLT-Malta
+MMR-Myanmar
+MNE-Montenegro
+MNG-Mongolia
+MOZ-Mozambique
+MRT-Mauritania
+MTQ-Martinique
+MUS-Mauritius
+MWI-Malawi
+MYS-Malaysia
+MYT-Mayotte
+NAM-Namibia
+NCL-New Caledonia
+NER-Niger
+NGA-Nigeria
+NIC-Nicaragua
+NLD-Netherlands
+NOR-Norway
+NPL-Nepal
+NZL-New Zealand
+OMN-Oman
+PAN-Panama
+PER-Peru
+PHL-Philippines
+PNG-Papua New Guinea
+POL-Poland
+PRI-Puerto Rico
+PRK-North Korea
+PRT-Portugal
+PRY-Paraguay
+PSE-Palestine
+PYF-French Polynesia
+QAT-Qatar
+REU-Réunion
+ROU-Romania
+RWA-Rwanda
+SDN-Sudan
+SEN-Senegal
+SGP-Singapore
+SLB-Solomon Islands
+SLE-Sierra Leone
+SLV-El Salvador
+SOM-Somalia
+SRB-Serbia
+STP-São Tomé and Príncipe
+SUR-Suriname
+SVK-Slovakia
+SVN-Slovenia
+SWE-Sweden
+SWZ-Eswatini
+SYC-Seychelles
+SYR-Syria
+TCD-Chad
+TGO-Togo
+THA-Thailand
+TJK-Tajikistan
+TKM-Turkmenistan
+TLS-Timor-Leste
+TON-Tonga
+TTO-Trinidad and Tobago
+TUN-Tunisia
+TZA-Tanzania
+UGA-Uganda
+UKR-Ukraine
+URY-Uruguay
+UZB-Uzbekistan
+VCT-Saint Vincent and the Grenadines
+VEN-Venezuela
+VIR-U.S. Virgin Islands
+VNM-Vietnam
+VUT-Vanuatu
+WSM-Samoa
+YEM-Yemen
+ZMB-Zambia
+ZWE-Zimbabwe

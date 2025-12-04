@@ -7,3 +7,6 @@ langchain_community
 seaborn
 langchain-groq
 langchain_core
+seaborn
+plotly
+nbformat
