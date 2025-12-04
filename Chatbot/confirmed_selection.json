@@ -1,22 +1,23 @@
 {
   "variable": {
     "type": "variable",
-    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile",
-    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile. AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 50.0th Percentile)",
+    "id": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|16.7th Percentile",
+    "text": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|16.7th Percentile",
     "meta": {
-      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CO2|FaIRv1.6.2|50.0th Percentile",
-      "description": "AR6 climate diagnostics for Atmospheric Concentrations of CO2 (FaIRv1.6.2, 50.0th Percentile)"
+      "variable": "AR6 climate diagnostics|Atmospheric Concentrations|CH4|FaIRv1.6.2|16.7th Percentile",
+      "description": ""
     }
   },
   "scenario": {
     "type": "scenario",
-    "id": "EMF30_D_Frozen-CH4",
+    "id": "EMF30_BCOC-EndU",
     "text": "",
     "meta": {
-      "scenario_id": "EMF30_D_Frozen-CH4",
+      "scenario_id": "EMF30_BCOC-EndU",
       "text": ""
     }
   },
-  "start_year": 2050,
-  "end_year": 2100
+  "region": "World",
+  "start_year": 2034,
+  "end_year": 2070
 }

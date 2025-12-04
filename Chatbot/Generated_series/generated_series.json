@@ -2,207 +2,207 @@
   "series": [
     {
       "year": 2050,
-      "value": 69.2497
+      "value": 73.4265
     },
     {
       "year": 2051,
-      "value": 70.492
+      "value": 74.5653
     },
     {
       "year": 2052,
-      "value": 68.972
+      "value": 75.0313
     },
     {
       "year": 2053,
-      "value": 69.4508
+      "value": 75.3958
     },
     {
       "year": 2054,
-      "value": 68.2547
+      "value": 71.442
     },
     {
       "year": 2055,
-      "value": 71.5399
+      "value": 72.9722
     },
     {
       "year": 2056,
-      "value": 68.9559
+      "value": 74.4157
     },
     {
       "year": 2057,
-      "value": 72.2484
+      "value": 71.1141
     },
     {
       "year": 2058,
-      "value": 70.4549
+      "value": 74.0721
     },
     {
       "year": 2059,
-      "value": 70.7372
+      "value": 73.5586
     },
     {
       "year": 2060,
-      "value": 70.8691
+      "value": 73.1018
     },
     {
       "year": 2061,
-      "value": 71.0218
+      "value": 71.874
     },
     {
       "year": 2062,
-      "value": 72.6636
+      "value": 73.1428
     },
     {
       "year": 2063,
-      "value": 72.8814
+      "value": 72.1682
     },
     {
       "year": 2064,
-      "value": 73.2357
+      "value": 73.6302
     },
     {
       "year": 2065,
-      "value": 74.3785
+      "value": 72.1405
     },
     {
       "year": 2066,
-      "value": 72.3743
+      "value": 72.9772
     },
     {
       "year": 2067,
-      "value": 74.8989
+      "value": 72.6653
     },
     {
       "year": 2068,
-      "value": 75.5777
+      "value": 72.0987
     },
     {
       "year": 2069,
-      "value": 73.6672
+      "value": 71.4193
     },
     {
       "year": 2070,
-      "value": 73.5806
+      "value": 71.5816
     },
     {
       "year": 2071,
-      "value": 74.8509
+      "value": 70.1886
     },
     {
       "year": 2072,
-      "value": 76.4366
+      "value": 69.0186
     },
     {
       "year": 2073,
-      "value": 77.4859
+      "value": 69.205
     },
     {
       "year": 2074,
-      "value": 77.1249
+      "value": 70.6834
     },
     {
       "year": 2075,
-      "value": 76.0465
+      "value": 68.378
     },
     {
       "year": 2076,
-      "value": 76.5844
+      "value": 70.5222
     },
     {
       "year": 2077,
-      "value": 74.792
+      "value": 69.8127
     },
     {
       "year": 2078,
-      "value": 75.8802
+      "value": 70.2361
     },
     {
       "year": 2079,
-      "value": 77.0968
+      "value": 70.9881
     },
     {
       "year": 2080,
-      "value": 77.7975
+      "value": 70.4173
     },
     {
       "year": 2081,
-      "value": 77.4683
+      "value": 70.9338
     },
     {
       "year": 2082,
-      "value": 78.9705
+      "value": 68.5827
     },
     {
       "year": 2083,
-      "value": 78.9845
+      "value": 68.2479
     },
     {
       "year": 2084,
-      "value": 80.503
+      "value": 67.7
     },
     {
       "year": 2085,
-      "value": 78.1372
+      "value": 66.8688
     },
     {
       "year": 2086,
-      "value": 79.5709
+      "value": 67.5977
     },
     {
       "year": 2087,
-      "value": 79.1147
+      "value": 69.5351
     },
     {
       "year": 2088,
-      "value": 78.994
+      "value": 67.1962
     },
     {
       "year": 2089,
-      "value": 79.7976
+      "value": 66.1956
     },
     {
       "year": 2090,
-      "value": 79.2106
+      "value": 69.7948
     },
     {
       "year": 2091,
-      "value": 81.1164
+      "value": 67.7204
     },
     {
       "year": 2092,
-      "value": 80.0074
+      "value": 66.4972
     },
     {
       "year": 2093,
-      "value": 79.9012
+      "value": 67.9023
     },
     {
       "year": 2094,
-      "value": 83.1623
+      "value": 66.6485
     },
     {
       "year": 2095,
-      "value": 80.1814
+      "value": 66.3404
     },
     {
       "year": 2096,
-      "value": 83.8827
+      "value": 68.8258
     },
     {
       "year": 2097,
-      "value": 80.7598
+      "value": 65.0292
     },
     {
       "year": 2098,
-      "value": 82.7723
+      "value": 66.6406
     },
     {
       "year": 2099,
-      "value": 84.2059
+      "value": 66.9216
     },
     {
       "year": 2100,
-      "value": 83.2885
+      "value": 67.8666
     }
   ],
   "source": "synth_fallback"

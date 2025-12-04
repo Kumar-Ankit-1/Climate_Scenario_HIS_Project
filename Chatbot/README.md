@@ -193,7 +193,7 @@ plot.html
 To open the plot:
 
 ```bash
-open ../output/plot.html
+open ../outputs/plot.html
 ```
 
 ---
