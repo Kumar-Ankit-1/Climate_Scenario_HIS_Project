@@ -1,0 +1,8 @@
+year,model,scenario,region,region_iso,sector,variable,value,unit
+2020,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,124204.114093,MtCO2/yr
+2025,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,149223.915582,MtCO2/yr
+2030,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,174421.976784,MtCO2/yr
+2035,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,203473.444437,MtCO2/yr
+2040,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,235532.440373,MtCO2/yr
+2045,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,270653.426404,MtCO2/yr
+2050,OECD ENV-Growth 2023,SSP1,World,,unspecified,GDP,306440.550011,MtCO2/yr

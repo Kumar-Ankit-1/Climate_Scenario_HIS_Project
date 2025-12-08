@@ -1,0 +1,31 @@
+{
+  "id": "ipcc_ar6",
+  "name": "IPCC AR6 Scenario Database (WG3 v1.1)",
+  
+  "format": "xlsx",
+
+  "access": {
+    "url": "etl/raw/ipcc_ar6.xlsx",
+    "local_path": "etl/raw/ipcc_ar6.xlsx"
+  },
+
+  "mapping": {
+    "model": "Model",
+    "scenario": "Scenario",
+    "region": "Region",
+    "variable": "Variable",
+    "sector": null,
+    "unit": "Unit",
+    "year": "year",
+    "value": "value"
+  },
+
+  "default_filters": {
+    "region": null,
+    "model": null,
+    "scenario": null,
+    "variable": null,
+    "start_year": 2020,
+    "end_year": 2100
+  }
+}

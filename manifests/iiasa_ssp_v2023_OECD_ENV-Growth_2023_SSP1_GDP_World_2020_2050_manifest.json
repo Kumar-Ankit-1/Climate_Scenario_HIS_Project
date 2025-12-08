@@ -1,0 +1,21 @@
+{
+  "dataset_id": "iiasa_ssp_v2023",
+  "provider_name": "IIASA SSP (wide-format)",
+  "generated_at": "2025-11-17T14:28:56.440167Z",
+  "raw_source": "etl/raw/iiasa_ssp_sample.xlsx",
+  "raw_path": "etl\\raw\\iiasa_ssp_sample.xlsx",
+  "raw_checksum": "sha256:ddab4968268c14064847f3b8710a7687a85bded7246f442c5ad2134bef658b85",
+  "processed_file": "D:\\Data Mining\\processed\\iiasa_ssp_v2023_OECD_ENV-Growth_2023_SSP1_GDP_World_2020_2050.csv",
+  "processed_checksum": "sha256:945c3f994c06e9c4421aec1d0d1beeb64c0566a43f8435e0e8a13f66916640ab",
+  "filters": {
+    "model": "OECD ENV-Growth 2023",
+    "scenario": "SSP1",
+    "variable": "GDP",
+    "sector": null,
+    "region": "World",
+    "start": 2020,
+    "end": 2050
+  },
+  "unit_normalization_note": "unit 'billion USD_2017/yr' unknown for CO2 conversion; left unchanged",
+  "notes": "Dataset is wide format (year columns). ETL reshapes to long format first."
+}

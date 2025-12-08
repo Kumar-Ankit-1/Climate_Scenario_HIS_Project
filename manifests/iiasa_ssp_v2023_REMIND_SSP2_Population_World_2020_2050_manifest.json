@@ -1,0 +1,21 @@
+{
+  "dataset_id": "iiasa_ssp_v2023",
+  "provider_name": "IIASA SSP (wide-format)",
+  "generated_at": "2025-11-17T13:37:42.105077Z",
+  "raw_source": "etl/raw/iiasa_ssp_sample.xlsx",
+  "raw_path": "etl\\raw\\iiasa_ssp_sample.xlsx",
+  "raw_checksum": "sha256:7d77bfb34a5750424b16d04088623004dadc9eca93fecb3e51639ec35569bdae",
+  "processed_file": "D:\\Data Mining\\processed\\iiasa_ssp_v2023_REMIND_SSP2_Population_World_2020_2050.csv",
+  "processed_checksum": "sha256:0fac63c42da7752b9b4cae69c33cd55b9d989ceb1551e6f7580e9c2c02ac9b49",
+  "filters": {
+    "model": "REMIND",
+    "scenario": "SSP2",
+    "variable": "Population",
+    "sector": null,
+    "region": "World",
+    "start": 2020,
+    "end": 2050
+  },
+  "unit_normalization_note": "unit 'million' unknown for CO2 conversion; left unchanged",
+  "notes": "Dataset is wide format (year columns). ETL reshapes to long format first."
+}

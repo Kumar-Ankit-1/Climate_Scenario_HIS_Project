@@ -1,0 +1,14 @@
+{
+    "provider_id": "ipcc_ar6",
+    "source_file": "etl/raw/ipcc_ar6.xlsx",
+    "processed_at": "20251129_232457",
+    "filters": {
+        "model": null,
+        "scenario": null,
+        "variable": null,
+        "region": null,
+        "start_year": null,
+        "end_year": null
+    },
+    "row_count": 205107
+}

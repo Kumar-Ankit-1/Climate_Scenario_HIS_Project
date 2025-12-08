@@ -1,0 +1,22 @@
+{
+  "id": "iiasa_ssp_v2023",
+  "name": "IIASA SSP (wide-format)",
+  "family": "SSP",
+  "description": "IIASA SSP model outputs in IAMC wide format.",
+  "format": "xlsx",
+  "access": {
+    "url": "etl/raw/iiasa_ssp_sample.xlsx"
+  },
+  "mapping": {
+    "model": "Model",
+    "scenario": "Scenario",
+    "region": "Region",
+    "sector": null,
+    "variable": "Variable",
+    "year": "year", 
+    "value": "value",
+    "unit": "Unit"
+  },
+  "unit_hint": "MtCO2/yr",
+  "notes": "Dataset is wide format (year columns). ETL reshapes to long format first."
+}

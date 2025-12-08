@@ -1,0 +1,14 @@
+{
+  "id": "gcp_v2024",
+  "name": "Global Carbon Project",
+  "adapter": "generic",
+  "format": "csv",
+  "access": { "url": "https://www.globalcarbonproject.org/carbonbudget/data.htm" },
+  "mapping": {
+    "year": "year",
+    "region": "country",
+    "value": "co2_total",
+    "unit": null
+  },
+  "unit_hint": "MtCO2/yr"
+}

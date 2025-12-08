@@ -1,0 +1,8 @@
+year,model,scenario,region,region_iso,sector,variable,value,unit
+2020,REMIND,SSP5,World,,unspecified,Population,7804.973761,MtCO2/yr
+2025,REMIND,SSP5,World,,unspecified,Population,8123.722893,MtCO2/yr
+2030,REMIND,SSP5,World,,unspecified,Population,8412.27920199999,MtCO2/yr
+2035,REMIND,SSP5,World,,unspecified,Population,8655.523047,MtCO2/yr
+2040,REMIND,SSP5,World,,unspecified,Population,8852.42389800001,MtCO2/yr
+2045,REMIND,SSP5,World,,unspecified,Population,9015.496743000002,MtCO2/yr
+2050,REMIND,SSP5,World,,unspecified,Population,9135.393125,MtCO2/yr
