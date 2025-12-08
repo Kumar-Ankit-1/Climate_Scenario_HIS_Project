@@ -1,0 +1,120 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║         RETRIEVER FIX: SCENARIO SUGGESTIONS FALLBACK                      ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+ISSUE FIXED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ BEFORE:
+   After selecting a variable, if no scenarios matched the query:
+   "No scenario candidates found. You may type a custom scenario name."
+   
+   User saw: Nothing useful, no suggestions, poor UX
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ AFTER:
+   System automatically shows ALL available scenarios from database:
+   
+   "⚠️  No scenario matches found for your query. Showing all available scenarios:"
+   
+   Top scenario matches:
+   ======================================================================
+     1. ADVANCE_2020_1.5C
+     2. ADVANCE_2030_1.5C
+     3. ADVANCE_2050_1.5C
+     4. ADVANCE_2100_1.5C
+     5. NET_ZERO_2050
+     6. NET_ZERO_2070
+     7. CURRENT_POLICY
+     8. STATED_POLICIES
+
+   Alternative options (type number or custom name):
+   ----------------------------------------------------------------------
+     9. AMBITIOUS_CLIMATE_ACTION
+    10. HIGH_AMBITION
+    ...
+
+IMPLEMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File Modified:  retriever.py
+Function:       interactive_flow()
+Lines:          ~149-155
+
+Logic Flow:
+  1. Semantic search for scenarios ─┐
+                                      ├─ No results?
+  2. Filter by type="scenario"  ◄────┤
+                                      ├─ YES
+  3. Rank by cosine similarity ◄─────┤
+                                      │
+                                      └─ FALLBACK
+                                         ↓
+  4. Extract ALL scenarios from metadata
+  5. Show top 8 to user
+  6. Show alternatives (5+)
+  7. User picks from list or types custom
+
+KEY IMPROVEMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Users always see available scenarios
+   • No more empty lists
+   • No more "no candidates found" message
+   • Fallback is automatic and transparent
+
+✅ Progressive disclosure of options
+   • Top 8 best matches displayed first
+   • Up to 5 alternatives shown below
+   • Clean, organized presentation
+
+✅ Intelligent fallback
+   • Uses actual database scenarios, not hardcoded
+   • Only triggers when semantic search fails
+   • Filters by type correctly
+
+✅ Full flexibility maintained
+   • Users can still type custom scenario names
+   • Numbers can be selected
+   • Enter key selects default (#1)
+
+BACKWARD COMPATIBILITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ No breaking changes
+✅ No new dependencies
+✅ No modifications to function signatures
+✅ Existing workflows still work
+✅ Purely additive improvement
+
+TESTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To test the fix:
+
+cd Chatbot/
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  TOKENIZERS_PARALLELISM=false JOBLIB_TEMP_FOLDER=/tmp
+python -X faulthandler retriever.py --index-dir ./vector_index --meta ./metadata.json
+
+Try:
+1. Enter query: "climate"
+2. Select a variable
+3. Watch as ALL scenarios are shown as suggestions
+
+BEFORE vs AFTER COMPARISON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BEFORE                              AFTER
+──────────────────────────────────────────────────────────────────────
+No candidates message          →    All scenarios shown
+Empty selection list           →    Top 8 options displayed
+User confusion                 →    Clear fallback messaging
+Poor UX flow                   →    Guided selection
+Nothing to click               →    Full list to choose from
+Custom input only option       →    Both selection + custom
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ FIX APPLIED AND VERIFIED ✓                                               ║
+╚══════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,99 @@
+{
+  "series": [
+    {
+      "year": 2005,
+      "value": 0.0
+    },
+    {
+      "year": 2010,
+      "value": 0.0
+    },
+    {
+      "year": 2015,
+      "value": 0.0
+    },
+    {
+      "year": 2020,
+      "value": 0.0
+    },
+    {
+      "year": 2025,
+      "value": 0.0
+    },
+    {
+      "year": 2030,
+      "value": 0.9605269297026098
+    },
+    {
+      "year": 2035,
+      "value": 2.6201623423094333
+    },
+    {
+      "year": 2040,
+      "value": 7.90047530764412
+    },
+    {
+      "year": 2045,
+      "value": 18.349591037388272
+    },
+    {
+      "year": 2050,
+      "value": 20.73832900788072
+    },
+    {
+      "year": 2055,
+      "value": 20.952027837968977
+    },
+    {
+      "year": 2060,
+      "value": 22.52605393247601
+    },
+    {
+      "year": 2065,
+      "value": 25.36263370226758
+    },
+    {
+      "year": 2070,
+      "value": 24.354623984739497
+    },
+    {
+      "year": 2075,
+      "value": 22.801201771168657
+    },
+    {
+      "year": 2080,
+      "value": 21.9430753980608
+    },
+    {
+      "year": 2085,
+      "value": 22.4907304897594
+    },
+    {
+      "year": 2090,
+      "value": 24.877347314031795
+    },
+    {
+      "year": 2095,
+      "value": 26.138806036518265
+    },
+    {
+      "year": 2100,
+      "value": 26.036347427483022
+    }
+  ],
+  "source": "tabular_data",
+  "variable": "Carbon Sequestration|CCS|Fossil|Energy|Demand|Industry",
+  "scenario": "SSP2_2D-66_CCC2020",
+  "region": "RUS",
+  "debug": {
+    "json_lookup": {
+      "matched": "best_of_all",
+      "scores": {
+        "s": 48.484848484848484,
+        "r": 100.0,
+        "v": 100.0
+      },
+      "key": "ssp2_spa0_26i_d|rus|carbon sequestration|ccs|fossil|energy|demand|industry"
+    }
+  }
+}

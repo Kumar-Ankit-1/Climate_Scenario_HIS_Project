@@ -1,0 +1,23 @@
+{
+  "variable": {
+    "type": "variable",
+    "id": "Carbon Utilization|CCS|Industry",
+    "text": "Carbon Utilization|CCS|Industry. Carbon Utilization|CCS|Industry represents industry within the broader context of carbon utilization → ccs → industry in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: carbon, carbon utilization, ccs, industry, utilization",
+    "meta": {
+      "variable": "Carbon Utilization|CCS|Industry",
+      "description": "Carbon Utilization|CCS|Industry represents industry within the broader context of carbon utilization → ccs → industry in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: carbon, carbon utilization, ccs, industry, utilization"
+    }
+  },
+  "scenario": {
+    "type": "scenario",
+    "id": "ADVANCE_WP2_TRA-450-FullTech",
+    "text": "ADVANCE_WP2_TRA-450-FullTech illustrates a world undergoing structural transitions driven by long-term economic and demographic trends. It continues by analyzing the progression of global warming outcomes under its particular policy and technology mix, with outcomes shaped by the uptake of clean technologies, shifting market signals, and institutional decisions. Keywords: 450, advance, carbon budget 450, climate scenario, emission target 450, emissions pathway, energy transition, fulltech, global model scenario, mitigation pathway, policy scenario, technology scenario, tra, wp2",
+    "meta": {
+      "scenario_id": "ADVANCE_WP2_TRA-450-FullTech",
+      "text": "ADVANCE_WP2_TRA-450-FullTech illustrates a world undergoing structural transitions driven by long-term economic and demographic trends. It continues by analyzing the progression of global warming outcomes under its particular policy and technology mix, with outcomes shaped by the uptake of clean technologies, shifting market signals, and institutional decisions. Keywords: 450, advance, carbon budget 450, climate scenario, emission target 450, emissions pathway, energy transition, fulltech, global model scenario, mitigation pathway, policy scenario, technology scenario, tra, wp2"
+    }
+  },
+  "region": "TUR",
+  "start_year": 2020,
+  "end_year": 2100
+}

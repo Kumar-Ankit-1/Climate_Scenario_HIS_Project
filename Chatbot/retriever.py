@@ -1,320 +1,410 @@
 # retriever.py
 """
-Retriever CLI (variables-first, with alternatives + scenario pick + region)
-
-Flow:
-1. Ask user for a search query.
-2. Retrieve a window of neighbors from FAISS.
-3. Display top variable matches and alternative variable suggestions.
-4. Let user pick a variable (or type a custom variable).
-5. Retrieve scenario candidates conditioned on selected variable and display
-   top scenarios plus alternative scenario suggestions.
-6. Ask user to choose a scenario (or enter a custom one).
-7. Ask for region/timeframe and save confirmed_selection.json.
+Retriever: semantic search (FAISS) + embedding-based rerank + interactive selection.
+Uses Gemini API to intelligently parse user input.
+Saves confirmed_selection.json containing variable, scenario, region, start_year, end_year.
 """
 import os
+import sys
 import json
 import argparse
-import sys
+import requests
+from typing import List, Tuple, Dict, Any, Optional
 
-def import_faiss():
-    try:
-        import faiss
-        return faiss
-    except Exception:
-        return None
+# NOTE: EmbeddingProvider is implemented in ingestion.py
+from ingestion import EmbeddingProvider
 
-def import_embedding_provider():
-    try:
-        from ingestion import EmbeddingProvider
-        return EmbeddingProvider
-    except Exception:
-        return None
+# faiss import may be optional at static-check time; fail fast at runtime if missing.
+try:
+    import faiss
+except Exception:
+    faiss = None
+
+import numpy as np
+
+def call_gemini_for_query_parsing(user_input: str) -> Dict[str, Any]:
+    """
+    Parse user input to extract variable and scenario keywords.
+    Uses Gemini API if available, otherwise uses local keyword matching.
+    """
+    # List of known scenarios and variables for fallback parsing
+    scenario_keywords = ['SSP1', 'SSP2', 'SSP3', 'SSP4', 'SSP5', 'RCP2.6', 'RCP4.5', 'RCP6.0', 'RCP8.5', 
+                         'NPI', 'ADVANCE', 'CURRENT', 'IMMEDIATE', 'CAP', 'TCRE', '1.5C', '2C', '3C']
+    variable_keywords_list = ['emissions', 'CO2', 'carbon', 'temperature', 'methane', 'aerosol', 'forcing', 
+                         'concentration', 'flux', 'precipitation', 'radiation', 'wind', 'humidity', 
+                         'pressure', 'sea level', 'ice', 'snow', 'manufacturing', 'energy', 'transport']
+    
+    # Try Gemini API first
+    gemini_url = os.getenv("GEMINI_GEN_URL")
+    gemini_key = os.getenv("GEMINI_API_KEY_GEN") or os.getenv("GEMINI_API_KEY")
+    
+    if gemini_url and gemini_key:
+        prompt = f"""You are an expert at parsing climate scenario queries. Your task is to analyze the user input and categorize terms.
+
+VARIABLE KEYWORDS include: emissions, temperature, CO2, methane, aerosol, forcing, concentration, flux, GMST, precipitation, radiation, wind, humidity, pressure, sea level, ice, snow
+
+SCENARIO KEYWORDS include: SSP (Shared Socioeconomic Pathways like SSP1, SSP2, SSP3, SSP4, SSP5), RCP (like RCP2.6, RCP4.5, RCP6.0, RCP8.5), warming levels (1.5C, 2C, 3C), policy names (NPI, ZERO, ADVANCE, CURRENT, IMMEDIATE), carbon targets (net zero, carbon neutral), named scenarios (CAP, TCRE)
+
+User query: "{user_input}"
+
+INSTRUCTIONS:
+1. Extract ONLY the most important variable keywords (keep it concise, 2-5 words max)
+2. Extract scenario-related keywords (policy, RCP, SSP, warming level)
+3. Extract region if explicitly mentioned
+4. If ambiguous, prioritize recognizing known terms from the lists above
+5. Return ONLY valid JSON with NO markdown or code blocks:
+
+{{
+  "variable_keywords": "the core variable term(s) to search for - single word or short phrase",
+  "scenario_keywords": "the scenario identifier(s) - empty if none found",
+  "region": "explicit region name or empty string",
+  "reasoning": "why this parsing makes sense"
+}}"""
+
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {
+                "temperature": 0.0,
+                "maxOutputTokens": 256
+            }
+        }
+        
+        try:
+            url = gemini_url
+            if "key=" not in url:
+                separator = "&" if "?" in url else "?"
+                url = f"{url}{separator}key={gemini_key}"
+            
+            resp = requests.post(url, headers=headers, json=payload, timeout=10)
+            resp.raise_for_status()
+            resp_json = resp.json()
+            
+            # Extract text from Gemini response
+            if "candidates" in resp_json and resp_json["candidates"]:
+                candidate = resp_json["candidates"][0]
+                if "content" in candidate and "parts" in candidate["content"]:
+                    parts = candidate["content"]["parts"]
+                    if parts and "text" in parts[0]:
+                        text = parts[0]["text"].strip()
+                        # Remove markdown code blocks if present
+                        if text.startswith("```json"):
+                            text = text[7:]
+                        if text.startswith("```"):
+                            text = text[3:]
+                        if text.endswith("```"):
+                            text = text[:-3]
+                        
+                        parsed = json.loads(text.strip())
+                        return parsed
+        except Exception as e:
+            print(f"⚠️ Gemini API parsing failed: {e}")
+    
+    # Fallback: Local keyword matching
+    user_input_lower = user_input.lower()
+    found_vars = []
+    found_scenarios = []
+    
+    for var in variable_keywords_list:
+        if var.lower() in user_input_lower:
+            found_vars.append(var)
+    
+    for scenario in scenario_keywords:
+        if scenario.lower() in user_input_lower:
+            found_scenarios.append(scenario)
+    
+    # If no exact matches found, use the whole query as variable keywords
+    if not found_vars:
+        found_vars = [user_input]
+    
+    return {
+        "variable_keywords": " ".join(found_vars) if found_vars else user_input,
+        "scenario_keywords": " ".join(found_scenarios) if found_scenarios else "",
+        "region": ""
+    }
+
 
 def load_index(index_dir: str):
     idx_file = os.path.join(index_dir, "faiss.index")
     if not os.path.exists(idx_file):
-        raise FileNotFoundError(f"Index not found at {idx_file}. Run ingestion.py first.")
-    faiss = import_faiss()
+        raise FileNotFoundError(f"No FAISS index found at {idx_file}")
     if faiss is None:
-        raise RuntimeError("faiss is not installed or failed to import.")
+        raise RuntimeError("faiss is not installed in this environment.")
+    index = faiss.read_index(idx_file)
+    # If HNSW index present, set efSearch for query-time recall/speed tradeoff
     try:
-        index = faiss.read_index(idx_file)
-    except Exception as e:
-        raise RuntimeError(f"Failed to read faiss index: {e}")
+        if hasattr(index, "hnsw"):
+            index.hnsw.efSearch = 64
+    except Exception:
+        # ignore if not applicable
+        pass
     return index
 
-def load_metadata(meta_path: str):
+def load_metadata(meta_path: str) -> Dict[str, Any]:
     if not os.path.exists(meta_path):
-        raise FileNotFoundError(f"Metadata file not found at {meta_path}. Run ingestion.py first.")
-    with open(meta_path, "r", encoding="utf-8") as f:
-        metadata = json.load(f)
-    return metadata
+        raise FileNotFoundError(f"metadata file not found: {meta_path}")
+    with open(meta_path, "r", encoding="utf-8") as fh:
+        meta = json.load(fh)
+    # metadata keys expected to be string ids (matching IndexIDMap ids)
+    return meta
 
-def retrieve_candidates(index, q_emb, window_k):
-    import numpy as np
-    q_emb = q_emb.astype(np.float32)
-    D, I = index.search(np.expand_dims(q_emb, axis=0), window_k)
+def embed_query(emb_provider: EmbeddingProvider, query: str) -> np.ndarray:
+    vec = emb_provider.embed_one(query)
+    vec = np.asarray(vec, dtype=np.float32)
+    if vec.ndim == 1:
+        vec = np.expand_dims(vec, axis=0)
+    return vec
+
+def search_index(index, q_emb: np.ndarray, k: int) -> Tuple[List[int], List[float]]:
+    # q_emb must be shape (1, dim)
+    D, I = index.search(q_emb, k)
     ids = I[0].tolist()
     dists = D[0].tolist()
     return ids, dists
 
-def present_variable_options(hits, vars_k):
-    """Return displayed numbered list and mapping to meta entries (vars first)."""
-    vars_hits = [h for h in hits if h[2].get("type") == "variable"]
-    scen_hits = [h for h in hits if h[2].get("type") == "scenario"]
-
-    vars_display = vars_hits[:vars_k]
-    # alternative suggestions: up to next 5 variable ids not in vars_display
-    alt_vars = [h for h in vars_hits[vars_k:vars_k+10]]
-
-    numbered = []
-    counter = 1
-    print("\nTop variable matches:")
-    if vars_display:
-        for h in vars_display:
-            meta = h[2]
-            print(f"{counter}. {meta.get('id')}")
-            numbered.append(h)
-            counter += 1
-    else:
-        print(" (no variable matches found)")
-
-    if alt_vars:
-        print("\nAlternative variable suggestions:")
-        for h in alt_vars[:5]:
-            meta = h[2]
-            print(f"- {meta.get('id')}")
-
-    return numbered, vars_hits, scen_hits
-
-def present_scenario_options(scen_hits, scen_k):
-    """Return primary numbered scenarios and also a list of alternative suggestions."""
-    scen_display = scen_hits[:scen_k]
-    alt_scen = scen_hits[scen_k:scen_k+10]  # alternatives beyond the primary list
-
-    numbered = []
-    counter = 1
-    print("\nScenario candidates:")
-    if scen_display:
-        for h in scen_display:
-            meta = h[2]
-            print(f"{counter}. {meta.get('id')}")
-            numbered.append(h)
-            counter += 1
-    else:
-        print(" (no scenario matches found for this variable)")
-
-    if alt_scen:
-        print("\nAlternative scenario suggestions:")
-        for h in alt_scen[:5]:
-            meta = h[2]
-            print(f"- {meta.get('id')}")
-
-    return numbered, alt_scen
-
-def interactive_flow(index, metadata, emb_provider, query=None, window_k=128, vars_k=8, scen_k=8):
-    is_interactive = sys.stdin.isatty()
-    if query is None:
-        if not is_interactive:
-            print("No query and non-interactive terminal: use --query.")
-            return None
-        try:
-            query = input("Enter a search query (e.g., 'Carbon Dioxide or Med2C'): ").strip()
-        except Exception as e:
-            print(f"Unable to read from stdin: {e}")
-            return None
-    if not query:
-        print("Empty query. Exiting.")
-        return None
-
-    try:
-        q_emb = emb_provider.embed_one(query)
-    except Exception as e:
-        print(f"Embedding failed: {e}")
-        return None
-
-    try:
-        ids, dists = retrieve_candidates(index, q_emb, window_k)
-    except Exception as e:
-        print(f"Vector search failed: {e}")
-        return None
-
+def gather_hits(ids: List[int], dists: List[float], metadata: Dict[str, Any]) -> List[Tuple[int,float,Dict[str,Any]]]:
     hits = []
     for idx, dist in zip(ids, dists):
         if idx == -1:
             continue
-        meta = metadata.get(str(int(idx)), None)
-        if not meta:
-            continue
-        hits.append((idx, dist, meta))
+        # metadata keys are strings
+        meta = metadata.get(str(int(idx)))
+        if meta:
+            hits.append((int(idx), float(dist), meta))
+    return hits
 
-    # Present variable options and alternatives
-    numbered_vars, all_vars_hits, all_scen_hits = present_variable_options(hits, vars_k)
+def rerank_by_cosine(query_emb: np.ndarray, candidate_texts: List[str], emb_provider: EmbeddingProvider) -> List[int]:
+    """
+    Returns order array (indices into candidate_texts) sorted by cosine similarity to query_emb descending.
+    """
+    if len(candidate_texts) == 0:
+        return []
+    # embed candidates (batch)
+    c_emb = emb_provider.embed_batch(candidate_texts).astype(np.float32)
+    # normalize
+    qe = np.asarray(query_emb, dtype=np.float32).reshape(-1)
+    qe = qe / (np.linalg.norm(qe) + 1e-12)
+    norms = np.linalg.norm(c_emb, axis=1, keepdims=True) + 1e-12
+    c_norm = c_emb / norms
+    sims = (c_norm @ qe).reshape(-1)
+    order = np.argsort(-sims)  # descending
+    return order.tolist()
 
-    # Ask user to pick a variable or enter a custom variable name
-    selected_variable_meta = None
-    if is_interactive:
-        print("\nChoose a VARIABLE by number from the list above, or type a custom variable name (or press Enter to pick #1):")
-        choice = input("VARIABLE choice: ").strip()
-        if choice == "":
-            if numbered_vars:
-                selected_variable_meta = numbered_vars[0][2]
+def present_and_select(prompt_text: str, choices: List[Dict[str,Any]], default_index: int = 0, max_display: int = 8, allow_research: bool = True) -> Dict[str,Any]:
+    """
+    Present top N choices (limited to max_display, default 8) with clean IDs only.
+    Show alternatives separately. Return chosen metadata dict.
+    If stdin is not a tty, return default.
+    If allow_research is True, allow user to type "0" to search again.
+    """
+    if not choices:
+        return None
+    
+    # Limit display to max_display items
+    displayed_choices = choices[:max_display]
+    alternatives = choices[max_display:] if len(choices) > max_display else []
+    
+    print(f"\n{prompt_text}")
+    print("=" * 70)
+    
+    # Show top matches cleanly (ID only)
+    for i, m in enumerate(displayed_choices, start=1):
+        item_id = m.get("id") or m.get("text") or f"item-{i}"
+        print(f"  {i}. {item_id}")
+    
+    # Show alternatives if any
+    if alternatives:
+        print("\nAlternative options (type number or custom name):")
+        print("-" * 70)
+        for i, m in enumerate(alternatives[:5], start=max_display + 1):  # Show up to 5 alternatives
+            item_id = m.get("id") or m.get("text") or f"item-{i}"
+            print(f"  {i}. {item_id}")
+    
+    print("=" * 70)
+    if allow_research:
+        print("(Type '0' to search again with different keywords)")
+    
+    if not sys.stdin.isatty():
+        print(f"Non-interactive: selecting default choice #{default_index+1}")
+        return displayed_choices[default_index] if 0 <= default_index < len(displayed_choices) else displayed_choices[0]
+    
+    choice = input(f"Pick a number (1-{len(displayed_choices)}) or type a custom name (Enter = {default_index+1}): ").strip()
+    
+    # Special: return None if user wants to research
+    if choice == "0" and allow_research:
+        return None
+    
+    if choice == "":
+        return displayed_choices[default_index]
+    
+    if choice.isdigit():
+        idx = int(choice) - 1
+        # Check in displayed choices
+        if 0 <= idx < len(displayed_choices):
+            return displayed_choices[idx]
+        # Check in alternatives
+        if len(displayed_choices) <= idx < len(displayed_choices) + len(alternatives):
+            alt_idx = idx - len(displayed_choices)
+            return alternatives[alt_idx]
+        print("Number out of range; using default.")
+        return displayed_choices[default_index]
+    
+    # Custom typed name: wrap into metadata dict
+    is_var = "variable" in prompt_text.lower()
+    return {"type": "variable" if is_var else "scenario", "id": choice, "text": choice, "meta": {}}
+
+def interactive_flow(index_dir: str, meta_path: str, window_k: int=128, vars_k: int=8, scen_k: int=8, query: str=None):
+    embprov = EmbeddingProvider()
+    index = load_index(index_dir)
+    metadata = load_metadata(meta_path)
+
+    if query is None:
+        if not sys.stdin.isatty():
+            raise RuntimeError("No query provided in non-interactive mode. Use --query.")
+        query = input("Enter a search query (e.g., 'aerosol for NPI scenario'): ").strip()
+
+    if not query:
+        print("Empty query — aborting.")
+        return
+
+    # OUTER LOOP: Allow re-doing entire variable + scenario selection if needed
+    selected_variable = None
+    selected_scenario = None
+    var_keywords = None
+    scen_keywords = None
+    
+    while selected_variable is None or selected_scenario is None:
+        # VARIABLE SELECTION LOOP
+        while selected_variable is None:
+            # Use Gemini API to intelligently parse the query
+            print("\n🤖 Parsing your query with AI...")
+            parsed_input = call_gemini_for_query_parsing(query)
+            var_keywords = parsed_input.get("variable_keywords", query)
+            scen_keywords = parsed_input.get("scenario_keywords", "")
+            region_hint = parsed_input.get("region", "")
+            
+            print(f"✓ Variable keywords: {var_keywords}")
+            if scen_keywords:
+                print(f"✓ Scenario keywords: {scen_keywords}")
+            if region_hint:
+                print(f"✓ Region hint: {region_hint}")
+
+            # Search for variables using parsed keywords
+            q_emb = embed_query(embprov, var_keywords)  # shape (1, dim)
+            ids, dists = search_index(index, q_emb, k=window_k)
+            hits = gather_hits(ids, dists, metadata)
+
+            # split hits by type
+            var_hits = [h for h in hits if h[2].get("type") == "variable"]
+            scen_hits = [h for h in hits if h[2].get("type") == "scenario"]
+
+            # If no variable hits found, try using scenario hits as candidate variables (defensive)
+            if not var_hits and scen_hits:
+                # treat top scenario hits as variable candidates (rare but safe)
+                candidate_texts = [h[2]["text"] for h in scen_hits[:min(len(scen_hits), 50)]]
+                order = rerank_by_cosine(q_emb, candidate_texts, embprov)
+                var_ordered = [scen_hits[i][2] for i in order]
             else:
-                print("No variable available to select.")
-                return None
-        else:
-            # if numeric
-            if choice.isdigit():
-                n = int(choice) - 1
-                if 0 <= n < len(numbered_vars):
-                    selected_variable_meta = numbered_vars[n][2]
+                candidate_texts = [h[2]["text"] for h in var_hits[:min(len(var_hits), 50)]]
+                order = rerank_by_cosine(q_emb, candidate_texts, embprov) if candidate_texts else []
+                var_ordered = [var_hits[i][2] for i in order] if order else [h[2] for h in var_hits]
+
+            if not var_ordered:
+                print("No variable candidates found. You may type a custom variable name.")
+            
+            selected_variable = present_and_select("Top variable matches:", var_ordered, default_index=0, max_display=8, allow_research=True)
+            
+            # If user selected "research again", prompt for new keywords
+            if selected_variable is None:
+                query = input("\n🔍 Enter new search keywords for variables: ").strip()
+                if not query:
+                    print("No keywords provided. Using original query.")
+                    query = var_keywords
+                continue
+
+        # SCENARIO SELECTION LOOP (only if variable was selected)
+        while selected_scenario is None:
+            # Build scenario query: use parsed scenario keywords if available, otherwise mix variable + original query
+            if scen_keywords:
+                scen_query = scen_keywords
+            else:
+                scen_query = f"{selected_variable.get('text') if isinstance(selected_variable, dict) else str(selected_variable)} {query}"
+            
+            scen_q_emb = embed_query(embprov, scen_query)
+            s_ids, s_dists = search_index(index, scen_q_emb, k=window_k)
+            s_hits = gather_hits(s_ids, s_dists, metadata)
+            # filter scenarios
+            s_hits = [h for h in s_hits if h[2].get("type") == "scenario"]
+            scen_texts = [h[2]["text"] for h in s_hits[:min(len(s_hits), 50)]]
+            order_s = rerank_by_cosine(scen_q_emb, scen_texts, embprov) if scen_texts else []
+            scen_ordered = [s_hits[i][2] for i in order_s] if order_s else [h[2] for h in s_hits]
+
+            # FALLBACK: If no scenarios found through semantic search, get all available scenarios from metadata
+            if not scen_ordered:
+                print("\n⚠️  No scenario matches found for your query. Showing all available scenarios:")
+                all_scenarios = [m for m in metadata.values() if m.get("type") == "scenario"]
+                if all_scenarios:
+                    scen_ordered = all_scenarios
                 else:
-                    print("Number out of range. Exiting.")
-                    return None
-            else:
-                # custom variable name: create a simple meta entry
-                selected_variable_meta = {"type":"variable","id":choice,"text":choice,"meta":{"variable":choice,"description":""}}
-                print(f"Using custom variable: {choice}")
-    else:
-        # non-interactive auto-select
-        if numbered_vars:
-            selected_variable_meta = numbered_vars[0][2]
-            print(f"Non-interactive: auto-selected variable='{selected_variable_meta.get('id')}'")
-        else:
-            print("Non-interactive: no variable to select.")
-            return None
-
-    # Now retrieve scenario candidates conditioned on the selected variable
-    scen_query = f"{selected_variable_meta.get('text')} {query}"
-    try:
-        scen_emb = emb_provider.embed_one(scen_query)
-        s_ids, s_dists = retrieve_candidates(index, scen_emb, window_k)
-    except Exception:
-        s_ids, s_dists = [], []
-    scen_hits = []
-    for idx, dist in zip(s_ids, s_dists):
-        if idx == -1:
-            continue
-        meta = metadata.get(str(int(idx)), None)
-        if not meta:
-            continue
-        if meta.get("type") == "scenario":
-            scen_hits.append((idx, dist, meta))
-
-    scen_numbered, scen_alternatives = present_scenario_options(scen_hits, scen_k)
-
-    # User chooses scenario
-    selected_scenario_meta = None
-    if is_interactive:
-        if scen_numbered:
-            choice = input("SCENARIO choice (number, or press Enter to pick #1): ").strip()
-            if choice == "":
-                selected_scenario_meta = scen_numbered[0][2]
-            elif choice.isdigit():
-                n = int(choice) - 1
-                if 0 <= n < len(scen_numbered):
-                    selected_scenario_meta = scen_numbered[n][2]
+                    print("No scenarios available in database.")
+                    scen_ordered = []
+            
+            selected_scenario = present_and_select("Top scenario matches:", scen_ordered, default_index=0, max_display=8, allow_research=True)
+            
+            # If user selected "research again", prompt for new keywords
+            if selected_scenario is None:
+                option = input("\nDo you want to:\n  1. Search for scenarios with new keywords\n  2. Go back and change variable\nChoice (1 or 2): ").strip()
+                if option == "2":
+                    # Go back to variable selection - reset variable and break from scenario loop
+                    selected_variable = None
+                    break
                 else:
-                    print("Number out of range. Exiting.")
-                    return None
-            else:
-                # allow entering a scenario id which might match one of the alternatives
-                txt = choice.strip()
-                # check if input matches one of the alternative scenario ids
-                matched = None
-                for h in scen_alternatives:
-                    if h[2].get("id") == txt:
-                        matched = h[2]; break
-                if matched:
-                    selected_scenario_meta = matched
-                    print(f"Selected alternative scenario: {matched.get('id')}")
-                else:
-                    # treat as custom scenario
-                    selected_scenario_meta = {"type":"scenario","id":txt,"text":txt,"meta":{"scenario_id":txt,"text":txt}}
-                    print(f"Using custom scenario: {txt}")
-        else:
-            # allow custom scenario text
-            custom = input("No scenario candidates found. Type a custom scenario name (or blank to abort): ").strip()
-            if not custom:
-                print("No scenario chosen. Exiting.")
-                return None
-            selected_scenario_meta = {"type":"scenario","id":custom,"text":custom,"meta":{"scenario_id":custom,"text":custom}}
-    else:
-        if scen_numbered:
-            selected_scenario_meta = scen_numbered[0][2]
-            print(f"Non-interactive: auto-selected scenario='{selected_scenario_meta.get('id')}'")
-        else:
-            fallback = next((h for h in hits if h[2].get("type") == "scenario"), None)
-            if fallback:
-                selected_scenario_meta = fallback[2]
-            else:
-                print("Non-interactive: no scenario found.")
-                return None
+                    # Research scenarios
+                    scen_keywords = input("🔍 Enter new search keywords for scenarios: ").strip()
+                    if not scen_keywords:
+                        print("No keywords provided. Using previous query.")
+                    continue
 
-    # Region and timeframe
-    if is_interactive:
-        region = input("Enter region (e.g., 'Global', 'Europe', 'USA', or leave blank for 'Global'): ").strip()
-        if not region:
-            region = "Global"
-        start = input("Enter start year (leave blank for default 2020): ").strip()
-        end = input("Enter end year (leave blank for default 2100): ").strip()
+    # region and timeframe
+    if sys.stdin.isatty():
+        region = input("Enter REGION (default: 'Global'): ").strip() or "Global"
+        start_raw = input("Start year (default 2020): ").strip()
+        end_raw = input("End year (default 2100): ").strip()
         try:
-            start_y = int(start) if start else 2020
+            start_year = int(start_raw) if start_raw else 2020
         except:
-            start_y = 2020
+            start_year = 2020
         try:
-            end_y = int(end) if end else 2100
+            end_year = int(end_raw) if end_raw else 2100
         except:
-            end_y = 2100
+            end_year = 2100
     else:
         region = "Global"
-        start_y, end_y = 2020, 2100
+        start_year, end_year = 2020, 2100
 
     record = {
-        "variable": selected_variable_meta,
-        "scenario": selected_scenario_meta,
+        "variable": selected_variable,
+        "scenario": selected_scenario,
         "region": region,
-        "start_year": start_y,
-        "end_year": end_y
+        "start_year": start_year,
+        "end_year": end_year
     }
-    out_path = "Confirmed_selection/confirmed_selection.json"
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(record, f, indent=2, ensure_ascii=False)
-    print(f"\nSaved selection to {out_path}")
+    with open("confirmed_selection.json", "w", encoding="utf-8") as fh:
+        json.dump(record, fh, indent=2, ensure_ascii=False)
+    print("WROTE confirmed_selection.json")
     return record
 
-def main(args):
-    EmbeddingProvider = import_embedding_provider()
-    if EmbeddingProvider is None:
-        print("Could not import EmbeddingProvider from ingestion.py. Check ingestion.py.")
-        return
-
-    try:
-        index = load_index(args.index_dir)
-    except Exception as e:
-        print(f"Failed to load FAISS index: {e}")
-        return
-
-    try:
-        metadata = load_metadata(args.meta)
-    except Exception as e:
-        print(f"Failed to load metadata: {e}")
-        return
-
-    emb = EmbeddingProvider()
-    try:
-        interactive_flow(index, metadata, emb, query=args.query, window_k=args.window_k, vars_k=args.vars_k, scen_k=args.scen_k)
-    except Exception as e:
-        print(f"Unexpected error during search: {e}")
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--index-dir", default="./vector_index", help="directory with faiss.index")
-    parser.add_argument("--meta", default="./metadata.json", help="metadata json path")
-    parser.add_argument("--window-k", default=128, type=int, help="search window size to collect candidates")
-    parser.add_argument("--vars-k", default=8, type=int, help="number of variable results to show")
-    parser.add_argument("--scen-k", default=8, type=int, help="number of scenario results to show")
-    parser.add_argument("--query", default=None, help="(optional) query string to run non-interactively")
-    args = parser.parse_args()
-    main(args)
+    p = argparse.ArgumentParser()
+    p.add_argument("--index-dir", default="./vector_index")
+    p.add_argument("--meta", default="./metadata.json")
+    p.add_argument("--window-k", type=int, default=128)
+    p.add_argument("--vars-k", type=int, default=8)
+    p.add_argument("--scen-k", type=int, default=8)
+    p.add_argument("--query", default=None, help="Provide query for non-interactive mode")
+    args = p.parse_args()
+    try:
+        interactive_flow(args.index_dir, args.meta, window_k=args.window_k, vars_k=args.vars_k, scen_k=args.scen_k, query=args.query)
+    except Exception as e:
+        print("ERROR in retriever:", e)
+        raise
