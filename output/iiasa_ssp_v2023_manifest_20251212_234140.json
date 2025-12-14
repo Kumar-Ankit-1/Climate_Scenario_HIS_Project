@@ -1,0 +1,14 @@
+{
+    "provider_id": "iiasa_ssp_v2023",
+    "source_file": "etl/raw/iiasa_ssp_2024.xlsx",
+    "processed_at": "20251212_234140",
+    "filters": {
+        "model": null,
+        "scenario": null,
+        "variable": null,
+        "region": null,
+        "start_year": null,
+        "end_year": null
+    },
+    "row_count": 78319
+}

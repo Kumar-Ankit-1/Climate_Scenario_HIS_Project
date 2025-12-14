@@ -4,86 +4,127 @@ from pathlib import Path
 
 CATALOG_PATH = Path("etl/catalog/providers_overview.json")
 
-# Weights (tune if needed)
-W_VAR  = 0.40
-W_SCEN = 0.25
-W_GRAN = 0.10
+# Weights
+W_VAR   = 0.40
+W_SCEN  = 0.25
+W_GRAN  = 0.10
 W_AVAIL = 0.10
 
+
 ##############################################################
-# 1. VARIABLE MATCHING (fuzzy)
+# 1. Helper matchers
 ##############################################################
+
+def semantic_match(q, p):
+    q = q.lower()
+    p = p.lower()
+    if q == p:
+        return 1.0
+    if q in p or p in q:
+        return 0.8
+    return 0.0
+
 
 def var_match(q_var: str, prov_var: str) -> float:
     qv = q_var.lower()
     pv = prov_var.lower()
 
-    # Exact match
     if qv == pv:
         return 1.0
-
-    # If the whole query seg is inside provider variable
     if qv in pv:
         return 0.8
-
-    # Base match ("gdp" matches "gdp|ppp")
     if qv.split("|")[0] in pv:
         return 0.5
-
-    # Reverse partial
     if pv in qv:
         return 0.5
-
     return 0.0
 
 
 ##############################################################
-# 2. Score Provider
+# 2. Score + Explain Provider
 ##############################################################
 
 def score_provider(provider, q):
     score = 0.0
 
-    # ---------------------------------------------------------
-    # STRICT REGION MATCHING
-    # ---------------------------------------------------------
-    if q["regions"]:  # user explicitly asked for region
-        if not any(r in provider["regions"] for r in q["regions"]):
-            return 0.0   # reject provider completely
+    matched = {
+        "variables": [],
+        "regions": [],
+        "scenarios": []
+    }
 
-    # ---------------------------------------------------------
-    # VARIABLE MATCH (fuzzy)
-    # ---------------------------------------------------------
+    # ---------- STRICT REGION FILTER ----------
+    if q["regions"]:
+        for qr in q["regions"]:
+            for pr in provider["regions"]:
+                sim = semantic_match(qr, pr)
+                if sim > 0:
+                    matched["regions"].append({
+                        "query": qr,
+                        "provider": pr,
+                        "similarity": sim
+                    })
+
+        if not matched["regions"]:
+            return 0.0, None
+
+    # ---------- VARIABLES (FUZZY) ----------
     if q["variables"]:
         var_scores = []
         for qv in q["variables"]:
-            best = max(var_match(qv, pv) for pv in provider["variables"])
-            var_scores.append(best)
-        score += (sum(var_scores) / len(var_scores)) * W_VAR
+            best = 0
+            best_p = None
+            for pv in provider["variables"]:
+                sim = var_match(qv, pv)
+                if sim > best:
+                    best = sim
+                    best_p = pv
 
-    # ---------------------------------------------------------
-    # SCENARIO MATCH
-    # ---------------------------------------------------------
+            if best > 0:
+                var_scores.append(best)
+                matched["variables"].append({
+                    "query": qv,
+                    "provider": best_p,
+                    "similarity": best
+                })
+
+        if var_scores:
+            score += (sum(var_scores) / len(var_scores)) * W_VAR
+
+    # ---------- SCENARIOS (SEMANTIC) ----------
     if q["scenarios"]:
-        matched = sum(1 for s in q["scenarios"] if s in provider["scenarios"])
-        score += (matched / len(q["scenarios"])) * W_SCEN
+        scen_scores = []
+        for qs in q["scenarios"]:
+            for ps in provider["scenarios"]:
+                sim = semantic_match(qs, ps)
+                if sim > 0:
+                    scen_scores.append(sim)
+                    matched["scenarios"].append({
+                        "query": qs,
+                        "provider": ps,
+                        "similarity": sim
+                    })
 
-    # ---------------------------------------------------------
-    # GRANULARITY
-    # ---------------------------------------------------------
+        if scen_scores:
+            score += (sum(scen_scores) / len(q["scenarios"])) * W_SCEN
+
+    # ---------- GRANULARITY ----------
     if q["granularity"] and q["granularity"] == provider["granularity"]:
         score += W_GRAN
 
-    # ---------------------------------------------------------
-    # YEAR SPAN
-    # ---------------------------------------------------------
+    # ---------- YEAR COVERAGE ----------
     if q["start_year"] and q["end_year"]:
         ymin = provider["years"]["min"]
         ymax = provider["years"]["max"]
         if ymin <= q["start_year"] and ymax >= q["end_year"]:
             score += W_AVAIL
 
-    return score
+    explanation = {
+        "matched": {k: v for k, v in matched.items() if v},
+        "missing": [k for k, v in matched.items() if not v and q.get(k)]
+    }
+
+    return score, explanation
 
 
 ##############################################################
@@ -100,48 +141,29 @@ def parse_query(text):
     start_year = None
     end_year = None
 
-    # Patterns
-    scen_re = re.compile(r"ssp\d.*")     # SSP2, SSP1-26, SSP3baseline
+    scen_re = re.compile(r"ssp\d.*")
     year_re = re.compile(r"\d{4}")
-    var_pipe_re = re.compile(r".*\|.*")  # GDP|PPP, Emissions|CO2
-    
-    # Simple known region list (you can expand or load from file)
+    var_pipe_re = re.compile(r".*\|.*")
+
     known_regions = ["india", "china", "usa", "world", "europe", "germany"]
 
     for t in tokens:
-        # scenario
         if scen_re.match(t):
             scenarios.append(t.upper())
-            continue
-
-        # variable with pipes ("gdp|ppp")
-        if var_pipe_re.match(t):
+        elif var_pipe_re.match(t):
             variables.append(t)
-            continue
-
-        # region
-        if t in known_regions:
+        elif t in known_regions:
             regions.append(t.capitalize())
-            continue
-
-        # granularity
-        if t in ["annual", "yearly", "5-year", "decadal"]:
+        elif t in ["annual", "yearly", "5-year", "decadal"]:
             granularity = t
-            continue
-
-        # years
-        if year_re.match(t):
+        elif year_re.match(t):
             y = int(t)
             if not start_year:
                 start_year = y
             else:
                 end_year = y
-            continue
-
-        # potential base variables (gdp, population, co2)
-        if t in ["gdp", "population", "co2", "emissions"]:
+        elif t in ["gdp", "population", "co2", "emissions"]:
             variables.append(t)
-            continue
 
     return {
         "variables": variables,
@@ -159,8 +181,7 @@ def parse_query(text):
 
 def load_provider_catalog():
     with open(CATALOG_PATH) as f:
-        data = json.load(f)
-    return data["providers"]
+        return json.load(f)["providers"]
 
 
 ##############################################################
@@ -172,19 +193,21 @@ def match_providers(query_text):
     providers = load_provider_catalog()
 
     results = []
+
     for p in providers:
-        s = score_provider(p, parsed)
-        if s > 0:  # keep only relevant
+        score, explanation = score_provider(p, parsed)
+        if score > 0:
             results.append({
                 "provider_id": p["id"],
-                "score": s,
+                "score": score,
+                "explanation": explanation,
                 "latest_file": p["latest_file"],
                 "variables": p["variables"],
                 "scenarios": p["scenarios"],
-                "regions": p["regions"]
+                "regions": p["regions"],
+                "models": p.get("models", [])
             })
 
-    # Sort by descending score
     results.sort(key=lambda x: x["score"], reverse=True)
 
     return {

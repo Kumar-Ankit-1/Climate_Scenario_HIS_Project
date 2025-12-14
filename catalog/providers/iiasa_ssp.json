@@ -5,7 +5,7 @@
   "description": "IIASA SSP model outputs in IAMC wide format.",
   "format": "xlsx",
   "access": {
-    "url": "etl/raw/iiasa_ssp_sample.xlsx"
+    "url": "etl/raw/iiasa_ssp_2024.xlsx"
   },
   "mapping": {
     "model": "Model",

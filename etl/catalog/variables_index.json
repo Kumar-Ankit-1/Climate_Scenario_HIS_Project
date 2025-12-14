@@ -1,6 +1,5 @@
 {
   "variables": [
-    "GDP",
     "GDP|PPP",
     "Population",
     "Population|Urban [Share]"
