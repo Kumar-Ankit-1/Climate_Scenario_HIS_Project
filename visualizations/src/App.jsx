@@ -1185,7 +1185,7 @@ export default function App() {
                   {/* Maps Section - Two Column */}
                   <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 20 }}>
                     {/* Choropleth Map */}
-                    <div
+                    {/* <div
                       style={{
                         background: "rgba(255, 255, 255, 0.8)",
                         backdropFilter: "blur(10px)",
@@ -1216,10 +1216,10 @@ export default function App() {
                         scenario={query?.scenarios?.[0]}
                         variable={query?.variables?.[0]}
                       />
-                    </div>
+                    </div> */}
 
                     {/* Animated Geo Map */}
-                    <div
+                    {/* <div
                       style={{
                         background: "rgba(255, 255, 255, 0.8)",
                         backdropFilter: "blur(10px)",
@@ -1250,7 +1250,7 @@ export default function App() {
                         scenario={query?.scenarios?.[0]}
                         variable={query?.variables?.[0]}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

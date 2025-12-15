@@ -2,6 +2,7 @@ import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import ChatbotModal from "../components/ChatbotModal";
 
 /* ===================== STARFIELD ===================== */
 function Starfield({ numStars = 4500 }) {
@@ -294,6 +295,8 @@ function HeroWithSearch({ onSubmitQuery, onError }) {
 
 /* ===================== PAGE ===================== */
 export default function QueryPage({ onSubmitQuery }) {
+  const [chatbotOpen, setChatbotOpen] = useState(false);
+
   return (
     <div
       style={{
@@ -312,6 +315,61 @@ export default function QueryPage({ onSubmitQuery }) {
       </Canvas>
 
       <HeroWithSearch onSubmitQuery={onSubmitQuery} />
+
+      <button
+        onClick={() => setChatbotOpen(true)}
+        style={{
+          position: "fixed",
+          bottom: 24,
+          right: 24,
+          width: 64,
+          height: 64,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)",
+          border: "none",
+          color: "#fff",
+          cursor: "pointer",
+          boxShadow: "0 4px 20px rgba(139, 92, 246, 0.6), 0 0 0 0 rgba(139, 92, 246, 0.4)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 100,
+          transition: "all 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.boxShadow = "0 8px 30px rgba(139, 92, 246, 0.8), 0 0 0 8px rgba(139, 92, 246, 0.2)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow = "0 4px 20px rgba(139, 92, 246, 0.6), 0 0 0 0 rgba(139, 92, 246, 0.4)";
+        }}
+        title="AI Climate Assistant"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          <line x1="9" y1="10" x2="15" y2="10" />
+          <line x1="9" y1="14" x2="13" y2="14" />
+        </svg>
+      </button>
+
+      <ChatbotModal
+        isOpen={chatbotOpen}
+        onClose={() => setChatbotOpen(false)}
+        onComplete={(data) => {
+          console.log("Chatbot completed:", data);
+          setChatbotOpen(false);
+        }}
+      />
     </div>
   );
 }

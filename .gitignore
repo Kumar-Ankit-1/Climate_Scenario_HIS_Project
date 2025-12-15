@@ -1,1 +1,10 @@
-visualizations/node modules/
+node_modules/
+**/node_modules/
+package-lock.json
+*.log
+.DS_Store
+.env
+.venv
+*.pyc
+Datasets
+uv.lock
