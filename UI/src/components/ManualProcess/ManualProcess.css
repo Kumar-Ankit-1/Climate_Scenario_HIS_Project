@@ -1,0 +1,440 @@
+/* Global styles - Scoped to Manual Process Component */
+.cde-app {
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #f5f8ff, #e9eef8);
+    display: flex;
+    flex-direction: column;
+    /* Changed for back button alignment */
+    align-items: center;
+    /* Center content */
+    justify-content: flex-start;
+    padding: 32px 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    color: #0f172a;
+}
+
+.cde-page {
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* Header */
+.cde-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.cde-logo-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    color: white;
+    font-weight: 600;
+}
+
+.cde-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.cde-subtitle {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Tabs */
+.cde-tabs {
+    display: flex;
+    gap: 4px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.cde-tab {
+    flex: 1;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #4b5563;
+}
+
+.cde-tab--active {
+    background: white;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+    font-weight: 500;
+    color: #111827;
+}
+
+.cde-tab--disabled {
+    opacity: 0.6;
+}
+
+.cde-tab-icon {
+    font-size: 14px;
+}
+
+/* Cards */
+.cde-main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cde-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px 24px 24px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
+}
+
+.cde-card-header h2,
+.cde-card-header h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+}
+
+.cde-card-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* Form layout */
+.cde-form-grid {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cde-form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.cde-form-row--full {
+    flex-direction: column;
+}
+
+.cde-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cde-field label {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+/* Inputs */
+.cde-select,
+.cde-variable-row input,
+.cde-field input {
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    background: #f9fafb;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cde-field input:focus,
+.cde-select select:focus,
+.cde-variable-row input:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+}
+
+/* Custom select */
+.cde-select {
+    position: relative;
+    padding: 0;
+}
+
+.cde-select select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 10px 32px 10px 12px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.cde-select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* Variable row */
+.cde-variable-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Buttons */
+.cde-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.cde-button {
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 14px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.cde-button--primary {
+    background: #111827;
+    color: white;
+}
+
+.cde-button--secondary {
+    background: white;
+    color: #111827;
+    border-color: #d1d5db;
+}
+
+.cde-button--ghost {
+    background: #f9fafb;
+    color: #111827;
+    border-color: #e5e7eb;
+}
+
+/* Recommendation card */
+.cde-card--recommendation {
+    border-style: dashed;
+    border-color: #c7d2fe;
+    background: #eff6ff;
+}
+
+.cde-reco-text {
+    margin: 8px 0 12px;
+    font-size: 14px;
+    color: #1f2933;
+}
+
+.cde-link {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    color: #2563eb;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cde-page {
+        max-width: 100%;
+    }
+
+    .cde-form-row {
+        flex-direction: column;
+    }
+
+    .cde-tabs {
+        flex-direction: column;
+        border-radius: 16px;
+    }
+}
+
+/* Scenario families row */
+.cde-scenarios-row {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cde-scenario-pill {
+    border-radius: 14px;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+    cursor: pointer;
+    font-size: 12px;
+    min-width: 90px;
+}
+
+.cde-scenario-pill--active {
+    border-color: #4338ca;
+    background: #eef2ff;
+}
+
+.cde-scenario-pill-title {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.cde-scenario-pill-meta {
+    color: #6b7280;
+}
+
+/* Scenario highlight */
+.cde-scenario-highlight {
+    margin-top: 18px;
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.cde-scenario-highlight h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.cde-scenario-highlight p {
+    margin: 0;
+    color: #2563eb;
+    font-size: 14px;
+}
+
+/* Dataset card */
+.cde-card-header--inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cde-dataset-card {
+    margin-top: 16px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    padding: 16px 18px;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.cde-dataset-main h4 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.cde-dataset-subtitle {
+    margin: 0 0 10px;
+    color: #4b5563;
+    font-size: 14px;
+    margin-bottom: 8px;
+    /* Added spacing */
+}
+
+.cde-dataset-tag-row {
+    margin-bottom: 14px;
+}
+
+.cde-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 12px;
+    background: #f3f4ff;
+    border: 1px solid #c7d2fe;
+    color: #4338ca;
+}
+
+/* Assumptions list */
+.cde-dataset-assumptions h5 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    color: #111827;
+}
+
+.cde-dataset-assumptions ul {
+    margin: 0;
+    padding-left: 18px;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+.cde-dataset-assumptions li+li {
+    margin-top: 2px;
+}
+
+/* Dataset actions (right side) */
+.cde-dataset-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+@media (max-width: 768px) {
+    .cde-dataset-card {
+        flex-direction: column;
+    }
+
+    .cde-dataset-actions {
+        align-items: flex-start;
+    }
+}
+
+/* New: Back Button Styles */
+.cde-back-container {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.cde-back-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.cde-back-btn:hover {
+    background: #e5e7eb;
+    color: #111827;
+}

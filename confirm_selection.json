@@ -1,0 +1,13 @@
+{
+  "configuration": {
+    "region": "EU",
+    "start_date": "2020",
+    "end_date": "2050"
+  },
+  "variables": [
+    "Yield|Cereal"
+  ],
+  "scenarios": [],
+  "confirmed_at": "2025-12-21T13:08:20.924136",
+  "status": "confirmed"
+}
