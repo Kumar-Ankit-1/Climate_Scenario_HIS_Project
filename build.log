@@ -1,0 +1,8 @@
+npm error code ENOENT
+npm error syscall open
+npm error path /Users/kumarankit/Documents/chatbot/package.json
+npm error errno -2
+npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/Users/kumarankit/Documents/chatbot/package.json'
+npm error enoent This is related to npm not being able to find a file.
+npm error enoent
+npm error A complete log of this run can be found in: /Users/kumarankit/.npm/_logs/2025-12-21T17_28_40_729Z-debug-0.log

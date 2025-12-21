@@ -34,5 +34,5 @@ fi
 
 # Start Backend
 echo -e "${GREEN}Starting Flask Backend on port 5001...${NC}"
-cd "$SCRIPT_DIR/bot"
+cd "$SCRIPT_DIR/backend"
 python app.py

@@ -31,7 +31,7 @@ if [ -n "$PID" ]; then
 fi
 
 source "$SCRIPT_DIR/.venv/bin/activate"
-cd "$SCRIPT_DIR/bot"
+cd "$SCRIPT_DIR/backend"
 echo "Starting Backend (Flask) on port 5001..."
 python app.py > /tmp/chatbot_backend.log 2>&1 &
 BACKEND_PID=$!
