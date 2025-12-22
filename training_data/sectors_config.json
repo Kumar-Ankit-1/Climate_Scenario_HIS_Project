@@ -1,0 +1,38 @@
+{
+  "sectors": [
+    "Energy",
+    "Electricity",
+    "Transportation",
+    "Industry",
+    "Buildings",
+    "AFOLU",
+    "Materials",
+    "Waste",
+    "Cross-sector"
+  ],
+  "industries": {
+    "Transportation": [
+      "Automotive",
+      "Aviation",
+      "Shipping",
+      "Rail",
+      "Road Freight"
+    ],
+    "Industry": [
+      "Steel",
+      "Cement",
+      "Chemicals",
+      "Aluminum",
+      "Manufacturing (general)"
+    ],
+    "Electricity": [
+      "Power Generation",
+      "Grid & Storage"
+    ],
+    "AFOLU": [
+      "Agriculture",
+      "Forestry",
+      "Land Use"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from groq import Groq
+from groq import Groq, RateLimitError
 import difflib
 import pandas as pd
 import os
@@ -566,12 +566,125 @@ def get_variables():
     }), 200
 
 
+
 @app.route('/api/scenarios', methods=['GET'])
 def get_scenarios():
     """Get all available scenarios"""
     return jsonify({
         "scenarios": scenarios_list
     }), 200
+
+
+@app.route('/api/parse-query', methods=['POST'])
+def parse_query_endpoint():
+    """
+    Parse a user query to identify relevant sectors, industries, and variables.
+    """
+    data = request.json
+    user_query = data.get('query', '').strip()
+
+    if not user_query:
+        return jsonify({"error": "Query is required"}), 400
+
+    # Load Sector Config
+    try:
+        config_path = DATA_DIR / "sectors_config.json"
+        with open(config_path, 'r') as f:
+            sectors_config = json.load(f)
+    except Exception as e:
+        return jsonify({"error": f"Failed to load sector config: {str(e)}"}), 500
+
+    sectors_list = ", ".join(sectors_config.get('sectors', []))
+    
+    industry_map_str = ""
+    for sector, inds in sectors_config.get('industries', {}).items():
+        industry_map_str += f"{sector}: {', '.join(inds)}\n"
+
+    output_schema = json.dumps({
+      "query_metadata": {
+        "original_query": "",
+        "parsed_entities": [],
+        "parsed_intents": []
+      },
+      "relevant_sectors": [
+        {
+          "sector": "",
+          "confidence": 0.0,
+          "rationale": ""
+        }
+      ],
+      "relevant_industries": [
+        {
+          "industry": "",
+          "sector": "",
+          "confidence": 0.0
+        }
+      ],
+      "variable_selection_strategy": {
+        "selection_basis": "sector | industry | cross-sector",
+        "notes": ""
+      },
+      "missing_or_suggested_concepts": [
+        {
+          "concept": "",
+          "sector": "",
+          "reason": ""
+        }
+      ],
+      "explanation_summary": ""
+    }, indent=2)
+
+    prompt = f"""You are a climate scenario reasoning assistant.
+
+Your task is to analyze a user query and identify relevant
+economic sectors and industries.
+
+You must:
+- Use only the provided sector list
+- Never invent new sectors
+- Output valid JSON only
+- Focus on interpretability and uncertainty
+
+USER PROMPT:
+User query:
+"{user_query}"
+
+Allowed sectors:
+{sectors_list}
+
+Industry overview:
+{industry_map_str}
+
+Instructions:
+1. Identify key entities and intents in the query.
+2. Determine which sectors are relevant and why.
+3. Assign a confidence score to each sector.
+4. Suggest conceptual variables that may be missing from the dataset.
+
+Return output strictly in the following JSON format:
+{output_schema}
+"""
+
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            max_tokens=2048,
+            temperature=0.0
+        )
+        content = response.choices[0].message.content
+        result_json = json.loads(content)
+        return jsonify(result_json), 200
+
+    except groq.RateLimitError as e:
+        print(f"Rate Limit Error: {e}")
+        return jsonify({"error": "Service is busy (Rate Limit Exceeded). Please try again in a moment."}), 429
+
+    except Exception as e:
+        print(f"Query Parsing Error: {e}")
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == '__main__':

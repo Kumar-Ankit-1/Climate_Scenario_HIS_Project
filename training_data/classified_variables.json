@@ -1,0 +1,362 @@
+[
+  {
+    "variable": "Population",
+    "description": "Population represents population within the broader context of population in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: demographics, human population, population, population size",
+    "sector": "Cross-sector",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.8,
+    "rationale": "Population is a cross-sectoral variable that influences multiple sectors, including energy, transportation, and buildings."
+  },
+  {
+    "variable": "Emissions|CO2|Energy|Demand|Transportation",
+    "description": "Emissions|CO2|Energy|Demand|Transportation represents transportation within the broader context of emissions \u2192 co2 \u2192 energy \u2192 demand \u2192 transportation in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: carbon emissions, co2, co2 output, demand, emissions, energy, energy demand, energy sector, energy use, ghg emissions, mobility, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Emissions from transportation are a key aspect of climate modeling, and this variable captures the CO2 emissions from energy demand in the transportation sector."
+  },
+  {
+    "variable": "Energy Service|Transportation|Freight",
+    "description": "Energy Service|Transportation|Freight represents freight within the broader context of energy service \u2192 transportation \u2192 freight in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, freight, mobility, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Road Freight",
+    "subsector": null,
+    "confidence": 0.85,
+    "rationale": "Freight transportation is a significant component of the transportation sector, and this variable represents the energy service demand for freight transportation."
+  },
+  {
+    "variable": "Energy Service|Transportation|Freight|Aviation",
+    "description": "Energy Service|Transportation|Freight|Aviation represents aviation within the broader context of energy service \u2192 transportation \u2192 freight \u2192 aviation in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: aviation, energy, energy demand, energy sector, energy service, energy use, freight, mobility, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Aviation",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Aviation is a distinct industry within the transportation sector, and this variable captures the energy service demand for freight aviation."
+  },
+  {
+    "variable": "Energy Service|Transportation|Freight|International Shipping",
+    "description": "Energy Service|Transportation|Freight|International Shipping represents international shipping within the broader context of energy service \u2192 transportation \u2192 freight \u2192 international shipping in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, freight, international, international shipping, mobility, service, shipping, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Shipping",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "International shipping is a significant component of the transportation sector, and this variable represents the energy service demand for freight international shipping."
+  },
+  {
+    "variable": "Energy Service|Transportation|Freight|Railways",
+    "description": "Energy Service|Transportation|Freight|Railways represents railways within the broader context of energy service \u2192 transportation \u2192 freight \u2192 railways in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, freight, mobility, railways, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Rail",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Railways are a distinct industry within the transportation sector, and this variable captures the energy service demand for freight railways."
+  },
+  {
+    "variable": "Energy Service|Transportation|Freight|Road",
+    "description": "Energy Service|Transportation|Freight|Road represents road within the broader context of energy service \u2192 transportation \u2192 freight \u2192 road in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, freight, mobility, road, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Road Freight",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Road freight is a significant component of the transportation sector, and this variable represents the energy service demand for freight road transportation."
+  },
+  {
+    "variable": "Energy Service|Transportation|Passenger",
+    "description": "Energy Service|Transportation|Passenger represents passenger within the broader context of energy service \u2192 transportation \u2192 passenger in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, mobility, passenger, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.85,
+    "rationale": "Passenger transportation is a significant component of the transportation sector, and this variable represents the energy service demand for passenger transportation."
+  },
+  {
+    "variable": "Energy Service|Transportation|Passenger|Aviation",
+    "description": "Energy Service|Transportation|Passenger|Aviation represents aviation within the broader context of energy service \u2192 transportation \u2192 passenger \u2192 aviation in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: aviation, energy, energy demand, energy sector, energy service, energy use, mobility, passenger, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Aviation",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Aviation is a distinct industry within the transportation sector, and this variable captures the energy service demand for passenger aviation."
+  },
+  {
+    "variable": "Energy Service|Transportation|Passenger|Railways",
+    "description": "Energy Service|Transportation|Passenger|Railways represents railways within the broader context of energy service \u2192 transportation \u2192 passenger \u2192 railways in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, mobility, passenger, railways, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": "Rail",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Railways are a distinct industry within the transportation sector, and this variable captures the energy service demand for passenger railways."
+  },
+  {
+    "variable": "Energy Service|Transportation|Passenger|Road",
+    "description": "Energy Service|Transportation|Passenger|Road represents road within the broader context of energy service \u2192 transportation \u2192 passenger \u2192 road in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy service, energy use, mobility, passenger, road, service, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.85,
+    "rationale": "Passenger road transportation is a significant component of the transportation sector, and this variable represents the energy service demand for passenger road transportation."
+  },
+  {
+    "variable": "Final Energy|Transportation",
+    "description": "Final Energy|Transportation represents transportation within the broader context of final energy \u2192 transportation in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy use, final, final energy, mobility, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Final energy for transportation captures the total energy consumption of the transportation sector."
+  },
+  {
+    "variable": "Final Energy|Transportation|Electricity",
+    "description": "Final Energy|Transportation|Electricity represents electricity within the broader context of final energy \u2192 transportation \u2192 electricity in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: electricity, energy, energy demand, energy sector, energy use, final, final energy, mobility, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Final energy for transportation electricity captures the energy consumption of the transportation sector from electricity."
+  },
+  {
+    "variable": "Final Energy|Transportation|Freight",
+    "description": "Final Energy|Transportation|Freight represents freight within the broader context of final energy \u2192 transportation \u2192 freight in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy use, final, final energy, freight, mobility, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.85,
+    "rationale": "Final energy for transportation freight captures the energy consumption of the freight transportation sector."
+  },
+  {
+    "variable": "Final Energy|Transportation|Liquids|Oil",
+    "description": "Final Energy|Transportation|Liquids|Oil represents oil within the broader context of final energy \u2192 transportation \u2192 liquids \u2192 oil in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: energy, energy demand, energy sector, energy use, final, final energy, liquids, mobility, oil, transport, transportation, vehicle demand",
+    "sector": "Transportation",
+    "industry": null,
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Final energy for transportation liquids oil captures the energy consumption of the transportation sector from oil."
+  },
+  {
+    "variable": "Agricultural Demand",
+    "description": "Agricultural Demand represents agricultural demand within the broader context of agricultural demand in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural demand, agriculture, crop demand, demand, food production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Agricultural demand is a key aspect of the AFOLU sector, and this variable captures the demand for agricultural products."
+  },
+  {
+    "variable": "Agricultural Production",
+    "description": "Agricultural Production represents agricultural production within the broader context of agricultural production in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural production, agriculture, crop demand, food production, production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Agricultural production is a key aspect of the AFOLU sector, and this variable captures the production of agricultural products."
+  },
+  {
+    "variable": "Agricultural Production|Energy",
+    "description": "Agricultural Production|Energy represents energy within the broader context of agricultural production \u2192 energy in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural production, agriculture, crop demand, energy, energy demand, energy sector, energy use, food production, production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": null,
+    "confidence": 0.85,
+    "rationale": "Agricultural production energy captures the energy consumption of the agricultural production sector."
+  },
+  {
+    "variable": "Agricultural Production|Energy|Crops",
+    "description": "Agricultural Production|Energy|Crops represents crops within the broader context of agricultural production \u2192 energy \u2192 crops in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural production, agriculture, crop demand, crops, energy, energy demand, energy sector, energy use, food production, production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": null,
+    "confidence": 0.9,
+    "rationale": "Agricultural production energy crops captures the energy consumption of the crop production sector."
+  },
+  {
+    "variable": "Agricultural Production|Non-Energy",
+    "description": "Agricultural Production|Non-Energy represents non-energy within the broader context of agricultural production \u2192 non-energy in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural production, agriculture, crop demand, energy, energy demand, energy sector, energy use, food production, non, non-energy, production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": null,
+    "confidence": 0.85,
+    "rationale": "Agricultural production non-energy captures the non-energy aspects of the agricultural production sector."
+  },
+  {
+    "variable": "Agricultural Production|Non-Energy|Crops",
+    "description": "Agricultural Production|Non-Energy|Crops represents crops within the broader context of agricultural production \u2192 non-energy \u2192 crops in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural production, agriculture, crop demand, crops, energy, energy demand, energy sector, energy use, food production, non, non-energy, production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": "Crop Production",
+    "confidence": 0.95,
+    "rationale": "The variable is directly related to agricultural production, which falls under the AFOLU sector, specifically within the agriculture industry and crop production subsector."
+  },
+  {
+    "variable": "Agricultural Production|Non-Energy|Livestock",
+    "description": "Agricultural Production|Non-Energy|Livestock represents livestock within the broader context of agricultural production \u2192 non-energy \u2192 livestock in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: agricultural, agricultural production, agriculture, crop demand, energy, energy demand, energy sector, energy use, food production, livestock, non, non-energy, production",
+    "sector": "AFOLU",
+    "industry": "Agriculture",
+    "subsector": "Livestock Production",
+    "confidence": 0.95,
+    "rationale": "The variable is directly related to agricultural production, which falls under the AFOLU sector, specifically within the agriculture industry and livestock production subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Biomass",
+    "description": "Capacity Additions|Electricity|Biomass represents biomass within the broader context of capacity additions \u2192 electricity \u2192 biomass in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, biomass, capacity, capacity additions, electricity",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Biomass Power",
+    "confidence": 0.95,
+    "rationale": "The variable pertains to additions in electricity capacity from biomass sources, which aligns with the electricity sector, specifically within the power generation industry and biomass power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Biomass|w/ CCS",
+    "description": "Capacity Additions|Electricity|Biomass|w/ CCS represents w/ ccs within the broader context of capacity additions \u2192 electricity \u2192 biomass \u2192 w/ ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, biomass, capacity, capacity additions, ccs, electricity, w, w/ ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Biomass Power with CCS",
+    "confidence": 0.95,
+    "rationale": "This variable is about capacity additions in electricity from biomass with carbon capture and storage (CCS), which is still within the electricity sector, power generation industry, but with a specific subsector focus on biomass power with CCS."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Biomass|w/o CCS",
+    "description": "Capacity Additions|Electricity|Biomass|w/o CCS represents w/o ccs within the broader context of capacity additions \u2192 electricity \u2192 biomass \u2192 w/o ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, biomass, capacity, capacity additions, ccs, electricity, o, w, w/o ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Biomass Power without CCS",
+    "confidence": 0.95,
+    "rationale": "The variable deals with capacity additions in electricity from biomass without carbon capture and storage, placing it in the electricity sector, power generation industry, and specifically in the subsector of biomass power without CCS."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Coal",
+    "description": "Capacity Additions|Electricity|Coal represents coal within the broader context of capacity additions \u2192 electricity \u2192 coal in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, coal, electricity",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Coal Power",
+    "confidence": 0.95,
+    "rationale": "This variable relates to additions in electricity capacity from coal, fitting into the electricity sector, specifically within the power generation industry and coal power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Coal|w/ CCS",
+    "description": "Capacity Additions|Electricity|Coal|w/ CCS represents w/ ccs within the broader context of capacity additions \u2192 electricity \u2192 coal \u2192 w/ ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, ccs, coal, electricity, w, w/ ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Coal Power with CCS",
+    "confidence": 0.95,
+    "rationale": "The variable involves capacity additions in electricity from coal with carbon capture and storage (CCS), placing it in the electricity sector, power generation industry, and specifically in the coal power with CCS subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Coal|w/o CCS",
+    "description": "Capacity Additions|Electricity|Coal|w/o CCS represents w/o ccs within the broader context of capacity additions \u2192 electricity \u2192 coal \u2192 w/o ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, ccs, coal, electricity, o, w, w/o ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Coal Power without CCS",
+    "confidence": 0.95,
+    "rationale": "This variable is about additions in electricity capacity from coal without CCS, which fits into the electricity sector, power generation industry, and the subsector of coal power without CCS."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Gas",
+    "description": "Capacity Additions|Electricity|Gas represents gas within the broader context of capacity additions \u2192 electricity \u2192 gas in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, gas",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Gas Power",
+    "confidence": 0.95,
+    "rationale": "The variable pertains to additions in electricity capacity from gas, aligning with the electricity sector, specifically within the power generation industry and gas power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Gas|w/ CCS",
+    "description": "Capacity Additions|Electricity|Gas|w/ CCS represents w/ ccs within the broader context of capacity additions \u2192 electricity \u2192 gas \u2192 w/ ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, ccs, electricity, gas, w, w/ ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Gas Power with CCS",
+    "confidence": 0.95,
+    "rationale": "This variable involves capacity additions in electricity from gas with carbon capture and storage (CCS), placing it in the electricity sector, power generation industry, and specifically in the gas power with CCS subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Gas|w/o CCS",
+    "description": "Capacity Additions|Electricity|Gas|w/o CCS represents w/o ccs within the broader context of capacity additions \u2192 electricity \u2192 gas \u2192 w/o ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, ccs, electricity, gas, o, w, w/o ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Gas Power without CCS",
+    "confidence": 0.95,
+    "rationale": "The variable deals with additions in electricity capacity from gas without CCS, fitting into the electricity sector, power generation industry, and the subsector of gas power without CCS."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Hydro",
+    "description": "Capacity Additions|Electricity|Hydro represents hydro within the broader context of capacity additions \u2192 electricity \u2192 hydro in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, hydro",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Hydro Power",
+    "confidence": 0.95,
+    "rationale": "This variable relates to additions in electricity capacity from hydro sources, placing it in the electricity sector, specifically within the power generation industry and hydro power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Nuclear",
+    "description": "Capacity Additions|Electricity|Nuclear represents nuclear within the broader context of capacity additions \u2192 electricity \u2192 nuclear in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, nuclear",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Nuclear Power",
+    "confidence": 0.95,
+    "rationale": "The variable pertains to additions in electricity capacity from nuclear sources, aligning with the electricity sector, specifically within the power generation industry and nuclear power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Oil",
+    "description": "Capacity Additions|Electricity|Oil represents oil within the broader context of capacity additions \u2192 electricity \u2192 oil in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, oil",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Oil Power",
+    "confidence": 0.95,
+    "rationale": "This variable involves additions in electricity capacity from oil, which fits into the electricity sector, power generation industry, and the subsector of oil power."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Oil|w/ CCS",
+    "description": "Capacity Additions|Electricity|Oil|w/ CCS represents w/ ccs within the broader context of capacity additions \u2192 electricity \u2192 oil \u2192 w/ ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, ccs, electricity, oil, w, w/ ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Oil Power with CCS",
+    "confidence": 0.95,
+    "rationale": "The variable deals with capacity additions in electricity from oil with carbon capture and storage (CCS), placing it in the electricity sector, power generation industry, and specifically in the oil power with CCS subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Oil|w/o CCS",
+    "description": "Capacity Additions|Electricity|Oil|w/o CCS represents w/o ccs within the broader context of capacity additions \u2192 electricity \u2192 oil \u2192 w/o ccs in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, ccs, electricity, o, oil, w, w/o ccs",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Oil Power without CCS",
+    "confidence": 0.95,
+    "rationale": "This variable relates to additions in electricity capacity from oil without CCS, which aligns with the electricity sector, power generation industry, and the subsector of oil power without CCS."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Solar",
+    "description": "Capacity Additions|Electricity|Solar represents solar within the broader context of capacity additions \u2192 electricity \u2192 solar in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, solar",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Solar Power",
+    "confidence": 0.95,
+    "rationale": "The variable pertains to additions in electricity capacity from solar sources, fitting into the electricity sector, specifically within the power generation industry and solar power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Solar|PV",
+    "description": "Capacity Additions|Electricity|Solar|PV represents pv within the broader context of capacity additions \u2192 electricity \u2192 solar \u2192 pv in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, pv, solar",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Solar PV",
+    "confidence": 0.95,
+    "rationale": "This variable involves capacity additions in electricity from solar photovoltaic (PV) sources, placing it in the electricity sector, power generation industry, and specifically in the solar PV subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Wind",
+    "description": "Capacity Additions|Electricity|Wind represents wind within the broader context of capacity additions \u2192 electricity \u2192 wind in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, wind",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Wind Power",
+    "confidence": 0.95,
+    "rationale": "The variable relates to additions in electricity capacity from wind sources, aligning with the electricity sector, specifically within the power generation industry and wind power subsector."
+  },
+  {
+    "variable": "Capacity Additions|Electricity|Wind|Onshore",
+    "description": "Capacity Additions|Electricity|Wind|Onshore represents onshore within the broader context of capacity additions \u2192 electricity \u2192 wind \u2192 onshore in climate and energy modeling. It captures how activity levels, resource use, and sectoral dynamics influence long-term transitions and scenario outcomes. Keywords: additions, capacity, capacity additions, electricity, onshore, wind",
+    "sector": "Electricity",
+    "industry": "Power Generation",
+    "subsector": "Onshore Wind Power",
+    "confidence": 0.95,
+    "rationale": "This variable pertains to additions in electricity capacity from onshore wind sources, fitting into the electricity sector, power generation industry, and the subsector of onshore wind power."
+  }
+]

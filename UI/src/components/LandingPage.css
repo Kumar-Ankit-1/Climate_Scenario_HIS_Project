@@ -37,12 +37,18 @@
     line-height: 1.6;
 }
 
+.cta-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
 .cta-button {
     background: white;
     color: #2a5298;
     font-size: 1.2rem;
     font-weight: 700;
-    padding: 18px 48px;
+    padding: 18px 32px;
     border-radius: 50px;
     border: none;
     cursor: pointer;
@@ -50,6 +56,16 @@
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cta-button-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
 }
 
 .cta-button:hover {
@@ -83,10 +99,12 @@
     background: rgba(255, 255, 255, 0.15);
 }
 
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    display: block;
+.feature-icon-wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
 }
 
 .feature-card h3 {

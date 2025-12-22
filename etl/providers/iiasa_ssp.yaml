@@ -1,0 +1,21 @@
+provider: IIASA
+dataset: SSP
+provider_version: "2024-04"
+
+input:
+  file_path: "training_data/raw/iiasa_ssp_2024.xlsx"
+  sheet_name: 0
+
+columns:
+  model: "Model"
+  scenario: "Scenario"
+  region: "Region"
+  variable: "Variable"
+  unit: "Unit"
+
+year_columns:
+  start: 2020
+  end: 2100
+  step: 5
+
+ingestion_batch: "iiasa_ssp_2024_04"
