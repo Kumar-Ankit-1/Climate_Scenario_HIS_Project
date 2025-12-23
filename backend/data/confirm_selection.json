@@ -1,13 +1,15 @@
 {
   "configuration": {
     "region": [
-      "India"
-    ]
+      "Russia",
+      "China",
+      "Japan"
+    ],
+    "start_date": "2011",
+    "end_date": "2089"
   },
   "variables": [],
-  "scenarios": [
-    "PEP_NoPolicy"
-  ],
-  "confirmed_at": "2025-12-23T15:46:32.728343",
+  "scenarios": [],
+  "confirmed_at": "2025-12-24T00:10:54.465980",
   "status": "confirmed"
 }

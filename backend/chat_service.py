@@ -59,6 +59,8 @@ def process_chat_message(state, user_message, history, variables_list, scenarios
     - If user mentions a YEAR or DATE:
       Determine if it's start_date or end_date based on context
     - NEVER omit an entity that was explicitly mentioned in the user message
+    - IF user mentions a SCENARIO (e.g., "IPR Policy", "SSP1", "RCP4.5"):
+      - Extract it into "detected_scenarios": ["IPR Policy"]
 
     LOGIC RULES:
     1. **Date Logic**:
@@ -106,7 +108,7 @@ def process_chat_message(state, user_message, history, variables_list, scenarios
         try:
             response = client.chat.completions.create(
                 # Using a smarter model for better logic
-                model="llama-3.3-70b-versatile",
+                model="llama-3.1-8b-instant",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message}

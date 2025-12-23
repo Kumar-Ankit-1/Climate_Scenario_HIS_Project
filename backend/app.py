@@ -43,8 +43,8 @@ def get_auto_suggestions():
             "query": query
         }), 200
 
-    var_suggestions = suggestions.get_suggestions(query, suggestions.variables_list)
-    scenario_suggestions = suggestions.get_suggestions(query, suggestions.scenarios_list)
+    var_suggestions = suggestions.get_suggestions(query, suggestions.variables_list, use_llm=False)
+    scenario_suggestions = suggestions.get_suggestions(query, suggestions.scenarios_list, use_llm=False)
     
     return jsonify({
         "variables": var_suggestions,
