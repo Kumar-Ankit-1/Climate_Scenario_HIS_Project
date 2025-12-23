@@ -1,70 +1,110 @@
 #!/bin/bash
 
-# Financial Chatbot - Quick Start Script
-# This script starts both the backend and frontend
+# Climate Chatbot Master Start Script
+# Handles setup, environment checks, and parallel execution of Frontend and Backend
 
-echo "🚀 Starting Financial Chatbot..."
-echo ""
-
-# Colors for output
+# Colors
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Get the directory where this script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo -e "${BLUE}=======================================${NC}"
+echo -e "${BLUE}   Climate Selection Buddy Launcher    ${NC}"
+echo -e "${BLUE}=======================================${NC}"
 
-# Check if virtual environment exists
-if [ ! -d "$SCRIPT_DIR/.venv" ]; then
-    echo "❌ Virtual environment not found. Please run setup first."
+# 1. Environment Checks
+echo -e "\n${GREEN}[1/4] Checking Environment...${NC}"
+
+# Check Python (Require 3.9+)
+if command -v python3 &>/dev/null; then
+    PY_VERSION=$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+    echo "Using Python $PY_VERSION"
+else
+    echo -e "${RED}Error: Python 3 is not installed.${NC}"
     exit 1
 fi
 
-# Start backend in the background
-echo -e "${YELLOW}Starting backend on port 5001...${NC}"
-# Kill any process running on port 5001
-echo "Cleaning up port 5001..."
-PID=$(lsof -t -i:5001)
-if [ -n "$PID" ]; then
-    kill -9 $PID
-    echo "Killed process $PID on port 5001."
+# Check Node (Require 16+)
+if command -v node &>/dev/null; then
+    NODE_VERSION=$(node -v)
+    echo "Using Node $NODE_VERSION"
+else
+    echo -e "${RED}Error: Node.js is not installed.${NC}"
+    exit 1
 fi
 
-source "$SCRIPT_DIR/.venv/bin/activate"
-cd "$SCRIPT_DIR/backend"
-echo "Starting Backend (Flask) on port 5001..."
-python app.py > /tmp/chatbot_backend.log 2>&1 &
-BACKEND_PID=$!
-echo -e "${GREEN}✓ Backend started (PID: $BACKEND_PID)${NC}"
-echo ""
+# 2. Backend Setup
+echo -e "\n${GREEN}[2/4] Setting up Backend...${NC}"
 
-# Wait a moment for backend to start
-sleep 2
+if [ ! -d ".venv" ]; then
+    echo "Creating virtual environment..."
+    python3 -m venv .venv
+fi
 
-# Start frontend
-echo -e "${YELLOW}Starting frontend on port 3000...${NC}"
-cd "$SCRIPT_DIR/UI"
+source .venv/bin/activate
+echo "Virtual environment activated."
 
-# Check if node_modules exists
+
+
+if [ ! -f ".env" ]; then
+    echo -e "${RED}Warning: .env file missing in root. Copying .env.example if exists or create one.${NC}"
+fi
+
+# 3. Frontend Setup
+echo -e "\n${GREEN}[3/4] Setting up Frontend...${NC}"
+cd UI
 if [ ! -d "node_modules" ]; then
-    echo "📦 Installing dependencies..."
+    echo "Installing frontend dependencies (first run only)..."
     npm install
 fi
+cd ..
 
-npm start &
+# 4. Launch Services
+echo -e "\n${GREEN}[4/4] Launching Services...${NC}"
+
+# Function to kill child processes on exit
+cleanup() {
+    echo -e "\n${BLUE}Shutting down services...${NC}"
+    # Just in case vars are not set yet
+    if [ -n "$BACKEND_PID" ]; then kill $BACKEND_PID 2>/dev/null; fi
+    if [ -n "$FRONTEND_PID" ]; then kill $FRONTEND_PID 2>/dev/null; fi
+    exit
+}
+
+trap cleanup SIGINT
+
+# Kill existing processes on ports
+if lsof -t -i:5001 > /dev/null; then
+    echo "Killing existing backend on port 5001..."
+    lsof -t -i:5001 | xargs kill -9
+fi
+
+if lsof -t -i:3000 > /dev/null; then
+    echo "Killing existing frontend on port 3000..."
+    lsof -t -i:3000 | xargs kill -9
+fi
+
+# Make sure installs are visible (Unmask pip errors)
+echo "Installing requirements..."
+pip install -r requirements.txt
+
+# Start Backend
+echo "Starting Flask Backend (Port 5001)..."
+python backend/app.py > backend.log 2>&1 &
+BACKEND_PID=$!
+sleep 2 # basic wait
+
+# Start Frontend
+echo "Starting React Frontend..."
+cd UI
+npm start > ../frontend.log 2>&1 &
 FRONTEND_PID=$!
-echo -e "${GREEN}✓ Frontend started (PID: $FRONTEND_PID)${NC}"
-echo ""
+cd ..
 
-echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}✓ Chatbot is running!${NC}"
-echo -e "${GREEN}========================================${NC}"
-echo ""
-echo "📱 Frontend:  http://localhost:3000"
-echo "🔧 Backend:   http://localhost:5001"
-echo ""
-echo "Press Ctrl+C to stop both services"
-echo ""
+echo -e "${GREEN}Services are running!${NC}"
+echo -e "Backend Logs: tail -f backend.log"
+echo -e "Frontend Logs: tail -f frontend.log"
+echo -e "Press ${RED}Ctrl+C${NC} to stop."
 
-# Wait for user to interrupt
 wait

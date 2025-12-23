@@ -1,0 +1,409 @@
+ * Serving Flask app 'app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.111:5001
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [23/Dec/2025 15:46:31] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:46:31] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:46:31] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:46:32] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:46:32] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:13] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:14] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:16] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:21] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:21] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:22] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:22] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:23] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:24] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:27] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:27] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:28] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:53:51] "POST /api/suggestions HTTP/1.1" 200 -
+Primary model failed (Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99282, Requested 870. Please try again in 2m11.328s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}), switching to fallback...
+DEBUG LLM RESPONSE: {
+  "reasoning": "User requested analysis for India, setting region to India.",
+   "updates": {
+      "region": ["India"]
+   },
+   "detected_variables": [],
+   "detected_scenarios": [],
+   "intent": "INFO",
+   "response": "Analysis for India set."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: INFO
+Updates: {'region': ['India']}
+Current State BEFORE applying: {}
+Applying INFO updates...
+  Setting region = ['India']
+State AFTER applying updates: {'region': ['India']}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['India']}
+Normalized context_data: {'region': 'India', 'start_date': 'Not Set', 'end_date': 'Not Set'}
+Response: Analysis for India set.
+
+Primary model failed (Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99282, Requested 870. Please try again in 2m11.328s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}), switching to fallback...
+DEBUG LLM RESPONSE: {
+  "reasoning": "User requested to add Temperature variable.",
+   "updates": {
+      "region": ["India"],
+      "detected_variables": ["Temperature"]
+   },
+   "detected_scenarios": [],
+   "intent": "INFO",
+   "response": "Temperature variable has been added."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: INFO
+Updates: {'region': ['India'], 'detected_variables': ['Temperature']}
+Current State BEFORE applying: {'region': ['India']}
+Applying INFO updates...
+  Setting region = ['India']
+State AFTER applying updates: {'region': ['India']}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['India']}
+Normalized context_data: {'region': 'India', 'start_date': 'Not Set', 'end_date': 'Not Set'}
+Response: Temperature variable has been added.
+
+Primary model failed (Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99281, Requested 872. Please try again in 2m12.191999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}), switching to fallback...
+DEBUG LLM RESPONSE: {
+  "reasoning": "Adding IPR Policy scenario as per user request.",
+   "updates": {
+      "region": ["India"],
+      "start_date": null,
+      "end_date": null,
+      "scenario": ["IPR Policy"]
+   },
+   "detected_variables": [],
+   "detected_scenarios": ["IPR Policy"],
+   "intent": "INFO",
+   "response": "IPR Policy scenario added to the analysis."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: INFO
+Updates: {'region': ['India'], 'start_date': None, 'end_date': None, 'scenario': ['IPR Policy']}
+Current State BEFORE applying: {'region': ['India']}
+Applying INFO updates...
+  Setting region = ['India']
+State AFTER applying updates: {'region': ['India']}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['India']}
+Normalized context_data: {'region': 'India', 'start_date': 'Not Set', 'end_date': 'Not Set'}
+Response: IPR Policy scenario added to the analysis.
+
+Primary model failed (Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99281, Requested 875. Please try again in 2m14.783999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}), switching to fallback...
+DEBUG LLM RESPONSE: {
+  "reasoning": "User specified a date range, so we update both start and end dates.",
+   "updates": {
+      "start_date": "2020",
+      "end_date": "2030"
+   },
+   "detected_variables": [],
+   "detected_scenarios": [],
+   "intent": "CONFIRM_UPDATE",
+   "response": "The analysis period has been updated to 2020-2030."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: CONFIRM_UPDATE
+Updates: {'start_date': '2020', 'end_date': '2030'}
+Current State BEFORE applying: {'region': ['India']}
+State AFTER applying updates: {'region': ['India']}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['India']}
+Normalized context_data: {'region': 'India', 'start_date': 'Not Set', 'end_date': 'Not Set'}
+Response: ✅ **Configuration Confirmed!**
+
+[Open Comparison Tool](/compare)
+
+Primary model failed (Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99280, Requested 868. Please try again in 2m7.872s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}), switching to fallback...
+DEBUG LLM RESPONSE: {
+  "reasoning": "Confirmation received, no updates made.",
+   "updates": {
+      "region": ["India"],
+      "start_date": null,
+      "end_date": null
+   },
+   "detected_variables": [],
+   "detected_scenarios": [],
+   "intent": "CONFIRM",
+   "response": "Your current configuration is set for India with no date range."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: CONFIRM
+Updates: {'region': ['India'], 'start_date': None, 'end_date': None}
+Current State BEFORE applying: {'region': ['India']}
+Applying CONFIRM updates...
+  Setting region = ['India']
+State AFTER applying updates: {'region': ['India']}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['India']}
+Normalized context_data: {'region': 'India', 'start_date': 'Not Set', 'end_date': 'Not Set'}
+Response: ✅ **Configuration Confirmed!**
+
+[Open Comparison Tool](/compare)
+
+DEBUG LLM RESPONSE: {
+  "reasoning": "The user has specified two regions, India and China, and a date range from 2015 to 2100. Since the date range includes a start and end year, both will be updated. The regions will be set as the current regions for analysis.",
+   "updates": {
+      "region": ["India", "China"],
+      "start_date": "2015",
+      "end_date": "2100"
+   },
+   "detected_variables": [],
+   "detected_scenarios": [],
+   "intent": "INFO",
+   "response": "The climate analysis will be performed for India and China, from 2015 to 2100."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: INFO
+Updates: {'region': ['India', 'China'], 'start_date': '2015', 'end_date': '2100'}
+Current State BEFORE applying: {}
+Applying INFO updates...
+  Setting region = ['India', 'China']
+  Setting start_date = 2015
+  Setting end_date = 2100
+State AFTER applying updates: {'region': ['India', 'China'], 'start_date': '2015', 'end_date': '2100'}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['India', 'China'], 'start_date': '2015', 'end_date': '2100'}
+Normalized context_data: {'region': 'India, China', 'start_date': '2015', 'end_date': '2100'}
+Response: The climate analysis will be performed for India and China, from 2015 to 2100.
+
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5896, Requested 2403. Please try again in 22.99s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5879, Requested 2401. Please try again in 22.8s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}127.0.0.1 - - [23/Dec/2025 15:54:13] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:13] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:13] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:15] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:34] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:35] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:35] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:38] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:38] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:54:38] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:00] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:00] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:23] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:24] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:47] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:47] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:47] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:57] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:58] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:55:58] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:56:11] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:56:20] "POST /api/suggestions HTTP/1.1" 200 -
+
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5867, Requested 2401. Please try again in 22.68s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5846, Requested 2403. Please try again in 22.49s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5786, Requested 2401. Please try again in 21.87s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3895, Requested 2153. Please try again in 480ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5920, Requested 2151. Please try again in 20.71s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5757, Requested 2403. Please try again in 21.599999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5940, Requested 2403. Please try again in 23.43s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5999, Requested 2403. Please try again in 24.02s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5998, Requested 2403. Please try again in 24.01s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5975, Requested 2403. Please try again in 23.779999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5858, Requested 2401. Please try again in 22.59s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3936, Requested 2153. Please try again in 890ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3929, Requested 2153. Please try again in 820ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5942, Requested 2403. Please try again in 23.45s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4583, Requested 2403. Please try again in 9.86s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5982, Requested 2401. Please try again in 23.83s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5980, Requested 2401. Please try again in 23.81s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4671, Requested 2401. Please try again in 10.72s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5874, Requested 2403. Please try again in 22.77s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}127.0.0.1 - - [23/Dec/2025 15:56:21] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:56:22] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:56:45] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:57:07] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:57:28] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 15:57:30] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 16:29:16] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 16:29:17] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 16:29:22] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:49:23] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:49:24] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:49:26] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:49:27] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:51:28] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:51:29] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:53:45] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:53:46] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:54:38] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:54:39] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:54:56] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:54:57] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:02] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:03] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:06] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:14] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:15] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:20] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:27] "OPTIONS /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 17:55:28] "POST /api/parse-query HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:27:35] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:27:35] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:27:49] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:12] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:12] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:33] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:34] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:34] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:37] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:47] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:47] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:52] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:52] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:52] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:56] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:56] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:56] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:56] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:28:56] "POST /api/suggestions HTTP/1.1" 200 -
+
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5852, Requested 2403. Please try again in 22.55s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5981, Requested 2403. Please try again in 23.84s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5954, Requested 2403. Please try again in 23.57s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5988, Requested 2403. Please try again in 23.91s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3893, Requested 2155. Please try again in 480ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5764, Requested 2403. Please try again in 21.67s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5983, Requested 2155. Please try again in 21.38s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5751, Requested 2405. Please try again in 21.56s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5726, Requested 2405. Please try again in 21.31s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3888, Requested 2157. Please try again in 449.999999ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5973, Requested 2153. Please try again in 21.26s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+DEBUG LLM RESPONSE: {
+  "reasoning": "The user wants to analyze the climate for China and Japan from 2012 to 2099. Since the dates are within the allowed range, we can proceed with the update.",
+   "updates": {
+      "region": ["China", "Japan"],
+      "start_date": "2012",
+      "end_date": "2099"
+   },
+   "detected_variables": [],
+   "detected_scenarios": [],
+   "intent": "INFO",
+   "response": "Climate analysis for China and Japan has been set for the period from 2012 to 2099."
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: INFO
+Updates: {'region': ['China', 'Japan'], 'start_date': '2012', 'end_date': '2099'}
+Current State BEFORE applying: {}
+Applying INFO updates...
+  Setting region = ['China', 'Japan']
+  Setting start_date = 2012
+  Setting end_date = 2099
+State AFTER applying updates: {'region': ['China', 'Japan'], 'start_date': '2012', 'end_date': '2099'}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['China', 'Japan'], 'start_date': '2012', 'end_date': '2099'}
+Normalized context_data: {'region': 'China, Japan', 'start_date': '2012', 'end_date': '2099'}
+Response: Climate analysis for China and Japan has been set for the period from 2012 to 2099.
+
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5982, Requested 2155. Please try again in 21.37s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5979, Requested 2155. Please try again in 21.34s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5942, Requested 2157. Please try again in 20.99s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5996, Requested 2155. Please try again in 21.509999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5984, Requested 2161. Please try again in 21.45s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}127.0.0.1 - - [23/Dec/2025 18:28:56] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:02] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:02] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:08] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:08] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:09] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:18] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:18] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:18] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:36] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:36] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:37] "POST /api/chat HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:40] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:40] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:41] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:41] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:29:43] "POST /api/suggestions HTTP/1.1" 200 -
+
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5798, Requested 2405. Please try again in 22.029999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5775, Requested 2405. Please try again in 21.8s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5761, Requested 2403. Please try again in 21.64s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3846, Requested 2157. Please try again in 30ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5988, Requested 2151. Please try again in 21.39s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5761, Requested 2433. Please try again in 21.939999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5760, Requested 2427. Please try again in 21.87s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5753, Requested 2429. Please try again in 21.82s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5752, Requested 2433. Please try again in 21.85s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5749, Requested 2413. Please try again in 21.62s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5717, Requested 2435. Please try again in 21.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+DEBUG LLM RESPONSE: {
+  "reasoning": "The user has initiated a conversation, but no specific intent or entities have been mentioned.",
+   "updates": {},
+   "detected_variables": [],
+   "detected_scenarios": [],
+   "intent": "INFO",
+   "response": "Hello! How can I assist you with configuring your climate analysis today?"
+}
+
+=== CHAT SERVICE RETURNED ===
+Intent: INFO
+Updates: {}
+Current State BEFORE applying: {'region': ['China', 'Japan'], 'start_date': '2012', 'end_date': '2099'}
+Applying INFO updates...
+State AFTER applying updates: {'region': ['China', 'Japan'], 'start_date': '2012', 'end_date': '2099'}
+
+=== RETURNING TO FRONTEND ===
+Raw state: {'region': ['China', 'Japan'], 'start_date': '2012', 'end_date': '2099'}
+Normalized context_data: {'region': 'China, Japan', 'start_date': '2012', 'end_date': '2099'}
+Response: Hello! How can I assist you with configuring your climate analysis today?
+
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5967, Requested 2155. Please try again in 21.22s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5957, Requested 2155. Please try again in 21.119999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5939, Requested 2153. Please try again in 20.92s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Expecting value: line 1 column 1 (char 0)
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5798, Requested 2401. Please try again in 21.99s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5792, Requested 2403. Please try again in 21.95s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Semantic Search Error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01k60kzagff36ak9gp8zv8gbmv` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5768, Requested 2403. Please try again in 21.71s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}127.0.0.1 - - [23/Dec/2025 18:29:43] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:30:03] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:30:03] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:30:03] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:30:03] "POST /api/suggestions HTTP/1.1" 200 -
+127.0.0.1 - - [23/Dec/2025 18:30:03] "POST /api/suggestions HTTP/1.1" 200 -

@@ -29,6 +29,13 @@ climate-scenario-platform/
 
 5️⃣ Applying migrations (simple & explicit)
 
+
+Run this to check if the tables are created: 
+```bash
+psql -U climate_user -d climate_db -c "\dt"
+```
+
+
 Each dev runs:
 
 psql -U climate_user -d climate_db -f db/migrations/001_init.sql
@@ -44,3 +51,8 @@ DB_NAME=climate_db
 DB_USER=climate_user
 DB_PASSWORD=climate_pass
 
+
+
+Schema:
+    - scenario_observations
+    - variable_semantics

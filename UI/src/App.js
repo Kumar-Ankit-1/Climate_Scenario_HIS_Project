@@ -18,7 +18,10 @@ function App() {
         />
       )}
       {view === 'chat' && (
-        <ChatInterface onBack={() => setView('landing')} />
+        <ChatInterface
+          onBack={() => setView('landing')}
+          onCompare={() => setView('manual')}
+        />
       )}
       {view === 'manual' && (
         <ManualProcess onBack={() => setView('landing')} />

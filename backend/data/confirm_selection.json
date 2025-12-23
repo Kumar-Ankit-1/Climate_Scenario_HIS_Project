@@ -1,0 +1,13 @@
+{
+  "configuration": {
+    "region": [
+      "India"
+    ]
+  },
+  "variables": [],
+  "scenarios": [
+    "PEP_NoPolicy"
+  ],
+  "confirmed_at": "2025-12-23T15:46:32.728343",
+  "status": "confirmed"
+}

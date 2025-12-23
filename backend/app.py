@@ -1,13 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from groq import Groq, RateLimitError
-import difflib
-import pandas as pd
 import os
+import sys
 from dotenv import load_dotenv
 from pathlib import Path
 import json
 from datetime import datetime
+
+# Add separate modules
+import suggestions
+import chat_service
 
 # Load environment variables
 load_dotenv()
@@ -15,195 +17,18 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*", "methods": ["GET", "POST", "OPTIONS"], "allow_headers": ["Content-Type"]}})
 
-# Initialize Groq client
-groq_api_key = os.getenv('GROQ_API_KEY')
-if not groq_api_key:
-    raise ValueError("GROQ_API_KEY not found in environment variables")
-
-client = Groq(api_key=groq_api_key)
-
-# Load CSV data
-DATA_DIR = Path(__file__).parent.parent / "training_data"
-variables_df = pd.read_csv(DATA_DIR / "variables_vector.csv")
-scenarios_df = pd.read_csv(DATA_DIR / "scenario_vector.csv")
-
-# Convert to dictionaries for easier lookup
-variables_list = variables_df.to_dict('records')
-scenarios_list = scenarios_df.to_dict('records')
-
-
-
-def get_semantic_suggestions(query: str, data_list: list, max_suggestions: int = 5) -> list:
-    """
-    Use Groq to find semantically relevant suggestions when simple matching fails.
-    """
-    try:
-        # Prepare a summarized list of items for the LLM context
-        # We limit to name and description to save tokens
-        items_summary = []
-        for item in data_list:
-            name = item.get('name', 'Unknown')
-            desc = item.get('description', '')
-            items_summary.append(f"{name}: {desc}")
-        
-        # Super optimization: Only send names to keeping it fast and cheap
-        names_list = [item.get('name', '') for item in data_list]
-        
-        prompt = f"""
-        I have a list of financial/climate variables/scenarios: {names_list[:200]}... (truncated for brevity)
-        
-        The user searched for: "{query}" through a variable/scenario database.
-        
-        Return a JSON array of up to {max_suggestions} strings from the provided list (or hypothetical relevant ones if exact match missing but keep it strict to the domain) that are most semantically relevant to "{query}".
-        Example: User types "Icecream", you might return ["manufacturing", "consumer_goods", "retail_sales"] if they exist or are relevant.
-        
-        Return ONLY valid JSON array of strings.
-        """
-        
-        response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,
-            temperature=0.3
-        )
-        
-        content = response.choices[0].message.content
-        # Extract JSON list from text (handle potential markdown formatting)
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0]
-        elif "```" in content:
-            content = content.split("```")[1].split("```")[0]
-            
-        suggested_names = json.loads(content.strip())
-        
-        # Map back to full objects
-        matches = []
-        for name in suggested_names:
-            # Find original object
-            for item in data_list:
-                if item.get('name') == name:
-                    matches.append(item)
-                    break
-            # If we hallucinated a name not in list, maybe skip or add as 'suggestion'
-        
-        return matches[:max_suggestions]
-        
-    except Exception as e:
-        print(f"Semantic Search Error: {e}")
-        return []
-
-def get_suggestions(query: str, data_list: list, max_suggestions: int = 5) -> list:
-    """
-    Get suggestions using robust field detection and fuzzy/token matching.
-    Falls back to semantic search if no matches found.
-    """
-    if not query:
-        return []
-
-    query_lower = query.lower()
-    matches = []
-
-    for item in data_list:
-        # Find a likely name field
-        name = ""
-        desc = ""
-        for k, v in item.items():
-            kl = k.lower()
-            if kl in ("variable", "variable name", "name", "scenario", "scenario name", "title"):
-                name = str(v)
-                break
-        if not name:
-            # fallback: pick first field that looks like a title
-            for k, v in item.items():
-                if "name" in k.lower() or "variable" in k.lower() or "scenario" in k.lower():
-                    name = str(v)
-                    break
-        if not name:
-            try:
-                name = str(next(iter(item.values())))
-            except Exception:
-                name = ""
-
-        # description field detection
-        for k in ("description", "Description", "desc", "details", "Scenario Name"):
-            if k in item:
-                desc = str(item.get(k, ""))
-                break
-
-        # Attach normalized name to item for later use
-        item['name'] = name
-        item['description'] = desc
-
-        name_lower = name.lower()
-
-        # Simple normalization / stemming
-        def normalize_token(t: str) -> str:
-            t = t.lower()
-            t = ''.join([c for c in t if c.isalnum() or c.isspace()])
-            for suffix in ("ing", "ment", "tion", "s", "es", "ly"):
-                if len(t) > len(suffix) + 2 and t.endswith(suffix):
-                    t = t[: -len(suffix)]
-                    break
-            return t
-
-        qtokens = [normalize_token(t) for t in ''.join([c if c.isalnum() else ' ' for c in query_lower]).split() if t]
-        ntokens = [normalize_token(t) for t in ''.join([c if c.isalnum() else ' ' for c in name_lower]).split() if t]
-
-        # scoring
-        score = 0.0
-        if query_lower in name_lower:
-            score = 1.0
-        else:
-            if qtokens and all(any(qt == nt for nt in ntokens) for qt in qtokens):
-                score = 0.95
-            else:
-                try:
-                    ratio = difflib.SequenceMatcher(None, query_lower, name_lower).ratio()
-                except Exception:
-                    ratio = 0.0
-                score = ratio
-
-        if score > 0.4:
-            matches.append({
-                "name": name,
-                "description": desc,
-                "score": score
-            })
-
-    # Sort by match score
-    matches.sort(key=lambda x: x["score"], reverse=True)
-    top_matches = matches[:max_suggestions]
-    
-    # Fallback to Semantic Search if few results
-    if len(top_matches) < 2 and len(data_list) > 0:
-        # No good matches, try semantic
-        print(f"Low matches for '{query}', trying semantic search...")
-        semantic_matches = get_semantic_suggestions(query, data_list, max_suggestions)
-        
-        # Deduplicate
-        existing_names = {m['name'] for m in top_matches}
-        for sm in semantic_matches:
-            if sm.get('name') not in existing_names:
-                top_matches.append({
-                    "name": sm.get('name'),
-                    "description": sm.get('description'),
-                    "score": 0.8 # arbitrary score for semantic match
-                })
-    
-    return top_matches[:max_suggestions]
-
+# Global state store
+session_states = {}
 
 @app.route('/', methods=['GET'])
 def home():
     """Root endpoint"""
-    return jsonify({"status": "ok", "message": "Financial Chatbot Backend"}), 200
-
+    return jsonify({"status": "ok", "message": "Financial Chatbot Backend (Optimized)"}), 200
 
 @app.route('/api/health', methods=['GET'])
 def health():
     """Health check endpoint"""
     return jsonify({"status": "ok", "message": "Chatbot backend is running"}), 200
-
 
 @app.route('/api/suggestions', methods=['POST'])
 def get_auto_suggestions():
@@ -218,8 +43,8 @@ def get_auto_suggestions():
             "query": query
         }), 200
 
-    var_suggestions = get_suggestions(query, variables_list)
-    scenario_suggestions = get_suggestions(query, scenarios_list)
+    var_suggestions = suggestions.get_suggestions(query, suggestions.variables_list)
+    scenario_suggestions = suggestions.get_suggestions(query, suggestions.scenarios_list)
     
     return jsonify({
         "variables": var_suggestions,
@@ -227,468 +52,199 @@ def get_auto_suggestions():
         "query": query
     }), 200
 
+# NEW: Restoring the endpoint expected by SmartSuggestions.js
+@app.route('/api/parse-query', methods=['POST'])
+def parse_query_intent():
+    """Analyze complex query for Smart Suggestions UI"""
+    data = request.json
+    query = data.get('query', '').strip()
+    
+    if not query:
+        return jsonify({"error": "Query cannot be empty"}), 400
 
-# Global state store
-session_states = {}
-
-def get_session_id(request_data):
-    return "default_session"
+    result = chat_service.analyze_query_intent(query)
+    
+    if result:
+        return jsonify(result), 200
+    else:
+        return jsonify({"error": "Analysis failed"}), 500
 
 @app.route('/api/reset', methods=['POST'])
 def reset_session():
     """Reset the current session state"""
-    session_id = "default_session"
+    data = request.json
+    session_id = data.get('session_id', "default_session")
+    
     session_states[session_id] = {
-        "step": "region", 
+        "step": "dynamic", 
         "data": {},
         "completed": False
     }
     return jsonify({"message": "Session reset", "status": "reset"}), 200
 
-def parse_intent_with_groq(state, message):
-    """
-    Use Groq to understand user intent during the flow.
-    Returns JSON: { "intent": "NEXT"|"MODIFY"|"RESET"|"CONFIRM", "field": "...", "value": "..." }
-    """
-    # Deterministic Override for common modification patterns
-    # "Change region to X", "Set start date to Y"
-    lower_msg = message.lower()
-    
-    # Strict Confirm Check (Global or Review step specific)
-    # Log the input for debugging visibility in terminal
-    print(f"[DEBUG] Processing Message: '{message}' | Current Step: {state.get('step')}", file=sys.stderr)
-    
-    clean_msg = lower_msg.strip(" .,!")
-    if clean_msg in ["confirm", "yes", "done", "finish", "proceed", "looks good", "ok"]:
-        print(f"[DEBUG] Deterministic Intent Detected: CONFIRM", file=sys.stderr)
-        return {"intent": "CONFIRM"}
-
-    if "change" in lower_msg or "set" in lower_msg:
-        import re
-        # Pattern: change/set (region|start date|end date) to (value)
-        match = re.search(r'(?:change|set)\s+(region|start\s*date|end\s*date)\s+to\s+(.+)', lower_msg, re.IGNORECASE)
-        if match:
-            field_raw = match.group(1).lower().replace(" ", "_") # normalize start date -> start_date
-            value = match.group(2).strip()
-            # Special case cleanup
-            if field_raw == "startdate": field_raw = "start_date"
-            if field_raw == "enddate": field_raw = "end_date"
-            
-            print(f"[DEBUG] Deterministic Intent Detected: MODIFY {field_raw} -> {value}", file=sys.stderr)
-            return {"intent": "MODIFY", "field": field_raw, "value": value.title() if field_raw == "region" else value.upper()}  # Basic casing
-
-    prompt = f"""
-    You are an intent classification engine for a chatbot wizard.
-    The current step is: "{state['step']}".
-    The user says: "{message}".
-    
-    Determine the JSON output:
-    1. If the user is providing the answer for the current step (e.g. providing a region, date, or confirming), output: {{"intent": "NEXT", "value": "extracted_value"}}
-    2. If the user wants to CHANGE a previous value (region, start_date, end_date), output: {{"intent": "MODIFY", "field": "field_name", "value": "new_value"}}
-    3. If the user wants to RESET or RESTART, output: {{"intent": "RESET"}}
-    4. If the user says "confirm", "yes", "proceed" in the review step, output: {{"intent": "CONFIRM"}}
-    
-    Examples:
-    - Step: region, User: "North America" -> {{"intent": "NEXT", "value": "North America"}}
-    - Step: start_date, User: "2020" -> {{"intent": "NEXT", "value": "2020"}}
-    - Step: start_date, User: "Change region to China" -> {{"intent": "MODIFY", "field": "region", "value": "China"}}
-    - Step: start_date, User: "Change region to CHN" -> {{"intent": "MODIFY", "field": "region", "value": "CHN"}}
-    - Step: review, User: "Actually, start in 2015" -> {{"intent": "MODIFY", "field": "start_date", "value": "2015"}}
-    - Step: review, User: "confirm" -> {{"intent": "CONFIRM"}}
-    
-    Ensure dates are normalized to YYYY-MM-DD if possible.
-    """
-    
-    try:
-        response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,
-            temperature=0.1
-        )
-        content = response.choices[0].message.content
-        # Robust JSON extraction
-        json_str = content.strip()
-        if "```json" in json_str:
-            json_str = json_str.split("```json")[1].split("```")[0]
-        elif "```" in json_str:
-            json_str = json_str.split("```")[1].split("```")[0]
-        
-        # Cleanup potential extra text outside braces
-        start = json_str.find('{')
-        end = json_str.rfind('}')
-        if start != -1 and end != -1:
-            json_str = json_str[start:end+1]
-        
-        parsed = json.loads(json_str)
-        # print(f"DEBUG LLM Intent: {parsed}")
-        return parsed
-    except Exception as e:
-        print(f"Intent Parsing Error: {e}")
-        return {"intent": "NEXT", "value": message}
-    
-
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    """Chat endpoint that uses Groq API with Guided Flow"""
+    """Chat endpoint using optimized single-call service"""
     data = request.json
     user_message = data.get('message', '').strip()
-    conversation_history = data.get('history', [])
+    session_id = data.get('session_id')
     selected_variables = data.get('selected_variables', [])
     selected_scenarios = data.get('selected_scenarios', [])
     
     if not user_message:
         return jsonify({"error": "Message cannot be empty"}), 400
     
-    # Session Management
-    session_id = "default_session"
+    if not session_id:
+        session_id = "temp_" + datetime.now().strftime("%Y%m%d%H%M%S")
+        
     if session_id not in session_states:
         session_states[session_id] = {
-            "step": "region", 
+            "step": "dynamic", 
             "data": {},
+            "pending_updates": {},
             "completed": False
         }
     
     state = session_states[session_id]
+    conversation_history = data.get('history', [])
     
-    # If flow is completed, standard chat behavior for now
-    if state["completed"]:
-        return run_standard_chat(user_message, conversation_history, selected_variables, selected_scenarios, state["data"])
-
-    # Intelligent Guided Flow Logic
-    response_text = ""
+    # 1. Process Message (Optimize: Single Call)
+    result = chat_service.process_chat_message(
+        state, 
+        user_message, 
+        conversation_history,
+        suggestions.variables_list, 
+        suggestions.scenarios_list
+    )
     
-    # Parse Intent
-    parsed = parse_intent_with_groq(state, user_message)
-    intent = parsed.get("intent", "NEXT")
-    value = parsed.get("value", user_message)
-    field = parsed.get("field")
+    updates = result.get('updates', {})
+    response_text = result.get('response', '')
+    intent = result.get('intent', 'INFO')
+    detected_vars = result.get('detected_variables', [])
     
-    # Handle Global Intents
-    if intent == "RESET":
-        reset_session()
-        return jsonify({
-            "response": "I've reset the selection process. Please enter the **Target Region** for analysis.",
-            "success": True
-        }), 200
-
-    if intent == "MODIFY":
-        if field and field in ["region", "start_date", "end_date"]:
-            state["data"][field] = value
-            
-            # If we changed something, we should probably stay in review or go to review to see the change
-            # But the user might be mid-flow. 
-            # If step is review, update the response text immediately.
-            
-            response_text = f"✅ Updated **{field}** to **{value}**.\n\n"
+    print(f"\n=== CHAT SERVICE RETURNED ===")
+    print(f"Intent: {intent}")
+    print(f"Updates: {updates}")
+    print(f"Current State BEFORE applying: {state['data']}")
+    
+    # 2. Logic: Handle Overwrites vs Direct Updates
+    if intent == "REQUEST_OVERWRITE":
+        # Store updates as pending and ask user
+        state["pending_updates"] = updates
+        # Response text from LLM should already be asking "Do you want to switch to X?"
+        
+    elif intent == "CONFIRM_UPDATE":
+        # Apply pending updates
+        if state.get("pending_updates"):
+            for k, v in state["pending_updates"].items():
+                state["data"][k] = v
+            state["pending_updates"] = {} # Clear
+            response_text = "Update confirmed. " + response_text
         else:
-            response_text = "I understood you want to change something, but I wasn't sure which field. Please be specific (e.g., 'Change region to Europe').\n\n"
-    
-    step = state["step"]
-    
-    # Step Transition Logic (Skip if MODIFY, as we already updated data)
-    
-    if step == "region":
-        if intent == "NEXT":
-            state["data"]["region"] = value
-            state["step"] = "start_date"
-            response_text = f"Region set to **{value}**. \nNow, please enter the **Start Date** for the analysis period.\n\n_Suggested: 2010, 2015, 2020_"
-        elif intent == "MODIFY":
-             if state['data'].get("region"):
-                 # Re-prompt for next step if just modifying
-                 # Actually, if they modified region, we should probably just confirm it and remind of current step
-                 pass 
+             # Just normal confirm if no pending text
+             if state['data'].get('region'):
+                state["completed"] = True
+                save_confirmation(state, selected_variables, selected_scenarios)
+                response_text = "✅ **Configuration Confirmed!**\n\n[Open Comparison Tool](/compare)"
 
-    elif step == "start_date":
-        if intent == "NEXT":
-            # Validation: Simple check if it looks like a year or date
-            # Allow YYYY or YYYY-MM-DD
-            import re
-            if re.match(r'^\d{4}(?:-\d{2}-\d{2})?$', value):
-                state["data"]["start_date"] = value
-                state["step"] = "end_date"
-                response_text = f"Start Date set to **{value}**. \nPlease enter the **End Date** for the analysis period.\n\n_Suggested: 2030, 2050, 2100_"
-            else:
-                 response_text = f"❌ '**{value}**' doesn't look like a valid year.\nPlease enter a valid year (e.g., 2020) or date (YYYY-MM-DD)."
-                 
-        elif intent == "MODIFY":
-             pass
-            
-    elif step == "end_date":
-        if intent == "NEXT":
-            import re
-            if re.match(r'^\d{4}(?:-\d{2}-\d{2})?$', value):
-                 state["data"]["end_date"] = value
-                 state["step"] = "review"
-            else:
-                 response_text = f"❌ '**{value}**' doesn't look like a valid year.\nPlease enter a valid year (e.g., 2050) or date (YYYY-MM-DD)."
-        elif intent == "MODIFY":
-            state["step"] = "review" # Force review if modifying end date
-            
-    # Review Logic
+    elif intent == "CORRECTION":
+        # Corrections should be applied immediately, bypassing permission checks
+        print(f"Applying CORRECTION updates...")
+        for k, v in updates.items():
+            if k in ["region", "start_date", "end_date"]:
+                print(f"  Setting {k} = {v}")
+                state["data"][k] = v
+        response_text = "✅ " + response_text
+
+    else:
+        # Standard INFO or direct update if safe
+        # ALWAYS apply any updates returned by the LLM
+        print(f"Applying {intent} updates...")
+        for k, v in updates.items():
+            if k in ["region", "start_date", "end_date"]:
+                # Only update if value is meaningful
+                if v is not None:
+                    print(f"  Setting {k} = {v}")
+                    state["data"][k] = v
+    
+    print(f"State AFTER applying updates: {state['data']}")
+    
+    # 3. Handle Variable/Scenario Detection
     added_vars = []
     added_scens = []
     
-    if state["step"] == "review":
-        if intent == "CONFIRM":
+    for var_name in detected_vars:
+        # Validate existence (Quick check only, no second-layer LLM)
+        matches = suggestions.get_suggestions(var_name, suggestions.variables_list, max_suggestions=1, use_llm=False)
+        if matches and matches[0]['score'] > 0.6:
+            real_var_name = matches[0]['name']
+            if real_var_name not in selected_variables:
+                selected_variables.append(real_var_name)
+                added_vars.append(real_var_name)
+    
+    # Process Detected Scenarios
+    detected_scens_list = result.get('detected_scenarios', [])
+    for scen_name in detected_scens_list:
+        matches = suggestions.get_suggestions(scen_name, suggestions.scenarios_list, max_suggestions=1, use_llm=False)
+        if matches and matches[0]['score'] > 0.6:
+            real_scen_name = matches[0]['name']
+            if real_scen_name not in selected_scenarios:
+                selected_scenarios.append(real_scen_name)
+                added_scens.append(real_scen_name)
+    
+    # 4. Handle RESET
+    if intent == "RESET":
+        session_states[session_id] = {"step": "dynamic", "data": {}, "pending_updates": {}, "completed": False}
+        return jsonify({
+            "response": "I've reset the selection process. Let's start over!",
+            "success": True
+        }), 200
+    
+    # 5. Handle Final Confirmation (explicit intent)
+    if intent == "CONFIRM" and not state.get("pending_updates"):
+         if state['data'].get('region'):
             state["completed"] = True
-            
-            output_file = Path(__file__).parent.parent / "confirm_selection.json"
-            final_data = {
-                "configuration": state["data"],
-                "variables": selected_variables,
-                "scenarios": selected_scenarios,
-                "confirmed_at": datetime.now().isoformat(),
-                "status": "confirmed"
-            }
-            try:
-                with open(output_file, 'w') as f:
-                    json.dump(final_data, f, indent=2)
-                response_text = "✅ **Configuration Confirmed and Saved!** \n\nYou can now ask questions about your specific scenario and data."
-            except Exception as e:
-                response_text = f"❌ Error saving configuration: {str(e)}"
+            save_confirmation(state, selected_variables, selected_scenarios)
+            response_text = "✅ **Configuration Confirmed!**\n\n[Open Comparison Tool](/compare)" 
+
+    # Normalize state data: Convert None to "Not Set" for frontend display
+    normalized_data = {}
+    for key in ["region", "start_date", "end_date"]:
+        value = state["data"].get(key)
+        if value is None or value == "None" or (isinstance(value, list) and len(value) == 0):
+            normalized_data[key] = "Not Set"
+        elif isinstance(value, list):
+            normalized_data[key] = ", ".join(value)
         else:
-            # Check for variable/scenario additions via chat
-            if intent == "NEXT":
-                # Try to find a match
-                var_matches = get_suggestions(user_message, variables_list)
-                scen_matches = get_suggestions(user_message, scenarios_list)
-                
-                # If we have a very strong match or semantic match
-                # Logic: If top match score is high, add it.
-                if var_matches and var_matches[0]['score'] >= 0.5:
-                     top_var = var_matches[0]['name']
-                     if top_var not in selected_variables:
-                         selected_variables.append(top_var)
-                         added_vars.append(top_var)
-                         response_text += f"✅ Added **{top_var}** to variables.\n"
-                
-                if scen_matches and scen_matches[0]['score'] >= 0.5:
-                     top_scen = scen_matches[0]['name']
-                     if top_scen not in selected_scenarios:
-                         selected_scenarios.append(top_scen)
-                         added_scens.append(top_scen)
-                         response_text += f"✅ Added **{top_scen}** to scenarios.\n"
-
-            # Display Review Summary
-            reg = state['data'].get('region', 'Not Set')
-            sd = state['data'].get('start_date', 'Not Set')
-            ed = state['data'].get('end_date', 'Not Set')
-            
-            vars_str = ", ".join(selected_variables) if selected_variables else "None"
-            scens_str = ", ".join(selected_scenarios) if selected_scenarios else "None"
-            
-            summary = (
-                f"Region: **{reg}**\n"
-                f"Period: **{sd}** to **{ed}**\n"
-                f"Variables: {vars_str}\n"
-                f"Scenarios: {scens_str}"
-            )
-            
-            instruction = "\n\nType **'confirm'** to save and complete the flow, or tell me what to change."
-            
-            if intent == "MODIFY":
-                response_text += f"Updated Review:\n{summary}{instruction}"
-            elif intent == "NEXT":
-                 if not added_vars and not added_scens:
-                     response_text = f"Thanks! Please verify:\n\n{summary}{instruction}"
-                 else:
-                     response_text += f"\nUpdated Review:\n{summary}{instruction}"
-            elif not response_text:
-                 response_text = f"Please verify:\n\n{summary}{instruction}"
-
+            normalized_data[key] = str(value).strip() if value else "Not Set"
+    
+    print(f"\n=== RETURNING TO FRONTEND ===")
+    print(f"Raw state: {state['data']}")
+    print(f"Normalized context_data: {normalized_data}")
+    print(f"Response: {response_text}\n")
+    
     return jsonify({
         "response": response_text,
         "success": True,
         "added_variables": added_vars,
         "added_scenarios": added_scens,
-        "context_data": state["data"]
+        "context_data": normalized_data
     }), 200
 
-def run_standard_chat(user_message, history, variables, scenarios, context_data):
-    """Standard Groq Chat"""
-    context = ""
-    if variables:
-        context += "\nSelected Variables: " + ", ".join(variables)
-    if scenarios:
-        context += "\nSelected Scenarios: " + ", ".join(scenarios)
-    if context_data:
-        context += f"\nCONFIRMED CONTEXT - Region: {context_data.get('region')}, " \
-                   f"Date Range: {context_data.get('start_date')} to {context_data.get('end_date')}"
-    
-    messages = []
-    
-    system_message = """You are a professional chatbot assistant helping users with financial decisions. 
-You have access to a database of variables and scenarios. 
-Provide clear, concise, and helpful responses."""
-    
-    if context:
-        system_message += f"\n\nCurrent Context:{context}"
-    
-    for msg in history:
-        messages.append({
-            "role": msg.get("role", "user"),
-            "content": msg.get("content", "")
-        })
-    
-    messages.append({
-        "role": "user",
-        "content": user_message
-    })
-    
+def save_confirmation(state, variables, scenarios):
+    output_file = Path(__file__).parent / "data" / "confirm_selection.json"
+    final_data = {
+        "configuration": state["data"],
+        "variables": variables,
+        "scenarios": scenarios,
+        "confirmed_at": datetime.now().isoformat(),
+        "status": "confirmed"
+    }
     try:
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=messages,
-            max_tokens=1024,
-            temperature=0.7,
-            system=system_message
-        )
-        
-        bot_response = response.choices[0].message.content
-        return jsonify({
-            "response": bot_response,
-            "success": True
-        }), 200
-        
+        with open(output_file, 'w') as f:
+            json.dump(final_data, f, indent=2)
     except Exception as e:
-        return jsonify({
-            "error": str(e),
-            "success": False
-        }), 500
-
-
-@app.route('/api/variables', methods=['GET'])
-def get_variables():
-    """Get all available variables"""
-    return jsonify({
-        "variables": variables_list
-    }), 200
-
-
-
-@app.route('/api/scenarios', methods=['GET'])
-def get_scenarios():
-    """Get all available scenarios"""
-    return jsonify({
-        "scenarios": scenarios_list
-    }), 200
-
-
-@app.route('/api/parse-query', methods=['POST'])
-def parse_query_endpoint():
-    """
-    Parse a user query to identify relevant sectors, industries, and variables.
-    """
-    data = request.json
-    user_query = data.get('query', '').strip()
-
-    if not user_query:
-        return jsonify({"error": "Query is required"}), 400
-
-    # Load Sector Config
-    try:
-        config_path = DATA_DIR / "sectors_config.json"
-        with open(config_path, 'r') as f:
-            sectors_config = json.load(f)
-    except Exception as e:
-        return jsonify({"error": f"Failed to load sector config: {str(e)}"}), 500
-
-    sectors_list = ", ".join(sectors_config.get('sectors', []))
-    
-    industry_map_str = ""
-    for sector, inds in sectors_config.get('industries', {}).items():
-        industry_map_str += f"{sector}: {', '.join(inds)}\n"
-
-    output_schema = json.dumps({
-      "query_metadata": {
-        "original_query": "",
-        "parsed_entities": [],
-        "parsed_intents": []
-      },
-      "relevant_sectors": [
-        {
-          "sector": "",
-          "confidence": 0.0,
-          "rationale": ""
-        }
-      ],
-      "relevant_industries": [
-        {
-          "industry": "",
-          "sector": "",
-          "confidence": 0.0
-        }
-      ],
-      "variable_selection_strategy": {
-        "selection_basis": "sector | industry | cross-sector",
-        "notes": ""
-      },
-      "missing_or_suggested_concepts": [
-        {
-          "concept": "",
-          "sector": "",
-          "reason": ""
-        }
-      ],
-      "explanation_summary": ""
-    }, indent=2)
-
-    prompt = f"""You are a climate scenario reasoning assistant.
-
-Your task is to analyze a user query and identify relevant
-economic sectors and industries.
-
-You must:
-- Use only the provided sector list
-- Never invent new sectors
-- Output valid JSON only
-- Focus on interpretability and uncertainty
-
-USER PROMPT:
-User query:
-"{user_query}"
-
-Allowed sectors:
-{sectors_list}
-
-Industry overview:
-{industry_map_str}
-
-Instructions:
-1. Identify key entities and intents in the query.
-2. Determine which sectors are relevant and why.
-3. Assign a confidence score to each sector.
-4. Suggest conceptual variables that may be missing from the dataset.
-
-Return output strictly in the following JSON format:
-{output_schema}
-"""
-
-    try:
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": prompt}],
-            response_format={"type": "json_object"},
-            max_tokens=2048,
-            temperature=0.0
-        )
-        content = response.choices[0].message.content
-        result_json = json.loads(content)
-        return jsonify(result_json), 200
-
-    except groq.RateLimitError as e:
-        print(f"Rate Limit Error: {e}")
-        return jsonify({"error": "Service is busy (Rate Limit Exceeded). Please try again in a moment."}), 429
-
-    except Exception as e:
-        print(f"Query Parsing Error: {e}")
-        return jsonify({"error": str(e)}), 500
-
-
+        print(f"Error saving confirmation: {e}")
 
 if __name__ == '__main__':
-    # Run on port 5001 to avoid conflict with system services using port 5000.
-    # Threaded mode prevents long-running `/api/chat` calls from blocking
-    # quick endpoints such as `/api/suggestions` used by the UI.
     app.run(debug=False, port=5001, host='0.0.0.0', threaded=True)

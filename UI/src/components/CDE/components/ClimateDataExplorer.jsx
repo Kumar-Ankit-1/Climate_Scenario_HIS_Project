@@ -29,19 +29,17 @@ function ClimateDataExplorer() {
     });
   };
   const selectedMatches = matches.filter((m) => selectedDatasets.includes(m.dataset.id));
-  return <div className="min-h-screen bg-white">
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <header className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-blue-600 rounded-lg">
-            <Globe className="size-8 text-white" />
-          </div>
-          <div>
-            <h1 className="text-blue-900">Climate Data Explorer</h1>
-            <p className="text-gray-600">
-              Find and compare climate datasets from leading providers
-            </p>
-          </div>
+  return <div className="w-full">
+    <div className="container mx-auto px-0 py-2">
+      <header className="mb-8 flex items-center gap-4 p-6 bg-slate-900/50 rounded-2xl border border-white/10 backdrop-blur-md">
+        <div className="p-3 bg-indigo-500/20 rounded-xl border border-indigo-500/30">
+          <Globe className="size-8 text-indigo-400" />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-slate-100">Climate Data Explorer</h1>
+          <p className="text-slate-400">
+            Find and compare climate datasets from leading providers
+          </p>
         </div>
       </header>
 

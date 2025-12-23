@@ -1,16 +1,21 @@
 [project]
-name = "chatbot"
+name = "climate-chatbot"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "flask==3.1.2",
-    "flask-cors==6.0.2",
-    "groq==1.0.0",
-    "python-dotenv==1.2.1",
-    "pandas==2.3.3",
-    "openpyxl==3.1.5",
-    "requests>=2.32.5",
-    "yaml",
+description = "AI-Powered Climate Policy Assistant"
+authors = [
+    {name = "Ankit Kumar", email = "ankit@example.com"}
 ]
+requires-python = ">=3.9"
+dependencies = [
+    "flask>=3.0.0",
+    "flask-cors>=4.0.0",
+    "python-dotenv>=1.0.0",
+    "pandas>=2.1.4",
+    "groq>=0.4.2",
+    "requests>=2.31.0",
+    "numpy>=1.26.3"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
