@@ -10,6 +10,8 @@ __pycache__/
 .venv
 
 # Datasets (never commit raw or processed data)
+public/*.json
+public/json/*.json
 Datasets/IPCC_AR6/
 Datasets/NGFS-Phase-5/
 Datasets/processed/
