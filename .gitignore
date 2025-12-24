@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
+
+#vitual env
+.venv
+
+# Datasets (never commit raw or processed data)
+Datasets/IPCC_AR6/
+Datasets/NGFS-Phase-5/
+Datasets/processed/
+Datasets/**/*.csv
+
+# Logs
+*.log
+
+# Secrets
+Datasets/config.ini
+Datasets/secret.key
+Cred.py
+
+# Images
+*.png
