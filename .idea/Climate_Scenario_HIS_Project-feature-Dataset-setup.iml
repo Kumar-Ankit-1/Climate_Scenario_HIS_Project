@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/Datasets/IPCC_AR6" />
+      <excludeFolder url="file://$MODULE_DIR$/Datasets/NGFS-Phase-5" />
+      <excludeFolder url="file://$MODULE_DIR$/Datasets/processed" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
