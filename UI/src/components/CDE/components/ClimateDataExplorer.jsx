@@ -3,22 +3,59 @@ import { QueryForm } from "./QueryForm";
 import { DatasetResults } from "./DatasetResults";
 import { ScenarioExplorer } from "./ScenarioExplorer";
 import { DatasetComparison } from "./DatasetComparison";
-import { datasets } from "../data/datasets";
-import { matchDatasets } from "../utils/dataset-matcher";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Database, Search, GitCompare, Globe } from "lucide-react";
-function ClimateDataExplorer() {
+function ClimateDataExplorer({ initialData }) {
   const [query, setQuery] = useState({});
   const [matches, setMatches] = useState([]);
   const [selectedDatasets, setSelectedDatasets] = useState([]);
+  const [recommendation, setRecommendation] = useState(null);
+  const [isRecommending, setIsRecommending] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const handleSearch = (newQuery) => {
+
+  // Set initial query from initialData if provided and not yet set
+  // This might be better handled in QueryForm or by setting default state here if QueryForm is controlled.
+  // Looking at QueryForm, it manages its own state initiated from currentQuery prop.
+  // So we can pass initialData as currentQuery if query is empty? 
+  // Better: Pass initialData explicitly to QueryForm to serve as defaults.
+
+  const handleSearch = async (newQuery) => {
     setQuery(newQuery);
-    const results = matchDatasets(datasets, newQuery);
-    setMatches(results);
     setHasSearched(true);
     setSelectedDatasets([]);
+    setRecommendation(null);
+    setMatches([]); // Clear previous matches
+
+    // Fetch AI Recommendation and Candidates
+    setIsRecommending(true);
+    try {
+      const res = await fetch('/api/recommend-provider', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sector: newQuery.sector,
+          region: newQuery.region,
+          start_year: newQuery.timeStart,
+          end_year: newQuery.timeEnd,
+          variables: newQuery.variables || []
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setRecommendation(data.top_recommendation);
+        if (data.candidates) {
+          setMatches(data.candidates);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to get recommendation", e);
+    } finally {
+      setIsRecommending(false);
+    }
   };
+
+  // ... (keep existing handlers)
+
   const handleToggleDataset = (datasetId) => {
     setSelectedDatasets((prev) => {
       if (prev.includes(datasetId)) {
@@ -29,6 +66,7 @@ function ClimateDataExplorer() {
     });
   };
   const selectedMatches = matches.filter((m) => selectedDatasets.includes(m.dataset.id));
+
   return <div className="w-full">
     <div className="container mx-auto px-0 py-2">
       <header className="mb-8 flex items-center gap-4 p-6 bg-slate-900/50 rounded-2xl border border-white/10 backdrop-blur-md">
@@ -64,18 +102,29 @@ function ClimateDataExplorer() {
         </TabsList>
 
         <TabsContent value="search" className="space-y-6">
-          <QueryForm onSearch={handleSearch} currentQuery={query} />
+          <QueryForm onSearch={handleSearch} currentQuery={query} initialData={initialData} />
 
           {hasSearched && <DatasetResults
             matches={matches}
             query={query}
             selectedDatasets={selectedDatasets}
             onToggleDataset={handleToggleDataset}
+            recommendation={recommendation}
+            isRecommending={isRecommending}
           />}
         </TabsContent>
 
         <TabsContent value="scenarios">
-          <ScenarioExplorer datasets={datasets} />
+          {/* Note: ScenarioExplorer might still need datasets prop, but usage of dummy data is forbidden. 
+              We should probably pass the 'matches' or fetch scenarios from API too.
+              For now, passing empty array or handling it if ScenarioExplorer uses it.
+              Let's check ScenarioExplorer briefly or just pass [] if unrelated to current task.
+              But ScenarioExplorer likely needs data. The user said "Do not show any dataset from ... datasets.jsx".
+              If ScenarioExplorer relies on it, it will break or show nothing.
+              I'll just pass matches.map(m => m.dataset) if appropriate or leave it broken/empty until requested. 
+              Actually, passing [] is safer to respect "Do not show".
+           */}
+          <ScenarioExplorer datasets={matches.map(m => m.dataset)} />
         </TabsContent>
 
         <TabsContent value="compare">

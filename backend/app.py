@@ -52,6 +52,26 @@ def get_auto_suggestions():
         "query": query
     }), 200
 
+@app.route('/api/autocomplete/variables', methods=['GET'])
+def autocomplete_variables():
+    """Autocomplete for Variables of Interest (cached)"""
+    query = request.args.get('q', '').strip()
+    sector = request.args.get('sector', '').strip()
+    
+    if len(query) < 1:
+        return jsonify([]), 200
+        
+    # Call the cached suggestion function
+    results = suggestions.get_variable_suggestions_from_cache(query, sector)
+    return jsonify(results), 200
+
+# Initialize cache on startup (if main process)
+try:
+    print("Initializing variable cache...")
+    suggestions.load_variable_cache()
+except Exception as e:
+    print(f"Failed to load variable cache: {e}")
+
 # NEW: Restoring the endpoint expected by SmartSuggestions.js
 @app.route('/api/parse-query', methods=['POST'])
 def parse_query_intent():
@@ -68,6 +88,79 @@ def parse_query_intent():
         return jsonify(result), 200
     else:
         return jsonify({"error": "Analysis failed"}), 500
+
+@app.route('/api/metadata/sectors', methods=['GET'])
+def get_sectors():
+    """Get all available sectors from the database"""
+    conn = chat_service.get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cur = conn.cursor()
+        query = """
+            SELECT DISTINCT vs.sector
+            FROM scenario_observations so
+            JOIN variable_semantics vs
+              ON so.variable = vs.variable
+            WHERE vs.sector IS NOT NULL
+            ORDER BY vs.sector;
+        """
+        cur.execute(query)
+        sectors = [row[0] for row in cur.fetchall()]
+        cur.close()
+        conn.close()
+        return jsonify({"sectors": sectors}), 200
+    except Exception as e:
+        if conn:
+            conn.close()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/metadata/regions', methods=['GET'])
+def get_regions():
+    """Get all available regions from the database"""
+    conn = chat_service.get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cur = conn.cursor()
+        query = """
+            SELECT DISTINCT region
+            FROM scenario_observations
+            WHERE region IS NOT NULL
+            ORDER BY region;
+        """
+        cur.execute(query)
+        regions = [row[0] for row in cur.fetchall()]
+        cur.close()
+        conn.close()
+        return jsonify({"regions": regions}), 200
+    except Exception as e:
+        if conn:
+            conn.close()
+        return jsonify({"error": str(e)}), 500
+
+import recommendation_service
+
+@app.route('/api/recommend-provider', methods=['POST'])
+def recommend_provider():
+    """Get AI-powered provider/model recommendations based on coverage."""
+    data = request.json
+    sector = data.get('sector')
+    region = data.get('region')
+    start_year = data.get('start_year')
+    end_year = data.get('end_year')
+    variables = data.get('variables', [])
+
+    try:
+        result = recommendation_service.get_provider_recommendations(
+            sector, region, start_year, end_year, variables
+        )
+        return jsonify(result), 200
+    except Exception as e:
+        print(f"Recommendation Error: {e}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/reset', methods=['POST'])
 def reset_session():

@@ -5,6 +5,7 @@ import pandas as pd
 from groq import Groq
 import time
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 # Load environment variables from .env file
 load_dotenv()
@@ -26,6 +27,20 @@ def get_groq_client():
     if not api_key:
         raise ValueError("GROQ_API_KEY environment variable not set.")
     return Groq(api_key=api_key)
+
+def get_db_engine():
+    required_vars = ["DB_USER", "DB_PASSWORD", "DB_HOST", "DB_PORT", "DB_NAME"]
+    missing = [v for v in required_vars if not os.environ.get(v)]
+    if missing:
+        raise ValueError(f"Missing environment variables: {', '.join(missing)}")
+    
+    return create_engine(
+        f"postgresql+psycopg2://{os.environ['DB_USER']}:"
+        f"{os.environ['DB_PASSWORD']}@"
+        f"{os.environ['DB_HOST']}:"
+        f"{os.environ['DB_PORT']}/"
+        f"{os.environ['DB_NAME']}"
+    )
 
 def construct_batch_prompt(batch_data, config):
     sectors = ", ".join(config['sectors'])
@@ -85,7 +100,7 @@ def classify_batch(client, batch_data, config, retries=3):
                         "content": prompt,
                     }
                 ],
-                model="llama-3.3-70b-versatile",
+                model="llama-3.1-8b-instant",
                 response_format={"type": "json_object"},
             )
             response_content = chat_completion.choices[0].message.content
@@ -103,19 +118,33 @@ def classify_batch(client, batch_data, config, retries=3):
             
             data = json.loads(response_content)
             
-            if isinstance(data, list):
-                return data
-            elif isinstance(data, dict):
-                # Search values for a list
-                for key, value in data.items():
-                    if isinstance(value, list):
-                        return value
-                
-                # If it's a single dict and looks like one result
-                if 'variable' in data:
-                    return [data]
+            # Helper to recursively find a list of dicts or objects that look like results
+            def extract_results(obj):
+                if isinstance(obj, list):
+                    # If it's a list, check if elements are dicts or more lists
+                    flattened = []
+                    for item in obj:
+                        if isinstance(item, dict):
+                            flattened.append(item)
+                        elif isinstance(item, list):
+                            flattened.extend(extract_results(item))
+                    return flattened
+                elif isinstance(obj, dict):
+                    # If it's a dict and has 'variable', it's likely a single result
+                    if 'variable' in obj:
+                        return [obj]
+                    # Otherwise, check all values for lists
+                    for value in obj.values():
+                        res = extract_results(value)
+                        if res:
+                            return res
+                return []
+
+            results = extract_results(data)
+            if results:
+                return results
             
-            print(f"Warning: Unexpected JSON structure in batch response: {response_content[:100]}...")
+            print(f"Warning: Could not extract results from JSON structure: {response_content[:200]}...")
             return []
 
         except Exception as e:
@@ -133,7 +162,7 @@ def classify_batch(client, batch_data, config, retries=3):
 def main():
     parser = argparse.ArgumentParser(description="Classify climate variables.")
     parser.add_argument("--test-limit", type=int, default=0, help="Limit number of variables to process for testing.")
-    parser.add_argument("--batch-size", type=int, default=20, help="Batch size for processing.")
+    parser.add_argument("--batch-size", type=int, default=40, help="Batch size for processing.")
     args = parser.parse_args()
 
     print("Loading configuration...")
@@ -172,8 +201,15 @@ def main():
         # Map back to original records (simple join by variable name or index order)
         # We assume order is preserved or we can match by variable name
         
-        # Create a map of results by variable
-        result_map = {res.get('variable'): res for res in batch_results}
+        # Create a map of results by variable, with defensive check for dict type
+        result_map = {}
+        for res in batch_results:
+            if isinstance(res, dict):
+                var_name = res.get('variable')
+                if var_name:
+                    result_map[var_name] = res
+            else:
+                print(f"Warning: Skipping non-dictionary result item: {res}")
         
         for record in batch:
             var_name = record['variable']
@@ -191,18 +227,41 @@ def main():
     elapsed_time = time.time() - start_time
     print(f"Processed {total_processed} variables in {elapsed_time:.2f} seconds.")
 
-    # Save Results
+    # Save Results to DB
     results_df = pd.DataFrame(results)
     
-    # Ensure columns order
-    cols = ['variable', 'description', 'sector', 'industry', 'subsector', 'confidence', 'rationale']
-    final_cols = [c for c in cols if c in results_df.columns] + [c for c in results_df.columns if c not in cols]
-    results_df = results_df[final_cols]
-
-    print(f"Saving results to {OUTPUT_CSV}...")
-    results_df.to_csv(OUTPUT_CSV, index=False)
+    # Ensure columns order and filter for DB schema
+    db_cols = ['variable', 'description', 'sector', 'industry', 'subsector', 'confidence', 'rationale']
+    final_df = results_df[[c for c in db_cols if c in results_df.columns]].copy()
     
-    print(f"Saving JSON results to {OUTPUT_JSON}...")
+    # Add source field as in schema
+    final_df['source'] = 'llm'
+
+    print(f"Connecting to database...")
+    try:
+        engine = get_db_engine()
+        print(f"Saving {len(final_df)} results to 'variable_semantics' table...")
+        
+        # Using multi-row insertion with conflict handling via temporary table or just replace/append
+        # For simplicity and given the prompt "insert directly", we'll use append.
+        # If we want upsert, we'd need a more complex SQLAlchemy approach.
+        
+        final_df.to_sql(
+            "variable_semantics",
+            engine,
+            if_exists="append", # Or use a method that handles duplicates if needed
+            index=False,
+            method="multi",
+            chunksize=1000
+        )
+        print("Database insertion complete!")
+        
+    except Exception as e:
+        print(f"Error saving to database: {e}")
+        print(f"Falling back to CSV saving at {OUTPUT_CSV}...")
+        results_df.to_csv(OUTPUT_CSV, index=False)
+
+    print(f"Saving JSON backup to {OUTPUT_JSON}...")
     with open(OUTPUT_JSON, 'w') as f:
         json.dump(results, f, indent=2)
     

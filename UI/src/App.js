@@ -7,27 +7,45 @@ import './App.css';
 
 function App() {
   const [view, setView] = useState('landing'); // 'landing' | 'chat' | 'manual' | 'smart_suggestions'
+  const [initialData, setInitialData] = useState(null);
+
+  const handleShowDataProviders = (data) => {
+    setInitialData(data);
+    setView('manual');
+  };
 
   return (
     <div className="app">
       {view === 'landing' && (
         <LandingPage
           onStart={() => setView('chat')}
-          onManual={() => setView('manual')}
+          onManual={() => {
+            setInitialData(null);
+            setView('manual');
+          }}
           onSmartSuggestions={() => setView('smart_suggestions')}
         />
       )}
       {view === 'chat' && (
         <ChatInterface
           onBack={() => setView('landing')}
-          onCompare={() => setView('manual')}
+          onCompare={() => {
+            setInitialData(null);
+            setView('manual');
+          }}
         />
       )}
       {view === 'manual' && (
-        <ManualProcess onBack={() => setView('landing')} />
+        <ManualProcess
+          onBack={() => setView('landing')}
+          initialData={initialData}
+        />
       )}
       {view === 'smart_suggestions' && (
-        <SmartSuggestions onBack={() => setView('landing')} />
+        <SmartSuggestions
+          onBack={() => setView('landing')}
+          onShowDataProviders={handleShowDataProviders}
+        />
       )}
     </div>
   );

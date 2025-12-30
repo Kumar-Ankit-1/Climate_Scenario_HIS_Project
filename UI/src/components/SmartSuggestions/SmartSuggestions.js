@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Factory, Target, Building2, Sparkles, Lightbulb, ChevronLeft, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, Factory, Target, Building2, Sparkles, Lightbulb, ChevronLeft, RotateCcw, Database } from 'lucide-react';
 
-const SmartSuggestions = ({ onBack }) => {
+const SmartSuggestions = ({ onBack, onShowDataProviders }) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const SmartSuggestions = ({ onBack }) => {
         setQuery(searchQuery);
 
         try {
-            const response = await fetch('http://localhost:5001/api/parse-query', {
+            const response = await fetch('/api/parse-query', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: searchQuery }),
@@ -58,6 +58,57 @@ const SmartSuggestions = ({ onBack }) => {
         { text: "Analyze agricultural emissions in Asia", icon: "🌾" },
         { text: "Scenario: 100% Renewable Energy in Europe", icon: "🇪🇺" }
     ];
+
+    // Refs for connecting lines
+    const containerRef = useRef(null);
+    const industriesRef = useRef(null);
+    const sectorsRef = useRef(null);
+    const variablesRef = useRef(null);
+    const buttonRef = useRef(null);
+    const [connectorPaths, setConnectorPaths] = useState([]);
+
+    useEffect(() => {
+        const updatePaths = () => {
+            if (!containerRef.current || !buttonRef.current || !industriesRef.current || !sectorsRef.current || !variablesRef.current) return;
+
+            const containerRect = containerRef.current.getBoundingClientRect();
+            const buttonRect = buttonRef.current.getBoundingClientRect();
+
+            const cards = [industriesRef.current, sectorsRef.current, variablesRef.current];
+            const paths = cards.map(card => {
+                const cardRect = card.getBoundingClientRect();
+
+                // Start from bottom center of card
+                const startX = cardRect.left + cardRect.width / 2 - containerRect.left;
+                const startY = cardRect.bottom - containerRect.top;
+
+                // End at top center of button
+                const endX = buttonRect.left + buttonRect.width / 2 - containerRect.left;
+                const endY = buttonRect.top - containerRect.top;
+
+                // Control points for a nice S-curve
+                const cp1X = startX;
+                const cp1Y = startY + (endY - startY) * 0.5;
+                const cp2X = endX;
+                const cp2Y = endY - (endY - startY) * 0.5;
+
+                return `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+            });
+
+            setConnectorPaths(paths);
+        };
+
+        // Update on mount and resize
+        updatePaths();
+        window.addEventListener('resize', updatePaths);
+        // Also update after a short delay to ensure layout is stable
+        const timeout = setTimeout(updatePaths, 100);
+
+        return () => {
+            window.removeEventListener('resize', updatePaths);
+            clearTimeout(timeout);
+        };
+    }, [results]);
 
     return (
         <div className="relative min-h-screen w-full bg-slate-950 text-white font-sans overflow-x-hidden isolate">
@@ -148,10 +199,32 @@ const SmartSuggestions = ({ onBack }) => {
                 )}
 
                 {results && (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700 relative" ref={containerRef}>
+
+                        {/* SVG Connectors Layer (Visible only on lg screens) */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden lg:block overflow-visible">
+                            <defs>
+                                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="rgba(99, 102, 241, 0.1)" />
+                                    <stop offset="50%" stopColor="rgba(99, 102, 241, 0.4)" />
+                                    <stop offset="100%" stopColor="rgba(99, 102, 241, 0.1)" />
+                                </linearGradient>
+                            </defs>
+                            {connectorPaths.map((path, i) => (
+                                <path
+                                    key={i}
+                                    d={path}
+                                    fill="none"
+                                    stroke="url(#lineGradient)"
+                                    strokeWidth="2"
+                                    className="animate-[pulse_3s_infinite]"
+                                />
+                            ))}
+                        </svg>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
                             {/* Industries Card */}
-                            <div className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl p-6 lg:col-span-1 shadow-xl">
+                            <div ref={industriesRef} className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl p-6 lg:col-span-1 shadow-xl">
                                 <h3 className="flex items-center gap-2 text-xl font-bold text-indigo-400 mb-6">
                                     <Factory size={22} /> Industries & Strategy
                                 </h3>
@@ -172,7 +245,7 @@ const SmartSuggestions = ({ onBack }) => {
                             </div>
 
                             {/* Sectors Card */}
-                            <div className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl p-6 shadow-xl">
+                            <div ref={sectorsRef} className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl p-6 shadow-xl">
                                 <h3 className="flex items-center gap-2 text-xl font-bold text-blue-400 mb-6">
                                     <Building2 size={20} /> Relevant Sectors
                                 </h3>
@@ -192,27 +265,55 @@ const SmartSuggestions = ({ onBack }) => {
                             </div>
 
                             {/* Variables Card */}
-                            <div className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl p-6 shadow-xl">
+                            <div ref={variablesRef} className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl p-6 shadow-xl">
                                 <h3 className="flex items-center gap-2 text-xl font-bold text-purple-400 mb-6">
                                     <Sparkles size={20} /> Recommended Variables
                                 </h3>
                                 <div className="space-y-4">
-                                    {results.missing_or_suggested_concepts?.map((concept, idx) => (
-                                        <div key={idx} className="flex gap-3">
-                                            <div className="mt-1 min-w-[20px]">
-                                                <Lightbulb size={18} className="text-yellow-400" />
+                                    {(results.suggested_variables || results.missing_or_suggested_concepts)?.slice(0, 5).map((item, idx) => (
+                                        <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                                            <div className="flex items-start justify-between gap-3 mb-2">
+                                                <div className="flex gap-2 min-w-0">
+                                                    <Lightbulb size={16} className="text-yellow-400 mt-0.5 shrink-0" />
+                                                    <span className="font-bold text-slate-200 text-sm break-words leading-tight">
+                                                        {item.variable || item.concept}
+                                                    </span>
+                                                </div>
+                                                {item.relevance && (
+                                                    <span className="shrink-0 text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 whitespace-nowrap">
+                                                        {(item.relevance * 100).toFixed(0)}%
+                                                    </span>
+                                                )}
                                             </div>
-                                            <div>
-                                                <span className="block font-bold text-slate-200 text-sm mb-1">{concept.concept}</span>
-                                                <span className="block text-xs text-slate-400 leading-snug">{concept.reason}</span>
-                                            </div>
+                                            <p className="text-xs text-slate-400 leading-relaxed pl-6">
+                                                {item.reason}
+                                            </p>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
 
-
+                        <div className="flex justify-center mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 relative z-10">
+                            <button
+                                ref={buttonRef}
+                                onClick={() => {
+                                    if (onShowDataProviders && results) {
+                                        const sector = results.relevant_sectors?.[0]?.sector;
+                                        const variables = results.suggested_variables?.map(v => v.variable).filter(Boolean);
+                                        onShowDataProviders({
+                                            sector,
+                                            variables
+                                        });
+                                    }
+                                }}
+                                className="group relative px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-indigo-500/25 flex items-center gap-3 overflow-hidden"
+                            >
+                                <Database className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+                                <span>Show Data Providers</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+                            </button>
+                        </div>
                     </div>
                 )}
 

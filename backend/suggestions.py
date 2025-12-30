@@ -7,7 +7,91 @@ from groq import Groq
 from dotenv import load_dotenv
 
 # Load environment variables
+# Load environment variables
 load_dotenv()
+
+# Import chat_service for DB connection
+import chat_service
+
+# NEW: Global cache for variables
+cached_variables = []
+
+def load_variable_cache():
+    """Load variables from Postgres variable_semantics table into memory."""
+    global cached_variables
+    conn = chat_service.get_db_connection()
+    if not conn:
+        print("Warning: Could not connect to DB for variable cache.")
+        return
+
+    try:
+        cur = conn.cursor()
+        query = """
+        SELECT variable, sector, industry, description
+        FROM variable_semantics
+        ORDER BY variable; 
+        """
+        cur.execute(query)
+        rows = cur.fetchall()
+        
+        # Store as list of dicts
+        cached_variables = []
+        for r in rows:
+            cached_variables.append({
+                "variable": r[0],
+                "sector": r[1],
+                "industry": r[2],
+                "description": r[3]
+            })
+            
+        print(f"Cache: Loaded {len(cached_variables)} variables from DB.")
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"Error loading variable cache: {e}")
+        if conn: conn.close()
+
+def get_variable_suggestions_from_cache(query, sector=None, max_suggestions=10):
+    """
+    Return list of {value: variable, label: variable, ...} based on query.
+    Sector-aware filtering.
+    """
+    # If cache is empty, try loading it (lazy load fallback)
+    if not cached_variables:
+        load_variable_cache()
+
+    q_lower = query.lower().strip()
+    results = []
+    
+    for item in cached_variables:
+        # 1. Sector Filter
+        if sector and sector != "All Sectors":
+            # item['sector'] might be None or string. Data is "sector", input is "sector"
+            if not item['sector'] or sector.lower() != item['sector'].lower():
+                 # Try lenient match?
+                 if not item['sector'] or sector.lower() not in item['sector'].lower():
+                    continue
+        
+        # 2. Query Match
+        # Simple substring match for "lightweight"
+        v_name = item['variable']
+        # v_descStr = item['description'] if item['description'] else ""
+        
+        if q_lower in v_name.lower():
+            results.append(item)
+             
+        if len(results) >= max_suggestions * 5: # Optimization: stop early
+            break
+            
+    # Sort: Exact starts_with matches first, then shortest length
+    def sort_key(x):
+        name = x['variable'].lower()
+        starts = name.startswith(q_lower)
+        return (not starts, len(name))
+        
+    results.sort(key=sort_key)
+    
+    return results[:max_suggestions]
 
 # Initialize Groq client
 groq_api_key = os.getenv('GROQ_API_KEY')

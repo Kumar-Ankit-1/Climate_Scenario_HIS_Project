@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+climate_chatbot.egg-info/PKG-INFO
+climate_chatbot.egg-info/SOURCES.txt
+climate_chatbot.egg-info/dependency_links.txt
+climate_chatbot.egg-info/requires.txt
+climate_chatbot.egg-info/top_level.txt

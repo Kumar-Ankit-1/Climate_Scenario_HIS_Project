@@ -33,3 +33,5 @@ build/
 # Artifacts
 coverage/
 htmlcov/
+
+climate_chatbot.egg-info

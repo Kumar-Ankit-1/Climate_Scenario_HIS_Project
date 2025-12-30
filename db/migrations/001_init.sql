@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS variable_semantics (
 
 
 -- Indexes (critical for performance)
-CREATE INDEX IF NOT EXISTS idx_obs_core
-  ON scenario_observations (provider, dataset, model, scenario, region);
+CREATE INDEX IF NOT EXISTS idx_obs_provider_dataset
+ON scenario_observations (provider, dataset);
 
 CREATE INDEX IF NOT EXISTS idx_obs_variable
   ON scenario_observations (variable);
@@ -54,6 +54,9 @@ CREATE INDEX IF NOT EXISTS idx_obs_year
 CREATE INDEX IF NOT EXISTS idx_obs_metadata
   ON scenario_observations USING GIN (metadata);
 
+CREATE INDEX IF NOT EXISTS idx_obs_scenario
+ON scenario_observations (scenario);
+
 CREATE INDEX IF NOT EXISTS idx_variable_semantics_sector
   ON variable_semantics (sector);
 
@@ -62,3 +65,9 @@ CREATE INDEX IF NOT EXISTS idx_variable_semantics_industry
 
 CREATE INDEX IF NOT EXISTS idx_variable_semantics_confidence
   ON variable_semantics (confidence);
+
+CREATE INDEX IF NOT EXISTS idx_obs_region_year
+ON scenario_observations (region, year);
+
+CREATE INDEX IF NOT EXISTS idx_obs_provider_model
+ON scenario_observations (provider, model);

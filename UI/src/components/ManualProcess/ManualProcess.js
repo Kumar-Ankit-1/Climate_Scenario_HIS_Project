@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ClimateDataExplorer } from "../CDE/components/ClimateDataExplorer";
 import { ChevronLeft } from 'lucide-react';
 
-function ManualProcess({ onBack }) {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+function ManualProcess({ onBack, initialData }) {
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 }); // ... (keep existing state logic)
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -17,7 +17,7 @@ function ManualProcess({ onBack }) {
     }, []);
 
     return (
-        <div className="dark relative min-h-screen bg-slate-950 text-white font-sans overflow-x-hidden isolate">
+        <div className="dark relative h-screen bg-slate-950 text-white font-sans overflow-hidden isolate">
             {/* Interactive Background Glow */}
             <div
                 className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300"
@@ -44,7 +44,7 @@ function ManualProcess({ onBack }) {
                 <div className="flex-1 overflow-y-auto pt-4">
                     <div className="container mx-auto px-6 py-4 max-w-[90rem]">
                         {/* Main Content - ClimateDataExplorer has its own header */}
-                        <ClimateDataExplorer />
+                        <ClimateDataExplorer initialData={initialData} />
                     </div>
                 </div>
             </div>

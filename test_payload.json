@@ -1,0 +1,9 @@
+{
+    "sector": "Energy",
+    "region": "Asia",
+    "start_year": 2020,
+    "end_year": 2050,
+    "variables": [
+        "CO2 Emissions"
+    ]
+}

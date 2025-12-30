@@ -6,7 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { useState } from "react";
 import { DatasetPreviewPanel } from "./DatasetPreviewPanel";
-function DatasetResults({ matches, query, selectedDatasets, onToggleDataset }) {
+function DatasetResults({ matches, query, selectedDatasets, onToggleDataset, recommendation, isRecommending }) {
   const [previewDataset, setPreviewDataset] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const handlePreview = (dataset) => {
@@ -29,26 +29,62 @@ function DatasetResults({ matches, query, selectedDatasets, onToggleDataset }) {
       {
         /* Recommendation Summary */
       }
-      <Alert className="border-blue-500/20 bg-slate-900/90 text-blue-200 backdrop-blur-xl">
-        <Info className="size-4 text-blue-400" />
-        <AlertTitle className="text-blue-100">Recommendation</AlertTitle>
-        <AlertDescription className="text-blue-200/80">
-          <p className="mb-2">
-            For your query ({query.sector && <span>{query.sector} sector</span>}
-            {query.sector && query.region && ", "}
-            {query.region && <span>{query.region}</span>}
-            {(query.sector || query.region) && query.timeStart && query.timeEnd && ", "}
-            {query.timeStart && query.timeEnd && <span>{query.timeStart}–{query.timeEnd}</span>}),
-            we found <strong>{matches.length}</strong> available dataset{matches.length !== 1 ? "s" : ""}.
-          </p>
-          <p>
-            <strong>{topMatch.dataset.provider}'s {topMatch.dataset.name}</strong> is the top match{" "}
-            ({topMatch.matchScore >= 70 ? "excellent fit" : topMatch.matchScore >= 50 ? "good fit" : "partial fit"}).{" "}
-            {topMatch.strengths.length > 0 && topMatch.strengths[0]}
-            {topMatch.limitations.length > 0 && `, but ${topMatch.limitations[0].toLowerCase()}`}.
-          </p>
-        </AlertDescription>
-      </Alert>
+      {
+        /* Recommendation Summary */
+      }
+      {isRecommending && (
+        <Alert className="border-indigo-500/20 bg-slate-900/90 text-indigo-200 backdrop-blur-xl animate-pulse">
+          <Info className="size-4 text-indigo-400" />
+          <AlertTitle className="text-indigo-100">Consulting AI Advisor...</AlertTitle>
+          <AlertDescription className="text-indigo-200/80">
+            Analyzing coverage metrics for variables and regions.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {!isRecommending && recommendation && (
+        <Alert className="border-indigo-500/20 bg-slate-900/90 text-indigo-200 backdrop-blur-xl">
+          <Info className="size-4 text-indigo-400" />
+          <AlertTitle className="text-indigo-100 flex items-center gap-2">
+            AI Recommendation: {recommendation.recommended_provider} - {recommendation.recommended_model}
+          </AlertTitle>
+          <AlertDescription className="text-indigo-200/80 mt-2">
+            <p className="mb-2 text-sm leading-relaxed">{recommendation.reasoning}</p>
+
+            {recommendation.strengths && recommendation.strengths.length > 0 && (
+              <div className="mt-2 text-xs">
+                <span className="font-bold text-emerald-400">Strengths:</span> {recommendation.strengths.join(", ")}
+              </div>
+            )}
+            {recommendation.limitations && recommendation.limitations.length > 0 && (
+              <div className="mt-1 text-xs">
+                <span className="font-bold text-amber-400">Limitations:</span> {recommendation.limitations.join(", ")}
+              </div>
+            )}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {!isRecommending && !recommendation && matches.length > 0 && (
+        <Alert className="border-blue-500/20 bg-slate-900/90 text-blue-200 backdrop-blur-xl">
+          <Info className="size-4 text-blue-400" />
+          <AlertTitle className="text-blue-100">Recommendation</AlertTitle>
+          <AlertDescription className="text-blue-200/80">
+            <p className="mb-2">
+              For your query ({query.sector && <span>{query.sector} sector</span>}
+              {query.sector && query.region && ", "}
+              {query.region && <span>{query.region}</span>}
+              {(query.sector || query.region) && query.timeStart && query.timeEnd && ", "}
+              {query.timeStart && query.timeEnd && <span>{query.timeStart}–{query.timeEnd}</span>}),
+              we found <strong>{matches.length}</strong> available dataset{matches.length !== 1 ? "s" : ""}.
+            </p>
+            <p>
+              <strong>{topMatch.dataset.provider}'s {topMatch.dataset.name}</strong> is the top match{" "}
+              ({topMatch.matchScore >= 70 ? "excellent fit" : topMatch.matchScore >= 50 ? "good fit" : "partial fit"}).
+            </p>
+          </AlertDescription>
+        </Alert>
+      )}
 
       {
         /* Results */

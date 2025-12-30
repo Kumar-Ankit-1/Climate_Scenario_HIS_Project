@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from groq import Groq
 from dotenv import load_dotenv
+import psycopg2
 
 load_dotenv()
 
@@ -10,6 +11,84 @@ groq_api_key = os.getenv('GROQ_API_KEY')
 client = None
 if groq_api_key:
     client = Groq(api_key=groq_api_key)
+
+def get_db_connection():
+    """Establish connection to the PostgreSQL database."""
+    try:
+        conn = psycopg2.connect(
+            dbname=os.getenv('DB_NAME', 'climate_db'),
+            user=os.getenv('DB_USER', 'climate_user'),
+            password=os.getenv('DB_PASSWORD', 'climate_pass'),
+            host=os.getenv('DB_HOST', '127.0.0.1'),
+            port=os.getenv('DB_PORT', '5432')
+        )
+        return conn
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        return None
+
+def rank_variables_with_llm(query, candidate_variables):
+    """
+    Rank candidate variables based on user query using LLM.
+    """
+    if not candidate_variables:
+        return []
+
+    candidate_variables_json = json.dumps(candidate_variables, indent=2)
+
+    prompt = f"""You are a climate scenario variable ranking assistant.
+
+You MUST follow these rules:
+- You may ONLY rank variables provided by the user.
+- You MUST NOT invent or modify variable names.
+- You MUST NOT add new variables.
+- Ranking must be based on relevance to the user query.
+- Output MUST be valid JSON only.
+
+User query:
+"{query}"
+
+The following variables were retrieved from a trusted database.
+You MUST ONLY use these variables.
+
+Candidate variables:
+
+{candidate_variables_json}
+
+Instructions:
+
+1. Rank the variables by relevance to the user query.
+2. Assign a relevance score between 0.0 and 1.0.
+3. Provide a short explanation for why each variable is relevant.
+4. Exclude variables that are clearly irrelevant.
+
+Output format (JSON ONLY):
+
+{{
+  "suggested_variables": [
+    {{
+      "variable": "",
+      "sector": "",
+      "industry": "",
+      "relevance": 0.0,
+      "reason": ""
+    }}
+  ]
+}}
+"""
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            max_tokens=1000,
+            temperature=0.0
+        )
+        result = json.loads(response.choices[0].message.content)
+        return result.get('suggested_variables', [])
+    except Exception as e:
+        print(f"Ranking Error: {e}")
+        return []
 
 def process_chat_message(state, user_message, history, variables_list, scenarios_list):
     """
@@ -249,17 +328,107 @@ def analyze_query_intent(query):
     if not client:
         return None
 
+    # Load allowed sectors and industries
+    try:
+        with open('training_data/sectors_config.json', 'r') as f:
+            sectors_config = json.load(f)
+            sectors_config_json = json.dumps(sectors_config, indent=2)
+    except Exception as e:
+        print(f"Error loading sectors_config.json: {e}")
+        sectors_config_json = "Error loading configuration."
+
     prompt = f"""
-    Analyze the following climate policy/scenario query: "{query}"
-    
-    Return a detailed JSON object with these keys:
-    1. "relevant_industries": list of objects {{ "industry": "...", "relevance": 0.0-1.0 }}
-    2. "relevant_sectors": list of objects {{ "sector": "...", "confidence": 0.0-1.0, "rationale": "..." }}
-    3. "variable_selection_strategy": object {{ "selection_basis": "...", "notes": "..." }}
-    4. "missing_or_suggested_concepts": list of objects {{ "concept": "...", "reason": "..." }}
-    
-    Output ONLY valid JSON.
-    """
+You are a climate scenario reasoning assistant.
+
+You MUST follow these rules strictly:
+- You may ONLY use sectors and industries provided by the user.
+- You MUST NOT invent, infer, rename, or generalize sectors or industries
+  outside the provided lists.
+- You MUST validate that every sector and industry you output exists
+  exactly as written in the provided lists.
+- If a relevant concept does not map to the provided lists, it MUST be placed
+  under "missing_or_suggested_concepts".
+- Any sector or industry not explicitly listed is INVALID and must not appear
+  in the output.
+- Output MUST be valid JSON and nothing else.
+
+IMPORTANT REASONING RULE:
+In addition to direct sector membership, you MUST consider
+SECOND-ORDER IMPACTS of the entity or behavior described in the query.
+
+Second-order impacts are allowed ONLY if:
+- They logically follow from the primary sector or industry
+- They exist in the provided sector list
+- You clearly explain the causal link in the rationale
+
+Do NOT include a sector or industry unless a clear causal relationship exists.
+If you are unsure, do NOT include it.
+
+Analyze the following climate policy / scenario query:
+
+"{query}"
+
+You are given a CLOSED and EXHAUSTIVE list of allowed sectors and industries.
+You MUST ONLY select from these lists.
+
+Allowed sectors and industries (from sectors_config.json):
+
+{sectors_config_json}
+
+Instructions:
+
+1. Identify which of the ALLOWED sectors are relevant to the query.
+
+   Consider BOTH:
+   a) Direct sector membership (what the entity or activity is)
+   b) Second-order impacts (what other sectors are affected if the
+      described behavior is applied globally or at scale)
+
+   - Only include a sector if it clearly applies.
+   - Assign a confidence score between 0.0 and 1.0.
+   - Provide a short rationale explaining the direct or causal link.
+
+2. Identify relevant industries ONLY if they belong to an already selected sector.
+   - Industries must exist exactly as written in the provided list.
+   - Do NOT invent or generalize industries.
+   - Assign a relevance score between 0.0 and 1.0.
+
+3. Define a variable selection strategy describing how variables should be
+   selected (e.g. sector-based, industry-based, cross-sector).
+
+4. If the query refers to concepts that CANNOT be mapped to the allowed sectors
+   or industries, list them under "missing_or_suggested_concepts" instead of
+   inventing new categories.
+
+Output format (STRICT — output JSON ONLY):
+
+{{
+  "relevant_industries": [
+    {{
+      "industry": "",
+      "relevance": 0.0
+    }}
+  ],
+  "relevant_sectors": [
+    {{
+      "sector": "",
+      "confidence": 0.0,
+      "rationale": ""
+    }}
+  ],
+  "variable_selection_strategy": {{
+    "selection_basis": "",
+    "notes": ""
+  }},
+  "missing_or_suggested_concepts": [
+    {{
+      "concept": "",
+      "reason": ""
+    }}
+  ]
+}}
+"""
+
     
     try:
         response = client.chat.completions.create(
@@ -267,9 +436,65 @@ def analyze_query_intent(query):
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"},
             max_tokens=600,
-            temperature=0.4
+            temperature=0.0
         )
-        return json.loads(response.choices[0].message.content)
+        initial_analysis = json.loads(response.choices[0].message.content)
+        
+        # --- Step 2: Database Lookup ---
+        relevant_sectors = [item['sector'] for item in initial_analysis.get('relevant_sectors', [])]
+        relevant_industries = [item['industry'] for item in initial_analysis.get('relevant_industries', [])]
+        
+        candidate_variables = []
+        conn = get_db_connection()
+        if conn:
+            try:
+                with conn.cursor() as cur:
+                    # Build query dynamically based on logic
+                    # We want variables that match ANY of the sectors OR industries
+                    query_filters = []
+                    params = []
+                    
+                    if relevant_sectors:
+                        query_filters.append("sector = ANY(%s)")
+                        params.append(relevant_sectors)
+                    
+                    if relevant_industries:
+                        query_filters.append("industry = ANY(%s)")
+                        params.append(relevant_industries)
+                        
+                    if query_filters:
+                        sql = f"""
+                            SELECT variable, sector, industry, description 
+                            FROM variable_semantics 
+                            WHERE {' OR '.join(query_filters)}
+                            LIMIT 20;
+                        """
+                        print("DEBUG: SQL Query:", sql)
+                        print("DEBUG: Parameters:", params)
+                        cur.execute(sql, params)
+                        rows = cur.fetchall()
+                        
+                        for row in rows:
+                            candidate_variables.append({
+                                "variable": row[0],
+                                "sector": row[1],
+                                "industry": row[2],
+                                "description": row[3]
+                            })
+            except Exception as e:
+                print(f"DB Query Error: {e}")
+            finally:
+                conn.close()
+        
+        # --- Step 3: LLM Ranking ---
+        ranked_variables = rank_variables_with_llm(query, candidate_variables)
+        
+        # Merge results logic:
+        # If we have ranked variables from DB, use them.
+        initial_analysis['suggested_variables'] = ranked_variables[:5]
+        
+        return initial_analysis
+
     except Exception as e:
         print(f"Smart Analysis Error: {e}")
         return None

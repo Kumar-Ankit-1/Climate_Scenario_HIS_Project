@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: climate-chatbot
+Version: 0.1.0
+Summary: AI-Powered Climate Policy Assistant
+Author-email: Ankit Kumar <ankit@example.com>
+Requires-Python: >=3.9
+Requires-Dist: flask>=3.0.0
+Requires-Dist: flask-cors>=4.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pandas>=2.1.4
+Requires-Dist: groq>=0.4.2
+Requires-Dist: requests>=2.31.0
+Requires-Dist: numpy>=1.26.3
